@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import { useInput } from '../hooks/useInput';
+import { ConfirmSignUp } from './ConfirmSignUp';
 
 export function SignUp() {
 
     const [signUpStatus, setsignUpStatus] = useState(false);
-
+    const [userId, setUserId] = useState('');
     const userFirstName = useInput('');
     const userSecondName = useInput('');
     const userName = useInput('');
@@ -25,7 +26,9 @@ export function SignUp() {
             }
             })
             .then(data => {
-                console.log(data)
+                console.log(data);
+                const userId = data.userSub;
+                setUserId(userId);
                 setsignUpStatus(true);
             })
             .catch(err => {
@@ -34,15 +37,26 @@ export function SignUp() {
     }
 
     if(signUpStatus) {
+        const userInfo = {
+            userId: userId,
+            firstName: userFirstName.value,
+            secondName: userSecondName.value,
+            userName: userName.value,
+            emailId: userEmailId.value,
+            phoneNumber: userPhoneNumber.value,
+            gender: userGender.value,
+            city: userCity.value
+        };
+        
         return (
             <>
                 <ConfirmSignUp 
                     emailId={userEmailId.value}
+                    userInfo={userInfo}
                 />
             </>
         )
     } else {
-
         return(
             <div>
                 <input
@@ -85,39 +99,4 @@ export function SignUp() {
             </div>
         );
     }
-}
-
-export function ConfirmSignUp({ emailId }) {
-    const otp = useInput('');
-
-    function verifyOtp(e) {
-        Auth.confirmSignUp(emailId, otp.value, {
-            forceAliasCreation: true    
-        }).then(data => {
-            console.log(data)
-        })
-          .catch(err => console.log(err));        
-    }
-
-    function reSendOtp(e) {
-        Auth.resendSignUp(emailId).then(() => {
-            console.log('code resent successfully');
-        }).catch(e => {
-            console.log(e);
-        });
-    }
-
-    return (
-        <>
-            <input
-                {...otp}
-                placeholder="Otp"
-            />
-            <button onClick={verifyOtp}>
-                Verify
-            </button>
-
-            <button onClick={reSendOtp}> Resend otp </button>
-        </>
-    );
 }
