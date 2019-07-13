@@ -5,7 +5,7 @@ export function useInput({ initialValue }) {
     function onChangeHandler(e) {
         setValue(e.target.value);
     }
-    return {
+    return { 
         value,
         onChange: onChangeHandler
     };

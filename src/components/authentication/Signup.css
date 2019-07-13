@@ -1,0 +1,136 @@
+.signUpCreation {
+    position: relative;
+    padding: 40px;
+}
+
+.signupHeader {
+    margin-bottom: 50px;
+    text-align: left;
+    font-size: 30px;
+    font-weight: 600;
+    color: #132c83;
+    text-shadow: 1px 1px 1px grey;
+}
+
+.division {
+    margin-top: 20px
+}
+
+form {
+    position: relative;
+    width: 400px;
+    margin: auto;
+}
+
+label {
+    font-size: 18px;
+    color: black;
+    font-family: fantasy;
+}
+
+.firstAndLastName {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+
+.input {
+    position: relative;
+    padding: 8px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-radius: .28571429rem;
+    width: 100%;
+    outline: none;
+    margin-top: 5px
+}
+
+.input:focus {
+    border: 1px solid skyblue;
+    box-shadow: 0px 0px 0.5px 1px skyblue
+}
+
+.input::placeholder {
+    color: #d8d8d8
+}
+
+.input:focus::placeholder {
+    color: transparent
+}
+
+.genderDiv {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    margin-top: 12px;
+}
+
+.genderSection {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    position: relative;
+}
+
+.genderIcon {
+    position: absolute;
+    top: 10px;
+    left: 23px;
+    color: lightgray;
+}
+
+.gender {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    position: relative;
+    background: transparent;
+    border-radius: 3px;
+    color: #9c9c9c;
+    font-size: 15px;
+    padding: 10px 0px 10px 50px;
+    outline: none;
+    cursor: pointer;
+}
+
+.genderActive {
+    border: 1px solid lightgray;
+}
+
+.genderInActive {
+    border: 2px solid #2185d0!important;
+}
+
+.arrowIcon {
+    position: absolute;
+    left: 360px;
+    top: 15px;
+    cursor: pointer;
+    color: white;
+    transform: rotate(180deg);
+    transition: 0.5s;
+}
+
+.submitField {
+    position: relative;
+    margin-top: 50px;
+}
+
+.submitField:hover .arrowIcon {
+    transform: rotate(0deg);
+}
+
+.submitButton {
+    width: 100%;
+    padding: 15px 15px 15px 30px;
+    border: 0;
+    outline: 0;
+    background: darkblue;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
