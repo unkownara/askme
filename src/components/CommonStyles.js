@@ -5,7 +5,7 @@ const ImgWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: ${props => props.margin || '10px'};
+    margin: ${props => props.margin || '0px'};
 `
 
 const Image = styled.img`
@@ -18,7 +18,12 @@ const Image = styled.img`
 export const ImageWrapper = (props) => {
     return (
         <ImgWrapper margin={props.margin}>
-            <Image src={props.src} alt={props.alt} radius={props.radius} />
+            <Image
+                src={props.src}
+                alt={props.alt}
+                radius={props.radius}
+                height={props.height}
+                width={props.width} />
         </ImgWrapper>
     )
 }
