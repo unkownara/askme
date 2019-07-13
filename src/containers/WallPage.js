@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import ProfileDetails from '../components/ProfileDetails';
+
+import Avatar from '../components/images/dp.png';
+
 class WallPage extends React.Component {
     constructor(props) {
         super(props);
@@ -10,8 +14,13 @@ class WallPage extends React.Component {
 
     render() {
         return (
-            <div>
-
+            <div style={{ margin: '100px' }}>
+                <ProfileDetails
+                    showUserName={true}
+                    showActivityDetails={false}
+                    showUploadedTime={false}
+                    userFullName={'Aravind Manoharan'}
+                    src={Avatar} />
             </div>
         );
     }
