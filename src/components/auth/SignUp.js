@@ -1,8 +1,10 @@
-import React from 'react';
-import {Auth} from 'aws-amplify';
-import {useInput} from '../hooks/useInput';
+import React, { useState } from 'react';
+import { Auth } from 'aws-amplify';
+import { useInput } from '../hooks/useInput';
 
 export function SignUp() {
+
+    const [signUpStatus, setsignUpStatus] = useState(false);
 
     const userFirstName = useInput('');
     const userSecondName = useInput('');
@@ -24,53 +26,65 @@ export function SignUp() {
             })
             .then(data => {
                 console.log(data)
+                setsignUpStatus(true);
             })
             .catch(err => {
                 console.log('Error message' ,err)
             });
     }
 
-    return(
-        <div>
-            <input
-                {...userFirstName}
-                placeholder="First name"
-            />
-            <input
-                {...userSecondName}
-                placeholder="Second name"
-            />
-            <input
-                {...userName}
-                placeholder="User name"
-            />
-            <input
-                {...userEmailId}
-                placeholder="Email Id"
-            />
-            <input
-                {...userPassword}
-                type="password"
-                placeholder="password"
-            />
-            <input
-                {...userPhoneNumber}
-                type="number"
-                placeholder="Phone number"
-            />
-            <input
-                {...userGender}
-                placeholder="Gender"
-            />
-            <input
-                {...userCity}
-                placeholder="City"
-            />
-            <button onClick={signUp}>
-                SIGN UP
-            </button>
-        </div>
-    );
+    if(signUpStatus) {
+        return (
+            <>
+                <ConfirmSignUp 
+                    emailId={userEmailId.value}
+                />
+            </>
+        )
+    } else {
+
+        return(
+            <div>
+                <input
+                    {...userFirstName}
+                    placeholder="First name"
+                />
+                <input
+                    {...userSecondName}
+                    placeholder="Second name"
+                />
+                <input
+                    {...userName}
+                    placeholder="User name"
+                />
+                <input
+                    {...userEmailId}
+                    placeholder="Email Id"
+                />
+                <input
+                    {...userPassword}
+                    type="password"
+                    placeholder="password"
+                />
+                <input
+                    {...userPhoneNumber}
+                    type="number"
+                    placeholder="Phone number"
+                />
+                <input
+                    {...userGender}
+                    placeholder="Gender"
+                />
+                <input
+                    {...userCity}
+                    placeholder="City"
+                />
+                <button onClick={signUp}>
+                    SIGN UP
+                </button>
+            </div>
+        );
+    }
 }
 
 export function ConfirmSignUp({ emailId }) {
