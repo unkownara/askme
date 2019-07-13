@@ -5,6 +5,8 @@ import config from './aws-config';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import 'semantic-ui-css/semantic.min.css';
+// import { LandingPage } from './components/landingPage/LandingPage';
 
 Amplify.configure({
 	Auth: {
