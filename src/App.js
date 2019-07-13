@@ -3,6 +3,9 @@ import createBrowserHistory from './history';
 import { Router, Switch, Route } from 'react-router';
 import { LoginPage } from './components/authentication/LoginPage'
 import { LandingPage } from './components/landingPage/LandingPage';
+import NavBar from './components/NavBar';
+import LandingPage from './containers/LandingPage';
+import WallPage from './containers/WallPage';
 
 function App() {
 	return (
@@ -14,6 +17,11 @@ function App() {
 						path="/home"
 						component={LoginPage}
 					/>
+          <Route
+            path="/wall"
+            exact
+            component={WallPage} 
+          />
 					<Route
 						exact
 						path="/"
@@ -22,7 +30,7 @@ function App() {
 				</Switch>
 			</Router>
 		</div>
-	)
+  )
 }
 
 export default App;
