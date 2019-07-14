@@ -10,9 +10,6 @@ function App() {
 	return (
 		<div className="loginForm" >
 			<Router history={history}>
-				<div className="textField">
-					<p>login</p>
-				</div>
 				<Switch>
 					<Route
 						exact

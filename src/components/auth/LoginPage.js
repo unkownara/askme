@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { useInput } from '../hooks/useInput';
+import { Auth } from 'aws-amplify';
+import cookie from 'react-cookies';
 import {emailValidation} from '../../Validation';
 import {passwordValidation} from '../../Validation';
+import { getUserInformation } from '../../ApiRequests';
 import { Icon } from 'semantic-ui-react';
 import history from '../../history';
 import './LoginPage.css';
@@ -9,34 +12,47 @@ import 'semantic-ui-css/semantic.min.css';
 
 export function LoginPage() {
 
-    const email = useInput('');
+    const userName = useInput(''); /* It might be a user name or email Id */
     const password = useInput('');
-    const [ arrowChange , setArrowChange ] = useState(true);
-    const [ isEmailValid, setIsEmailValid ] = useState(true);
-    const [ isPasswordValid, setIsPasswordValid ] = useState(true);
-    
-    function submit () {
-        setArrowChange(false)
+    const [arrowChange, setArrowChange] = useState(true);
+    const [isValidUser, setIsValidUser] = useState(false);
+    const [loginErrorMsg, setLoginErrorMsg] = useState('');
+
+    function signUpRedirect () {
+        setArrowChange(false);
         history.push('/signup'); 
     }
 
-    useEffect(() => {
-        if(emailValidation(email.value)) { 
-            setIsEmailValid(true); 
-        } 
-        else { 
-            setIsEmailValid(false); 
-        }
-        if( passwordValidation(password.value) ) { 
-            setIsPasswordValid(true)
-        } 
-        else {
-            setIsPasswordValid(false) 
-        } 
-    }, [email.value, password.value]); 
+    function verifyUserCredentials(e) {
+        e.preventDefault();
+        Auth.signIn(userName.value, password.value)
+            .then(user => {
+                console.log("user details ", user, user.signInUserSession.idToken);
+                /*
+                    cookie storage,
+                        userId
+                    localStorage
+                        userInformation
+                */
+               let data = user.signInUserSession.idToken;
+                localStorage.setItem('_cog_u_in_', JSON.stringify(data.payload));
+                cookie.save("_ref_i_token_", data.jwtToken, {path: '/'});
+                cookie.save("_u_id_", data.payload.sub, {path: '/'});
+                getUserInformation(data.payload.sub, function(response) {
+                    console.log('user information', response);
+                });
+            }).catch(err => {
+                setIsValidUser(false);
+                setLoginErrorMsg(err);
+                console.log("inside error", err)
+        });
+    }
 
     return (
         <React.Fragment>
+            <div className="textField">
+                <p>login</p>
+            </div>
             <div className="loginPageCreation">
                 <form className="formCreation">
                 <p className="loginHeadPara">Sign in to Account</p>
@@ -45,9 +61,8 @@ export function LoginPage() {
                         <input
                             className="inputField email"
                             type={"text"}
-                            placeholder="Username"
-                            {...email}
-                            text="Email"
+                            placeholder="User name or Email ID"
+                            {...userName}
                         />
                     </div>
                     <div className="passwordInput">
@@ -65,14 +80,15 @@ export function LoginPage() {
                         {arrowChange ? 
                     <Icon name="arrow right" className="arrowIcon" /> : 
                         <Icon loading name="spinner" className="arrowIcon" /> }
-                    <input 
+                    <button
                         className="submitButton"
-                        type={"button"}
-                        value={"Sign in"} 
-                    /> 
+                        onClick={verifyUserCredentials}>
+                        Sign In
+                    </button>
+                    {loginErrorMsg}
                     </div>
                     <p className="bottomPara">Already have an account?
-                        <span onClick={submit}>sign up</span>
+                        <span onClick={signUpRedirect}>sign up</span>
                     </p>
                 </form>
             </div> 

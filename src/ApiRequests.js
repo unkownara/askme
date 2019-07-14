@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cookie from 'cookie';
+import cookie from 'react-cookies';
 import { user_info } from './ApiUrls';
 
 export const getUserInformation = function(userId, callback) {
@@ -26,7 +26,7 @@ export const storeUserInformation = function(userInfo, callback) {
         method: 'POST',
         url: user_info,
         data: JSON.stringify({
-            userInfo: userInfo  
+            userInfo: userInfo
         }),
         headers: {
             "Access-Control-Allow-Origin": "*",
