@@ -11,17 +11,21 @@ import AudioUpload from './images/audio_upload.png';
 import VideoUpload from './images/video_upload.png';
 
 const BoxWrapper = styled.div`
-    min-height: 250px;
-    width: 400px;
+    min-height: 280px;
+    width: auto;
+    background: #fff;
     border-radius: 5px;
     border: 1px solid #eee;
     position: relative;
+    margin: 0 auto;
 `
 
 const HeaderWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 4fr;
     height: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 `
 
 const AskText = styled.div`
@@ -39,6 +43,10 @@ const QuestionTextArea = styled.textarea`
     border: none;
     padding: 10px;
     box-sizing: border-box;
+    letter-spacing: 0.5px;
+    color: gray;
+    font-size: 22px;
+    font-weight: 500;
 `
 
 const FooterWrapper = styled.div`
@@ -81,7 +89,7 @@ class AskQuestionBox extends React.Component {
                         alt={'Avatar'}
                         height={'40px'}
                         width={'40px'} />
-                    <AskText>Aravind, Ask a question.</AskText>
+                    <AskText>{this.props.userFullName}, Ask a question.</AskText>
                 </HeaderWrapper>
                 <QuestionTextArea placeholder={'Type...'} />
                 <FooterWrapper>
@@ -99,6 +107,8 @@ class AskQuestionBox extends React.Component {
     }
 }
 
-AskQuestionBox.propTypes = {};
+AskQuestionBox.propTypes = {
+    userFullName: PropTypes.string
+};
 
 export default AskQuestionBox;
