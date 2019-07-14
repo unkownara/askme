@@ -1,8 +1,8 @@
 import React from 'react';
-import createBrowserHistory from './history';
+import history from './history';
 import { Router, Switch, Route } from 'react-router';
-import { LoginPage } from './components/authentication/LoginPage'
-import { Signup } from './components/authentication/Signup';
+import { LoginPage } from './components/auth/LoginPage'
+import { Signup } from './components/auth/Signup';
 import NavBar from './components/NavBar';
 import LandingPage from './containers/LandingPage';
 import WallPage from './containers/WallPage';
@@ -10,7 +10,7 @@ import WallPage from './containers/WallPage';
 function App() {
 	return (
 		<div className="loginForm" >
-			<Router history={createBrowserHistory}>
+			<Router history={history}>
 				<div className="textField">
 					<p>login</p>
 				</div>
