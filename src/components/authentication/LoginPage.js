@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { useInput } from '../hooks/useInput';
 import {emailValidation} from '../../Validation';
-import {passwordValidation} from '../../Validation';
+import {passwordValidation} from '../../Validation'; 
 import { Icon } from 'semantic-ui-react';
-import createBrowserHistory from '../../history';
+import history from '../../history';
 import './LoginPage.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -17,7 +17,7 @@ export function LoginPage() {
     
     function submit () {
         setArrowChange(false)
-        createBrowserHistory.push('./signup'); 
+        history.push('./signup'); 
     }
 
     useEffect(() => {
@@ -60,7 +60,7 @@ export function LoginPage() {
                                 text="Password" 
                             />
                         </div>
-                        <span className="forgotSpan">forgot password?</span>
+                        <span className="forgotSpan" onClick={() => history.push('/forgot')}>forgot password?</span>
                         <div className="submitField">
                             {arrowChange ? 
                         <Icon name="arrow right" className="arrowIcon" /> : 

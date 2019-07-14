@@ -3,7 +3,7 @@ import history from './history';
 import styled from 'styled-components';
 import { Router, Switch, Route } from 'react-router';
 import { LoginPage } from './components/auth/LoginPage'
-import { Signup } from './components/auth/Signup';
+import { Signup } from './components/auth/SignUp';
 import NavBar from './components/NavBar';
 import WallPage from './containers/WallPage';
 import { Forgot } from './components/authentication/Forgot';
