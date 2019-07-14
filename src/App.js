@@ -2,8 +2,10 @@ import React from 'react';
 import createBrowserHistory from './history';
 import { Router, Switch, Route } from 'react-router';
 import { LoginPage } from './components/authentication/LoginPage'
-// import { LandingPage } from './components/landingPage/LandingPage';
 import { Signup } from './components/authentication/Signup';
+import NavBar from './components/NavBar';
+import LandingPage from './containers/LandingPage';
+import WallPage from './containers/WallPage';
 
 function App() {
 	return (
@@ -18,6 +20,11 @@ function App() {
 						path="/"
 						component={LoginPage}
 					/>
+          <Route
+            path="/wall"
+            exact
+            component={WallPage} 
+          />
 					<Route
 						exact
 						path="/signup"
@@ -26,6 +33,6 @@ function App() {
 				</Switch>
 			</Router>
 		</div>
-	)
+  )
 }
 export default App; 
