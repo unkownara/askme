@@ -91,12 +91,12 @@ html, body {
 
 .submitButton {
     width: 100%;
-    padding: 15px 15px 15px 30px;
+    padding: 15px 15px 15px 56px;
     border: 0;
     outline: 0;
     background: darkblue;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     border-radius: 4px;
     text-align: left;
@@ -107,7 +107,7 @@ html, body {
 .bottomPara {
     text-align: center;
     position: relative;
-    top: 95px;
+    top: 55px;
     font-size: 14px;
     font-weight: bold;
     color: gray;
@@ -136,6 +136,7 @@ html, body {
 
 .submitField {
     position: relative;
+    margin-top: 20px
 }
 
 .submitField:hover .arrowIcon {

@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import history from './history';
 import styled from 'styled-components';
-import createBrowserHistory from './history';
 import { Router, Switch, Route } from 'react-router';
-import { LoginPage } from './components/authentication/LoginPage'
-import { LandingPage } from './components/landingPage/LandingPage';
+import { LoginPage } from './components/auth/LoginPage'
+import { Signup } from './components/auth/Signup';
 import NavBar from './components/NavBar';
 import WallPage from './containers/WallPage';
+import { Forgot } from './components/authentication/Forgot';
 
 
 const Layout = styled.div`
@@ -15,32 +16,32 @@ const Layout = styled.div`
 
 function App() {
 	return (
-		<Fragment>
-			<NavBar />
-			<Layout>
-				<Router history={createBrowserHistory}>
-					<Switch>
-						<Route
-							exact
-							path="/home"
-							component={LoginPage}
-						/>
-						<Route
-							path="/wall"
-							exact
-							component={WallPage}
-						/>
-						<Route
-							exact
-							path="/"
-							component={LandingPage}
-						/>
-					</Switch>
-				</Router>
-			</Layout>
-		</Fragment>
-
+		<div className="loginForm" >
+			<Router history={history}>
+				<Switch>
+					<Route
+						exact
+						path="/"
+						component={LoginPage}
+					/>
+					<Route
+						path="/wall"
+						exact
+						component={WallPage}
+					/>
+					<Route
+						exact
+						path="/signup"
+						component={Signup}
+					/>
+					<Route
+						exact
+						path="/forgot"
+						component={Forgot}
+					/>
+				</Switch>
+			</Router>
+		</div>
 	)
 }
-
-export default App;
+export default App; 
