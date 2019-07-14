@@ -8,7 +8,7 @@ const ProfileDetailsWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-gap: 0 5px;
-    width: 300px;
+    width: auto;
 `
 
 const AvatarWrapper = styled(ImageWrapper)``
@@ -51,7 +51,7 @@ export const UploadedDateTime = styled.div`
 export const UserName = styled.div`
     color: gray;
     font-weight: 400;
-    font-size: ${props => props.size || '12px'};
+    font-size: ${props => props.size || '13px'};
     letter-spacing: 0.3px;
     opacity: 0.8;
     margin: ${props => props.margin || '0px'};
@@ -71,7 +71,7 @@ const ProfileDetails = (props) => {
             <AvatarWrapper
                 src={props.src}
                 alt={'Avatar'}
-                radius={'50px'}
+                radius={props.radius || '50px'}
                 height={'45px'}
                 width={'45px'} />
             <DetailsWrapper>
@@ -105,6 +105,7 @@ const ProfileDetails = (props) => {
 ProfileDetails.propTypes = {
     userFullName: PropTypes.string,
     margin: PropTypes.string,
+    radius: PropTypes.string,
     askedCount: PropTypes.number,
     answeredCount: PropTypes.number,
     showUserName: PropTypes.bool,
@@ -171,6 +172,7 @@ export default ProfileDetails;
         showUserName={false}
         showActivityDetails={false}
         showUploadedTime={false}
+        radius={}
         date={}
         time={}
         userFullName={'Aravind Manoharan'}
