@@ -1,30 +1,36 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-
-import history from './history';
+import createBrowserHistory from './history';
+import { Router, Switch, Route } from 'react-router';
+import { LoginPage } from './components/authentication/LoginPage'
+import { LandingPage } from './components/landingPage/LandingPage';
 import NavBar from './components/NavBar';
 import LandingPage from './containers/LandingPage';
 import WallPage from './containers/WallPage';
 
-
-class App extends React.Component {
-  render() {
-    return (
-      <Router history={history}>
-        <NavBar />
-        <Switch>
-          <Route
-            path="/"
-            exact
-            component={LandingPage} />
+function App() {
+	return (
+		<div className="App">
+			<Router history={createBrowserHistory}>
+				<Switch>
+					<Route
+						exact
+						path="/home"
+						component={LoginPage}
+					/>
           <Route
             path="/wall"
             exact
-            component={WallPage} />
-        </Switch>
-      </Router>
-    );
-  }
+            component={WallPage} 
+          />
+					<Route
+						exact
+						path="/"
+						component={LandingPage}
+					/>
+				</Switch>
+			</Router>
+		</div>
+  )
 }
 
 export default App;
