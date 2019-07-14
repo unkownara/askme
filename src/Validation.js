@@ -67,3 +67,7 @@ export function formValidation(obj) {
     // else if (obj.gender_value === '' || obj.gender_value === null) { return 'gender_value' }
     // else return true
 }
+
+export function OTPValidation(value) {
+    return value.length === 6 && value !== ''
+} 

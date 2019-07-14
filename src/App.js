@@ -5,6 +5,7 @@ import { LoginPage } from './components/auth/LoginPage'
 import { Signup } from './components/auth/Signup';
 import NavBar from './components/NavBar';
 import WallPage from './containers/WallPage';
+import { Forgot } from './components/authentication/Forgot';
 
 function App() {
 	return (
@@ -16,19 +17,24 @@ function App() {
 						path="/"
 						component={LoginPage}
 					/>
-          <Route
-            path="/wall"
-            exact
-            component={WallPage} 
-          />
+					<Route
+						path="/wall"
+						exact
+						component={WallPage}
+					/>
 					<Route
 						exact
 						path="/signup"
 						component={Signup}
 					/>
+					<Route
+						exact
+						path="/forgot"
+						component={Forgot}
+					/>
 				</Switch>
 			</Router>
 		</div>
-  )
+	)
 }
 export default App; 
