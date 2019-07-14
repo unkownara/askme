@@ -103,28 +103,24 @@ export function Signup() {
         }
         if(emailValidation(email.value)){
             setIsEmailValid(true)
-            console.log('email'+isEmailValid)
         } 
         else {
             setIsEmailValid(false) 
         }
         if(passwordValidation(password.value)){
             setIsPasswordValid(true)
-            console.log('pass'+isPasswordValid)
         }
         else {
             setIsPasswordValid(false)
         }
         if(phoneValidation(phone_number.value)){
             setIsPhoneValid(true)
-            console.log('phone'+isPhoneValid)
         }
         else {
             setIsPhoneValid(false) 
         }
         if(confirmPasswordValidation(password.value, confirmPassword.value)){
             setIsConfirmPasswordValid(true)
-            console.log('cnfrm'+isConfirmPasswordValid)
         }
         else {
             setIsConfirmPasswordValid(false)
@@ -177,7 +173,7 @@ export function Signup() {
                     <label>Password</label>
                     <input
                         {...password}
-                        type="text"
+                        type="password"
                         placeholder="Enter Value"
                         className="input"
                     />
@@ -224,7 +220,7 @@ export function Signup() {
                                     value="Male"
                                     style={{
                                         color: 'blue',
-                                        border: '2px solid blue'
+                                        border: '2px solid blue' 
                                     }}
                                 />}
                         </div>

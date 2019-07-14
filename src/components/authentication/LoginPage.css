@@ -91,12 +91,12 @@ html, body {
 
 .submitButton {
     width: 100%;
-    padding: 15px 15px 15px 30px;
+    padding: 15px 15px 15px 56px;
     border: 0;
     outline: 0;
     background: darkblue;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     border-radius: 4px;
     text-align: left;

@@ -55,7 +55,7 @@ export function LoginPage() {
                             <input
                                 className="inputField password"    
                                 type={"password"}
-                                placeholder="Password"
+                                placeholder="Password" 
                                 {...password}
                                 text="Password" 
                             />
@@ -66,9 +66,9 @@ export function LoginPage() {
                         <Icon name="arrow right" className="arrowIcon" /> : 
                             <Icon loading name="spinner" className="arrowIcon" /> }
                         <input 
-                            className="submitButton"
+                            className="submitButton" 
                             type={"button"}
-                            value={"Sign in"} 
+                            value={"Log in"} 
                         /> 
                         </div>
                         <p className="bottomPara">Already have an account?
