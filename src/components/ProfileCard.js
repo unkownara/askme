@@ -11,6 +11,7 @@ const ProfileCardWrapper = styled.div`
     min-height: 200px;
     max-height: 300px;
     border: 1px solid #eee;
+    background: #fff;
     border-radius: 5px;
     margin: ${props => props.margin || '0 auto'};
 `
@@ -59,6 +60,7 @@ const ProfileCard = (props) => {
                     showActivityDetails={false}
                     showUploadedTime={false}
                     userFullName={props.userFullName}
+                    username={props.username}
                     src={Avatar} />
             </ProfileWrapper>
             <ActivityDetailsWrapper>
@@ -76,8 +78,9 @@ const ProfileCard = (props) => {
 ProfileCard.propTypes = {
     margin: PropTypes.string,
     userFullName: PropTypes.string,
-    askedCount: PropTypes.number,
-    answeredCount: PropTypes.number
+    username: PropTypes.string,
+    askedCount: PropTypes.string,
+    answeredCount: PropTypes.string
 };
 
 export default ProfileCard;

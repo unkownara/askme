@@ -34,17 +34,29 @@ class WallPage extends React.Component {
     }
 
     render() {
+
+        const popularUsersData = [
+            {
+                askedCount: '100',
+                answeredCount: '1200',
+                userFullName: '@aravindmv97'
+            }
+        ]
+
         return (
             <PageWrapper>
                 <RowOneWrapper>
                     <ProfileCard />
-                    <PopularUsersCard margin={'40px auto'} />
+                    <PopularUsersCard
+                        margin={'40px auto'}
+                        popularUsers={popularUsersData} />
                 </RowOneWrapper>
                 <RowtwoWrapper>
                     <AskQuestionBox />
                 </RowtwoWrapper>
                 <RowThreeWrapper>
-                    <PopularQuestionsCard />
+                    <PopularQuestionsCard
+                    />
                 </RowThreeWrapper>
             </PageWrapper>
         );

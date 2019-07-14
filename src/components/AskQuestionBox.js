@@ -13,6 +13,7 @@ import VideoUpload from './images/video_upload.png';
 const BoxWrapper = styled.div`
     min-height: 280px;
     width: auto;
+    background: #fff;
     border-radius: 5px;
     border: 1px solid #eee;
     position: relative;

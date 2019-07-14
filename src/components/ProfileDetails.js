@@ -79,13 +79,14 @@ const ProfileDetails = (props) => {
                 <OtherDetailsWrapper>
                     {
                         props.showUserName ?
-                            <UserName margin={'0 10px 0 0'}>aravindmv97</UserName>
-                            :
-                            props.showActivityDetails ?
-                                <ActivityDetails
-                                    askedCount={props.askedCount}
-                                    answeredCount={props.answeredCount} />
-                                : null
+                            <UserName margin={'0 10px 0 0'}>{props.username}</UserName> : null
+                    }
+                    {
+                        props.showActivityDetails ?
+                            <ActivityDetails
+                                askedCount={props.askedCount}
+                                answeredCount={props.answeredCount} />
+                            : null
                     }
                     {
                         props.showUploadedTime && !props.showActivityDetails ?
@@ -104,10 +105,11 @@ const ProfileDetails = (props) => {
 
 ProfileDetails.propTypes = {
     userFullName: PropTypes.string,
+    username: PropTypes.string,
     margin: PropTypes.string,
     radius: PropTypes.string,
-    askedCount: PropTypes.number,
-    answeredCount: PropTypes.number,
+    askedCount: PropTypes.string,
+    answeredCount: PropTypes.string,
     showUserName: PropTypes.bool,
     showActivityDetails: PropTypes.bool,
     showUploadedTime: PropTypes.bool,
@@ -141,6 +143,8 @@ const TitleWrapper = styled.div`
 `
 
 export const ActivityDetails = (props) => {
+    console.log('3 ', props)
+
     return (
         <ActivityDetailsWrapper margin={props.margin}>
             <TitleWrapper>
@@ -155,8 +159,8 @@ export const ActivityDetails = (props) => {
 
 ActivityDetails.propTypes = {
     margin: PropTypes.string,
-    askedCount: PropTypes.number,
-    answeredCount: PropTypes.number
+    askedCount: PropTypes.string,
+    answeredCount: PropTypes.string
 }
 
 

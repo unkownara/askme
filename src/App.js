@@ -10,6 +10,7 @@ import WallPage from './containers/WallPage';
 
 const Layout = styled.div`
     padding: 50px;
+	/* background: #fff; */
 `
 
 function App() {
