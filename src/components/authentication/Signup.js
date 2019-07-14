@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
 import { useInput } from '../hooks/useInput';
+import { emailValidation, passwordValidation,phoneValidation,confirmPasswordValidation, formValidation } from "../../Validation.js";
 import './Signup.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -46,9 +47,15 @@ const friendOptions = [
 export function Signup() {
 
     const [isMaleActive, setIsMaleActive] = useState(true);
+    const [isFormValid, setIsFormValid] = useState(true);
     const [isFemaleActive, setIsFemaleActive] = useState(true);
     const [isOtherActive, setIsOtherActive] = useState(true);
     const [arrowChange, setArrowChange] = useState(true);
+    const [genderValue, setGenderValue] = useState('');
+    const [ isEmailValid, setIsEmailValid ] = useState(true);
+    const [ isPasswordValid, setIsPasswordValid ] = useState(true);
+    const [ isPhoneValid, setIsPhoneValid ] = useState(true);
+    const [ isConfirmPasswordValid, setIsConfirmPasswordValid ] = useState(true);
     const firstName = useInput('');
     const lastName = useInput('');
     const userName = useInput('');
@@ -57,24 +64,72 @@ export function Signup() {
     const confirmPassword = useInput('');
     const phone_number = useInput('');
 
-    function gender(e) {
-        console.log(e)
-        if (e === 'male') {
+    const obj = {
+        firstNameValue: firstName.value,
+        lastNameValue: lastName.value,
+        userNameValue: userName.value,
+        passwordValue: password.value,
+        confirmValue: confirmPassword.value,
+        phoneNo: phone_number.value,
+        gender_value: genderValue
+    }
+
+    function gender(value) {
+        if (value === 'male') {
             setIsMaleActive(false)
             setIsFemaleActive(true)
             setIsOtherActive(true)
         }
-        else if (e === 'female') {
+        else if (value === 'female') {
             setIsMaleActive(true)
             setIsFemaleActive(false)
             setIsOtherActive(true)
         }
-        else if (e === 'other') {
+        else if (value === 'other') {
             setIsMaleActive(true)
             setIsFemaleActive(true)
             setIsOtherActive(false)
         }
+        setGenderValue(value);
     }
+
+    useEffect (()=> {
+
+        if( formValidation(obj)){
+            setIsFormValid(true)
+        } 
+        else { 
+            setIsFormValid(false) 
+        }
+        if(emailValidation(email.value)){
+            setIsEmailValid(true)
+            console.log('email'+isEmailValid)
+        } 
+        else {
+            setIsEmailValid(false) 
+        }
+        if(passwordValidation(password.value)){
+            setIsPasswordValid(true)
+            console.log('pass'+isPasswordValid)
+        }
+        else {
+            setIsPasswordValid(false)
+        }
+        if(phoneValidation(phone_number.value)){
+            setIsPhoneValid(true)
+            console.log('phone'+isPhoneValid)
+        }
+        else {
+            setIsPhoneValid(false) 
+        }
+        if(confirmPasswordValidation(password.value, confirmPassword.value)){
+            setIsConfirmPasswordValid(true)
+            console.log('cnfrm'+isConfirmPasswordValid)
+        }
+        else {
+            setIsConfirmPasswordValid(false)
+        }
+    })
 
     return (
         <div className="signUpCreation">
@@ -82,7 +137,7 @@ export function Signup() {
             <form>
                 <div className="firstAndLastName division">
                     <div>
-                        <label>First</label><br />
+                        <label>First name</label><br />
                         <input
                             {...firstName}
                             type="text"
@@ -91,7 +146,7 @@ export function Signup() {
                         />
                     </div>
                     <div>
-                        <label>Last</label><br />
+                        <label>Last name</label><br />
                         <input
                             {...lastName}
                             type="text"
@@ -143,6 +198,7 @@ export function Signup() {
                         type="text"
                         placeholder="Enter Value"
                         className="input"
+                        maxLength="10"
                     />
                 </div>
                 <div className="division">
@@ -157,7 +213,7 @@ export function Signup() {
                                     type="button"
                                     className="gender genderActive"
                                     value="Male"
-                                    onClick={gender.bind(this, 'male')}
+                                    onClick={() => gender('male')}
                                     style={{
                                         border: '1px solid lightgray'
                                     }}
@@ -167,20 +223,21 @@ export function Signup() {
                                     className="gender genderInActive"
                                     value="Male"
                                     style={{
-                                        border: '1px solid blue'
+                                        color: 'blue',
+                                        border: '2px solid blue'
                                     }}
                                 />}
                         </div>
                         <div className="genderSection">
                             {isFemaleActive ?
                                 <Icon name="circle outline" className="genderIcon" /> :
-                                <Icon name="dot circle " color="blue" className="genderIcon" />}
+                                <Icon name="dot circle" color="blue" className="genderIcon" />}
                             {isFemaleActive ?
                                 <input
                                     type="button"
                                     className="gender genderActive"
                                     value="Female"
-                                    onClick={gender.bind(this, 'female')}
+                                    onClick={() => gender('female')}
                                     style={{
                                         border: '1px solid lightgray'
                                     }}
@@ -190,7 +247,8 @@ export function Signup() {
                                     className="gender genderInActive"
                                     value="Female"
                                     style={{
-                                        border: '1px solid blue'
+                                        color: 'blue',
+                                        border: '2px solid blue'
                                     }}
                                 />}
                         </div>
@@ -203,7 +261,7 @@ export function Signup() {
                                     type="button"
                                     className="gender genderActive"
                                     value="Other"
-                                    onClick={gender.bind(this, 'other')}
+                                    onClick={() => gender('other')}
                                     style={{
                                         border: '1px solid lightgray'
                                     }}
@@ -213,7 +271,8 @@ export function Signup() {
                                     className="gender genderInActive"
                                     value="Other"
                                     style={{
-                                        border: '1px solid blue'
+                                        color: 'blue',
+                                        border: '2px solid blue'
                                     }}
                                 />}
                         </div>
@@ -240,7 +299,7 @@ export function Signup() {
                         className="submitButton"
                         type={"button"}
                         value={"Sign up"}
-                        onClick={e => setArrowChange(false)}
+                        onClick={e => setArrowChange(false)} 
                     />
                 </div> 
             </form>

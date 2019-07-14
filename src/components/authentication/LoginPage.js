@@ -6,7 +6,6 @@ import { Icon } from 'semantic-ui-react';
 import createBrowserHistory from '../../history';
 import './LoginPage.css';
 import 'semantic-ui-css/semantic.min.css';
-import { Signup } from './Signup';
 
 export function LoginPage() {
 
@@ -18,13 +17,14 @@ export function LoginPage() {
     
     function submit () {
         setArrowChange(false)
-        createBrowserHistory.push('./home'); 
+        createBrowserHistory.push('./signup'); 
     }
 
     useEffect(() => {
         if(emailValidation(email.value)) { 
-            setIsEmailValid(true);
-        } else {
+            setIsEmailValid(true); 
+        } 
+        else { 
             setIsEmailValid(false); 
         }
         if( passwordValidation(password.value) ) { 
@@ -37,11 +37,7 @@ export function LoginPage() {
 
     return (
         <React.Fragment>
-            <div className="loginForm">
-                <div className="textField">
-                    <p>login</p>
-                </div>
-                {/* <div className="loginPageCreation">
+                <div className="loginPageCreation">
                     <form className="formCreation">
                     <p className="loginHeadPara">Sign in to Account</p>
                         <div className="emailField"> 
@@ -70,19 +66,16 @@ export function LoginPage() {
                         <Icon name="arrow right" className="arrowIcon" /> : 
                             <Icon loading name="spinner" className="arrowIcon" /> }
                         <input 
-                            onClick= { submit }
                             className="submitButton"
                             type={"button"}
                             value={"Sign in"} 
                         /> 
                         </div>
                         <p className="bottomPara">Already have an account?
-                            <span>sign up</span>
+                            <span onClick={submit}>sign up</span>
                         </p>
                     </form>
-                </div>  */}
-                <Signup />
-            </div>
+                </div> 
         </React.Fragment> 
     )
 }
