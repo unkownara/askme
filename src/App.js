@@ -4,7 +4,6 @@ import { Router, Switch, Route } from 'react-router';
 import { LoginPage } from './components/authentication/LoginPage'
 import { Signup } from './components/authentication/Signup';
 import NavBar from './components/NavBar';
-import LandingPage from './containers/LandingPage';
 import WallPage from './containers/WallPage';
 import { Forgot } from './components/authentication/Forgot';
 
