@@ -103,7 +103,7 @@ label {
     transition: 0.5s;
 }
 
-.submitField {
+.submit {
     position: relative;
     margin-top: 50px;
 }

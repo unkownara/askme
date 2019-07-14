@@ -1,7 +1,8 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import history from '../../history';
 import { Dropdown, Icon } from 'semantic-ui-react';
 import { useInput } from '../hooks/useInput';
-import { emailValidation, passwordValidation,phoneValidation,confirmPasswordValidation, formValidation } from "../../Validation.js";
+import { emailValidation, passwordValidation, phoneValidation, confirmPasswordValidation, formValidation } from "../../Validation.js";
 import './Signup.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -52,10 +53,10 @@ export function Signup() {
     const [isOtherActive, setIsOtherActive] = useState(true);
     const [arrowChange, setArrowChange] = useState(true);
     const [genderValue, setGenderValue] = useState('');
-    const [ isEmailValid, setIsEmailValid ] = useState(true);
-    const [ isPasswordValid, setIsPasswordValid ] = useState(true);
-    const [ isPhoneValid, setIsPhoneValid ] = useState(true);
-    const [ isConfirmPasswordValid, setIsConfirmPasswordValid ] = useState(true);
+    const [isEmailValid, setIsEmailValid] = useState(true);
+    const [isPasswordValid, setIsPasswordValid] = useState(true);
+    const [isPhoneValid, setIsPhoneValid] = useState(true);
+    const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
     const firstName = useInput('');
     const lastName = useInput('');
     const userName = useInput('');
@@ -93,33 +94,33 @@ export function Signup() {
         setGenderValue(value);
     }
 
-    useEffect (()=> {
+    useEffect(() => {
 
-        if( formValidation(obj)){
+        if (formValidation(obj)) {
             setIsFormValid(true)
-        } 
-        else { 
-            setIsFormValid(false) 
         }
-        if(emailValidation(email.value)){
-            setIsEmailValid(true)
-        } 
         else {
-            setIsEmailValid(false) 
+            setIsFormValid(false)
         }
-        if(passwordValidation(password.value)){
+        if (emailValidation(email.value)) {
+            setIsEmailValid(true)
+        }
+        else {
+            setIsEmailValid(false)
+        }
+        if (passwordValidation(password.value)) {
             setIsPasswordValid(true)
         }
         else {
             setIsPasswordValid(false)
         }
-        if(phoneValidation(phone_number.value)){
+        if (phoneValidation(phone_number.value)) {
             setIsPhoneValid(true)
         }
         else {
-            setIsPhoneValid(false) 
+            setIsPhoneValid(false)
         }
-        if(confirmPasswordValidation(password.value, confirmPassword.value)){
+        if (confirmPasswordValidation(password.value, confirmPassword.value)) {
             setIsConfirmPasswordValid(true)
         }
         else {
@@ -220,7 +221,7 @@ export function Signup() {
                                     value="Male"
                                     style={{
                                         color: 'blue',
-                                        border: '2px solid blue' 
+                                        border: '2px solid #2385d0'
                                     }}
                                 />}
                         </div>
@@ -244,7 +245,7 @@ export function Signup() {
                                     value="Female"
                                     style={{
                                         color: 'blue',
-                                        border: '2px solid blue'
+                                        border: '2px solid #2385d0'
                                     }}
                                 />}
                         </div>
@@ -268,7 +269,7 @@ export function Signup() {
                                     value="Other"
                                     style={{
                                         color: 'blue',
-                                        border: '2px solid blue'
+                                        border: '2px solid #2385d0'
                                     }}
                                 />}
                         </div>
@@ -287,7 +288,7 @@ export function Signup() {
                         options={friendOptions}
                     />
                 </div>
-                <div className="submitField">
+                <div className="submit">
                     {arrowChange ?
                         <Icon name="arrow right" className="arrowIcon" /> :
                         <Icon loading name="spinner" className="arrowIcon" />}
@@ -295,9 +296,14 @@ export function Signup() {
                         className="submitButton"
                         type={"button"}
                         value={"Sign up"}
-                        onClick={e => setArrowChange(false)} 
+                        onClick={e => setArrowChange(false)}
                     />
-                </div> 
+                </div>
+                <p className="bottomPara">Already have an account?
+                    <span onClick={() => history.push('/') }>
+                        Log in
+                    </span>
+                </p>
             </form>
         </div>
     )

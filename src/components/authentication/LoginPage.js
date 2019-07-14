@@ -71,7 +71,7 @@ export function LoginPage() {
                             value={"Log in"} 
                         /> 
                         </div>
-                        <p className="bottomPara">Already have an account?
+                        <p className="bottomPara">Create an new account?
                             <span onClick={submit}>sign up</span>
                         </p>
                     </form>

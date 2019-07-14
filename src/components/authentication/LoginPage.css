@@ -107,7 +107,7 @@ html, body {
 .bottomPara {
     text-align: center;
     position: relative;
-    top: 95px;
+    top: 55px;
     font-size: 14px;
     font-weight: bold;
     color: gray;
@@ -136,6 +136,7 @@ html, body {
 
 .submitField {
     position: relative;
+    margin-top: 20px
 }
 
 .submitField:hover .arrowIcon {
