@@ -1,11 +1,18 @@
 import React from 'react';
 import history from './history';
+import styled from 'styled-components';
 import { Router, Switch, Route } from 'react-router';
 import { LoginPage } from './components/auth/LoginPage'
 import { Signup } from './components/auth/Signup';
 import NavBar from './components/NavBar';
 import WallPage from './containers/WallPage';
 import { Forgot } from './components/authentication/Forgot';
+
+
+const Layout = styled.div`
+    padding: 50px;
+	/* background: #fff; */
+`
 
 function App() {
 	return (
