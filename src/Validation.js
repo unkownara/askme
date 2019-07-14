@@ -58,20 +58,8 @@ export function formValidation(obj) {
     } else {
         return 'none';
     }
-    // if (obj.firstNameValue === '' || obj.firstNameValue === null) {
-    //     return 'first'
-    // }
-    // else if (obj.lastNameValue === '' || obj.lastNameValue === null) {
-    //     return 'last'
-    // }
-    // else if (obj.userNameValue === '' || obj.userNameValue === null) { return 'userName' }
-    // else if (obj.passwordValue === '' || obj.passwordValue === null) { return 'passowrd' }
-    // else if (obj.confirmValue === '' || obj.confirmValue === null) { return 'confirm' }
-    // else if (obj.phoneNo === '' || obj.phoneNo === null) { return 'phoneNo' }
-    // else if (obj.gender_value === '' || obj.gender_value === null) { return 'gender_value' }
-    // else return true
 }
 
 export function OTPValidation(value) {
     return value.length === 6 && value !== ''
-} 
+}
