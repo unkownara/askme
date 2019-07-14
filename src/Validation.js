@@ -16,9 +16,10 @@ export function confirmPasswordValidation(password, confirmPassword) {
 }
 
 export function phoneValidation(value) {
-    var len = value;
-    if (/^\d{10}$/.test(len)) {
-        return len.length === 10
+    if (/^\d{10}$/.test(value)) {
+        return value.length === 10
+    } else {
+        return false;
     }
 }
 
