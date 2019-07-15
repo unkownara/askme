@@ -1,13 +1,10 @@
 import axios from 'axios';
 import cookie from 'react-cookies';
-import { user_info } from './ApiUrls';
 
 /* Retrieve user information from dynamodb by sending user_id */
-export const getUserInformation = function(userId, callback) {
-    axios.get(user_info, {
-        params: {
-            userId: userId
-        },
+export const getApiRequestCall = function(url, payload, callback) {
+    axios.get(url, {
+        params: payload,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -24,13 +21,11 @@ export const getUserInformation = function(userId, callback) {
 
 
 /* Store user information after user successfully confirmed by email otp verification */
-export const storeUserInformation = function(userInfo, callback) {
+export const postApiRequestCall = function(url, payload, callback) {
     axios({
         method: 'POST',
-        url: user_info,
-        data: JSON.stringify({
-            userInfo: userInfo
-        }),
+        url: url,
+        data: payload,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json"
