@@ -2,6 +2,7 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 import { user_info } from './ApiUrls';
 
+/* Retrieve user information from dynamodb by sending user_id */
 export const getUserInformation = function(userId, callback) {
     axios.get(user_info, {
         params: {
@@ -21,6 +22,8 @@ export const getUserInformation = function(userId, callback) {
     });
 }
 
+
+/* Store user information after user successfully confirmed by email otp verification */
 export const storeUserInformation = function(userInfo, callback) {
     axios({
         method: 'POST',

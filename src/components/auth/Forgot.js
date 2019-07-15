@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from 'semantic-ui-react';
-import './Forgot.css';
-import 'semantic-ui-css/semantic.min.css';
 import { useInput } from '../hooks/useInput';
 import { passwordValidation, confirmPasswordValidation, OTPValidation } from '../../Validation';
+import './Forgot.css';
+import 'semantic-ui-css/semantic.min.css';
 
 export function Forgot() {
 

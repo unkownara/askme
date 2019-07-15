@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
 import { useInput } from '../hooks/useInput';
-import { emailValidation, passwordValidation, phoneValidation, formValidation, inputValidation } from "../../Validation.js";
+import { formValidation, inputValidation } from "../../Validation.js";
+import history from '../../history';
 import './Signup.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -378,6 +379,11 @@ export function Signup() {
                     </div>
                     {formValidationErrorMsg}
                 </form>
+                <p className="bottomPara">Already have an account?
+                    <span onClick={() => history.push('/') }>
+                        Log in
+                    </span>
+                </p>
             </div>
         </>
     )
