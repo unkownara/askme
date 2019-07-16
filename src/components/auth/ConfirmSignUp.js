@@ -12,10 +12,7 @@ export function ConfirmSignUp({ emailId, userInfo }) {
             forceAliasCreation: true    
         }).then(data => {
             console.log(data);
-            const dataPayload = JSON.stringify({
-                userInfo: userInfo
-            });
-            postApiRequestCall(user_info_url, dataPayload, function(response) {
+            postApiRequestCall(user_info_url, userInfo, function(response) {
                 console.log('response in confirm sign up page', response);
             });
         })

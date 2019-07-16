@@ -22,11 +22,11 @@ function App() {
 			<Layout>
 				<Router history={history}>
 					<Switch>
-            <Route
-              exact
-              path="/"
-              component={LandingPage}
-            />
+						<Route
+						exact
+						path="/"
+						component={LandingPage}
+						/>
 						<Route
 							exact
 							path="/home"
@@ -37,16 +37,16 @@ function App() {
 							exact
 							component={WallPage}
 						/>
-            <Route
-              exact
-              path="/signup"
-              component={Signup}
-            />
-            <Route
-              exact
-              path="/forgot"
-              component={Forgot}
-            />
+						<Route
+							exact
+							path="/signup"
+							component={Signup}
+						/>
+						<Route
+							exact
+							path="/forgot"
+							component={Forgot}
+						/>
 					</Switch>
 				</Router>
 			</Layout>

@@ -11,7 +11,7 @@ export const getApiRequestCall = function(url, payload, callback) {
             "Authorization": cookie.load("_ref_i_token_")
         }
     }).then(res => {
-        callback(res.data.Items[0]);
+        callback(res.data.Items);
         console.log('response ', res);
     }).catch(err => {
         console.log('error ', err);
@@ -22,10 +22,11 @@ export const getApiRequestCall = function(url, payload, callback) {
 
 /* Store user information after user successfully confirmed by email otp verification */
 export const postApiRequestCall = function(url, payload, callback) {
-    axios({
-        method: 'POST',
-        url: url,
-        data: payload,
+    console.log('payload ', payload);
+    axios.post(url, {
+        data: JSON.stringify({
+            payload: payload,
+        }),
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json"
