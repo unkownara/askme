@@ -77,7 +77,7 @@ export function LoginPage() {
                             text="Password" 
                         />
                     </div>
-                    <span className="forgotSpan">forgot password?</span>
+                    <span className="forgotSpan" onClick={()=> history.push('/forgot')}>forgot password?</span>
                     <div className="submitField">
                         {arrowChange ? 
                     <Icon name="arrow right" className="arrowIcon" /> : 
