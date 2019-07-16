@@ -7,7 +7,7 @@ import ProfileCard from '../components/ProfileCard';
 import PopularUsersCard from '../components/PopularUsersCard';
 import PopularQuestionsCard from '../components/PopularQuestionsCard';
 
-import Avatar from '../components/images/dp.png';
+import Avatar from '../images/dp.png';
 
 const PageWrapper = styled.div`
     display: grid;
