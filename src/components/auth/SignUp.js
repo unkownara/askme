@@ -1,7 +1,10 @@
 import React, { useState,useEffect } from 'react';
+import { Auth } from 'aws-amplify';
 import { Dropdown, Icon } from 'semantic-ui-react';
 import { useInput } from '../hooks/useInput';
-import { emailValidation, passwordValidation, phoneValidation, formValidation, inputValidation } from "../../Validation.js";
+import { ConfirmSignUp } from './ConfirmSignUp';
+import { formValidation, inputValidation } from "../../Validation.js";
+import history from '../../history';
 import './Signup.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -60,6 +63,8 @@ export function Signup() {
     const [phoneNumberValidationErrorMsg, setPhoneNumberValidationErrorMsg] = useState('');
     const [genderValidationErrorMsg, setGenderValidationErrorMsg] = useState('');
     const [formValidationErrorMsg, setFormValidationErrorMsg] = useState('');
+    const [isSignUpCompleted, setIsSignUpCompleted] = useState('');
+    const [userId, setUserId] = useState('');
 
     const firstName = useInput('');
     const lastName = useInput('');
@@ -68,7 +73,7 @@ export function Signup() {
     const email = useInput('');
     const phoneNumber = useInput('');
 
-    const obj = {
+    const userInfo = {
         firstName: firstName.value,
         lastName: lastName.value,
         userName: userName.value,
@@ -156,8 +161,8 @@ export function Signup() {
 
     function formSubmit(e) {
         e.preventDefault();
-        console.log('object ', obj);
-        switch(formValidation(obj)) {
+        console.log('userInfoect ', userInfo);
+        switch(formValidation(userInfo)) {
             case 'firstName':
                 setFirstNameValidationErrorMsg('invalid');
                 setFormValidationErrorMsg('Fill all the fields');
@@ -190,195 +195,230 @@ export function Signup() {
     }
 
     useEffect(() => {
-        if(isFormValid) {
-            console.log('true');
+        if(isFormValid && !isSignUpCompleted) {
+            Auth.signUp({
+                username: email.value,
+                password: password.value,
+                attributes: {
+                    email: email.value,
+                    phone_number: '+91' + phoneNumber.value,
+                }
+                }).then(data => {
+                    console.log('signup data ', data);
+                    setIsSignUpCompleted(true);
+                    setUserId(data.userSub);
+                }).catch(err => console.log(err));
         } else {
             console.log('false');
         }
-    })
+    });
 
-    return (
-        <>
-            <div className="textField">
-                    <p>Sign Up</p>
-                </div>
-            <div className="signUpCreation">
-                <p className="signupHeader">Sign up to Account</p>
-                <form>
-                    <div className="firstAndLastName division">
-                        <div>
-                            <label>First name</label><br />
+    /* Triggering component based on signup form validation */
+    if(isSignUpCompleted) {
+        const userInfo = {
+            userId: userId,
+            firstName: firstName.value,
+            lastName: lastName.value,
+            userName: userName.value,
+            email: email.value,
+            phoneNumber: phoneNumber.value,
+            gender: genderValue
+        };
+        return (
+            <ConfirmSignUp 
+                emailId={email.value}
+                userInfo={userInfo}
+            />
+        );
+    } else {
+        return (
+            <>
+                <div className="textField">
+                        <p>Sign Up</p>
+                    </div>
+                <div className="signUpCreation">
+                    <p className="signupHeader">Sign up to Account</p>
+                    <form>
+                        <div className="firstAndLastName division">
+                            <div>
+                                <label>First name</label><br />
+                                <input
+                                    {...firstName}
+                                    onBlur={() => onBlurChange('firstName', firstName.value)}
+                                    type="text"
+                                    placeholder="Enter Value"
+                                    className="input firstName"
+                                />
+                                {firstNameValidationErrorMsg}
+                            </div>
+                            <div>
+                                <label>Last name</label><br />
+                                <input
+                                    {...lastName}
+                                    onBlur={() => onBlurChange('lastName', lastName.value)}
+                                    type="text"
+                                    placeholder="Enter Value"
+                                    className="input lastName"
+                                />
+                                {lastNameValidationErrorMsg}
+                            </div>
+                        </div>
+                        <div className="division">
+                            <label>Username</label>
                             <input
-                                {...firstName}
-                                onBlur={() => onBlurChange('firstName', firstName.value)}
+                                {...userName}
+                                onBlur={() => onBlurChange('userName', userName.value)}
                                 type="text"
                                 placeholder="Enter Value"
                                 className="input firstName"
                             />
-                            {firstNameValidationErrorMsg}
+                            {userNameValidationErrorMsg}
                         </div>
-                        <div>
-                            <label>Last name</label><br />
+                        <div className="division">
+                            <label>Email</label>
                             <input
-                                {...lastName}
-                                onBlur={() => onBlurChange('lastName', lastName.value)}
+                                {...email}
+                                onBlur={() => onBlurChange('email', email.value)}
                                 type="text"
                                 placeholder="Enter Value"
-                                className="input lastName"
+                                className="input email"
                             />
-                            {lastNameValidationErrorMsg}
+                            {emailValidationErrorMsg}
                         </div>
-                    </div>
-                    <div className="division">
-                        <label>Username</label>
-                        <input
-                            {...userName}
-                            onBlur={() => onBlurChange('userName', userName.value)}
-                            type="text"
-                            placeholder="Enter Value"
-                            className="input firstName"
-                        />
-                        {userNameValidationErrorMsg}
-                    </div>
-                    <div className="division">
-                        <label>Email</label>
-                        <input
-                            {...email}
-                            onBlur={() => onBlurChange('email', email.value)}
-                            type="text"
-                            placeholder="Enter Value"
-                            className="input email"
-                        />
-                        {emailValidationErrorMsg}
-                    </div>
-                    <div className="division">
-                        <label>Password</label>
-                        <input
-                            {...password}
-                            onBlur={() => onBlurChange('password', password.value)}
-                            type="text"
-                            placeholder="Enter Value"
-                            className="input"
-                        />
-                        {passwordValidationErrorMsg}
-                    </div>
-                    <div className="division">
-                        <label>Phone no</label>
-                        <input
-                            {...phoneNumber}
-                            onBlur={() => onBlurChange('phoneNumber', phoneNumber.value)}
-                            type="text"
-                            placeholder="Enter Value"
-                            className="input"
-                            maxLength="10"
-                        />
-                        {phoneNumberValidationErrorMsg}
-                    </div>
-                    <div className="division">
-                        <label>Gender</label>
-                        <div className="genderDiv">
-                            <div className="genderSection">
-                                {isMaleActive ?
-                                    <Icon name="circle outline" className="genderIcon" /> :
-                                    <Icon name="dot circle" color="blue" className="genderIcon" />}
-                                {isMaleActive ?
-                                    <input
-                                        type="button"
-                                        className="gender genderActive"
-                                        value="Male"
-                                        onClick={() => gender('male')}
-                                        style={{
-                                            border: '1px solid lightgray'
-                                        }}
-                                    /> :
-                                    <input
-                                        type="button"
-                                        className="gender genderInActive"
-                                        value="Male"
-                                        style={{
-                                            color: 'blue',
-                                            border: '2px solid blue'
-                                        }}
-                                    />}
-                            </div>
-                            <div className="genderSection">
-                                {isFemaleActive ?
-                                    <Icon name="circle outline" className="genderIcon" /> :
-                                    <Icon name="dot circle" color="blue" className="genderIcon" />}
-                                {isFemaleActive ?
-                                    <input
-                                        type="button"
-                                        className="gender genderActive"
-                                        value="Female"
-                                        onClick={() => gender('female')}
-                                        style={{
-                                            border: '1px solid lightgray'
-                                        }}
-                                    /> :
-                                    <input
-                                        type="button"
-                                        className="gender genderInActive"
-                                        value="Female"
-                                        style={{
-                                            color: 'blue',
-                                            border: '2px solid blue'
-                                        }}
-                                    />}
-                            </div>
-                            <div className="genderSection">
-                                {isOtherActive ?
-                                    <Icon name="circle outline" className="genderIcon" /> :
-                                    <Icon name="dot circle" color="blue" className="genderIcon" />}
-                                {isOtherActive ?
-                                    <input
-                                        type="button"
-                                        className="gender genderActive"
-                                        value="Other"
-                                        onClick={() => gender('other')}
-                                        style={{
-                                            border: '1px solid lightgray'
-                                        }}
-                                    /> :
-                                    <input
-                                        type="button"
-                                        className="gender genderInActive"
-                                        value="Other"
-                                        style={{
-                                            color: 'blue',
-                                            border: '2px solid blue'
-                                        }}
-                                    />}
-                            </div>
-                            {genderValidationErrorMsg}
+                        <div className="division">
+                            <label>Password</label>
+                            <input
+                                {...password}
+                                onBlur={() => onBlurChange('password', password.value)}
+                                type="text"
+                                placeholder="Enter Value"
+                                className="input"
+                            />
+                            {passwordValidationErrorMsg}
                         </div>
-                    </div>
-                    <div className="division">
-                        <label>city</label>
-                        <Dropdown style={{
-                            width: '100%',
-                            margin: '8px 0px',
-                            color: 'gray'
-                        }}
-                            placeholder='Select Value'
-                            search
-                            selection
-                            options={friendOptions}
-                        />
-                    </div>
-                    <div className="submitField">
-                        {arrowChange ?
-                            <Icon name="arrow right" className="arrowIcon" /> :
-                            <Icon loading name="spinner" className="arrowIcon" />}
-                        <button
-                            className="submitButton"
-                            onMouseOver={e => setArrowChange(false)}
-                            onClick={(e) => formSubmit(e)}>
-                            Sign up
-                        </button>
-                    </div>
-                    {formValidationErrorMsg}
-                </form>
-            </div>
-        </>
-    )
+                        <div className="division">
+                            <label>Phone no</label>
+                            <input
+                                {...phoneNumber}
+                                onBlur={() => onBlurChange('phoneNumber', phoneNumber.value)}
+                                type="text"
+                                placeholder="Enter Value"
+                                className="input"
+                                maxLength="10"
+                            />
+                            {phoneNumberValidationErrorMsg}
+                        </div>
+                        <div className="division">
+                            <label>Gender</label>
+                            <div className="genderDiv">
+                                <div className="genderSection">
+                                    {isMaleActive ?
+                                        <Icon name="circle outline" className="genderIcon" /> :
+                                        <Icon name="dot circle" color="blue" className="genderIcon" />}
+                                    {isMaleActive ?
+                                        <input
+                                            type="button"
+                                            className="gender genderActive"
+                                            value="Male"
+                                            onClick={() => gender('male')}
+                                            style={{
+                                                border: '1px solid lightgray'
+                                            }}
+                                        /> :
+                                        <input
+                                            type="button"
+                                            className="gender genderInActive"
+                                            value="Male"
+                                            style={{
+                                                color: 'blue',
+                                                border: '2px solid blue'
+                                            }}
+                                        />}
+                                </div>
+                                <div className="genderSection">
+                                    {isFemaleActive ?
+                                        <Icon name="circle outline" className="genderIcon" /> :
+                                        <Icon name="dot circle" color="blue" className="genderIcon" />}
+                                    {isFemaleActive ?
+                                        <input
+                                            type="button"
+                                            className="gender genderActive"
+                                            value="Female"
+                                            onClick={() => gender('female')}
+                                            style={{
+                                                border: '1px solid lightgray'
+                                            }}
+                                        /> :
+                                        <input
+                                            type="button"
+                                            className="gender genderInActive"
+                                            value="Female"
+                                            style={{
+                                                color: 'blue',
+                                                border: '2px solid blue'
+                                            }}
+                                        />}
+                                </div>
+                                <div className="genderSection">
+                                    {isOtherActive ?
+                                        <Icon name="circle outline" className="genderIcon" /> :
+                                        <Icon name="dot circle" color="blue" className="genderIcon" />}
+                                    {isOtherActive ?
+                                        <input
+                                            type="button"
+                                            className="gender genderActive"
+                                            value="Other"
+                                            onClick={() => gender('other')}
+                                            style={{
+                                                border: '1px solid lightgray'
+                                            }}
+                                        /> :
+                                        <input
+                                            type="button"
+                                            className="gender genderInActive"
+                                            value="Other"
+                                            style={{
+                                                color: 'blue',
+                                                border: '2px solid blue'
+                                            }}
+                                        />}
+                                </div>
+                                {genderValidationErrorMsg}
+                            </div>
+                        </div>
+                        <div className="division">
+                            <label>city</label>
+                            <Dropdown style={{
+                                width: '100%',
+                                margin: '8px 0px',
+                                color: 'gray'
+                            }}
+                                placeholder='Select Value'
+                                search
+                                selection
+                                options={friendOptions}
+                            />
+                        </div>
+                        <div className="submitField">
+                            {arrowChange ?
+                                <Icon name="arrow right" className="arrowIcon" /> :
+                                <Icon loading name="spinner" className="arrowIcon" />}
+                            <button
+                                className="submitButton"
+                                onMouseOver={e => setArrowChange(false)}
+                                onClick={(e) => formSubmit(e)}>
+                                Sign up
+                            </button>
+                        </div>
+                        {formValidationErrorMsg}
+                    </form>
+                    <p className="bottomPara">Already have an account?
+                        <span onClick={() => history.push('/') }>
+                            Log in
+                        </span>
+                    </p>
+                </div>
+            </>
+        );
+    }
 }

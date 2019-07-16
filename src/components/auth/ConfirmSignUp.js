@@ -1,7 +1,8 @@
 import React from 'react';
 import { useInput } from '../hooks/useInput';
 import { Auth } from 'aws-amplify';
-import { storeUserInformation } from '../../ApiRequests';
+import { postApiRequestCall } from '../../ApiRequests';
+import { user_info_url } from '../../ApiUrls';
 
 export function ConfirmSignUp({ emailId, userInfo }) {
     const otp = useInput('');
@@ -11,7 +12,7 @@ export function ConfirmSignUp({ emailId, userInfo }) {
             forceAliasCreation: true    
         }).then(data => {
             console.log(data);
-            storeUserInformation(userInfo, function(response) {
+            postApiRequestCall(user_info_url, userInfo, function(response) {
                 console.log('response in confirm sign up page', response);
             });
         })
