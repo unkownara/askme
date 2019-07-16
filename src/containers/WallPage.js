@@ -43,10 +43,24 @@ class WallPage extends React.Component {
             }
         ]
 
+        const popularQuestionsData = [
+            {
+                question: 'How to complete this app in 2 days?',
+                username: '@aravindmv97',
+                likes: '100',
+                comments: '25',
+                answers: '200'
+            },
+        ]
+
         return (
             <PageWrapper>
                 <RowOneWrapper>
-                    <ProfileCard />
+                    <ProfileCard
+                        userFullName={'Aravind Manoharan'}
+                        username={'@aravindmv97'}
+                        askedCount={'100'}
+                        answeredCount={'200'} />
                     <PopularUsersCard
                         margin={'40px auto'}
                         popularUsers={popularUsersData} />
@@ -55,8 +69,7 @@ class WallPage extends React.Component {
                     <AskQuestionBox />
                 </RowtwoWrapper>
                 <RowThreeWrapper>
-                    <PopularQuestionsCard
-                    />
+                    <PopularQuestionsCard popularQuestions={popularQuestionsData} />
                 </RowThreeWrapper>
             </PageWrapper>
         );
