@@ -18,9 +18,9 @@ export function OTPpage() {
             <input
                 type="text"
                 placeholder="Enter Value"
-                className="otpInput"
+                className="otpInput" 
                 maxLength="6"
-                {...OTP}
+                {...OTP} 
             />
         </div>
     )

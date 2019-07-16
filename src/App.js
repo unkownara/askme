@@ -16,7 +16,7 @@ const Layout = styled.div`
 
 function App() {
 	return (
-		<div className="loginForm" >
+		<div className="loginForm" > 
 			<Router history={history}>
 				<Switch>
 					<Route
