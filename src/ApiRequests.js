@@ -1,19 +1,16 @@
 import axios from 'axios';
 import cookie from 'react-cookies';
-import { user_info } from './ApiUrls';
 
-export const getUserInformation = function(userId, callback) {
-    axios.get(user_info, {
-        params: {
-            userId: userId
-        },
+export const getApiRequestCall = function(url, payload, callback) {
+    axios.get(url, {
+        params: payload,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
             "Authorization": cookie.load("_ref_i_token_")
         }
     }).then(res => {
-        callback(res.data.Items[0]);
+        callback(res.data.Items);
         console.log('response ', res);
     }).catch(err => {
         console.log('error ', err);
@@ -21,12 +18,13 @@ export const getUserInformation = function(userId, callback) {
     });
 }
 
-export const storeUserInformation = function(userInfo, callback) {
+
+export const postApiRequestCall = function(url, payload, callback) {
     axios({
         method: 'POST',
-        url: user_info,
+        url: url,
         data: JSON.stringify({
-            userInfo: userInfo
+            payload: payload,
         }),
         headers: {
             "Access-Control-Allow-Origin": "*",

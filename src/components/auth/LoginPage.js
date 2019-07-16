@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
+import { useDispatch } from 'react-redux';
 import { useInput } from '../hooks/useInput';
 import { Auth } from 'aws-amplify';
 import cookie from 'react-cookies';
-import {emailValidation} from '../../Validation';
-import {passwordValidation} from '../../Validation';
-import { getUserInformation } from '../../ApiRequests';
+import { getApiRequestCall } from '../../ApiRequests';
+import { user_info_url } from '../../ApiUrls';
 import { Icon } from 'semantic-ui-react';
 import history from '../../history';
 import './LoginPage.css';
@@ -17,6 +17,9 @@ export function LoginPage() {
     const [arrowChange, setArrowChange] = useState(true);
     const [isValidUser, setIsValidUser] = useState(false);
     const [loginErrorMsg, setLoginErrorMsg] = useState('');
+
+    // useDispatch redux object setup
+    const dispatch = useDispatch();
 
     function signUpRedirect () {
         setArrowChange(false);
@@ -34,12 +37,22 @@ export function LoginPage() {
                     localStorage
                         userInformation
                 */
-               let data = user.signInUserSession.idToken;
+                let data = user.signInUserSession.idToken;
                 localStorage.setItem('_cog_u_in_', JSON.stringify(data.payload));
                 cookie.save("_ref_i_token_", data.jwtToken, {path: '/'});
                 cookie.save("_u_id_", data.payload.sub, {path: '/'});
-                getUserInformation(data.payload.sub, function(response) {
+                const dataPayload = {
+                    userId: data.payload.sub
+                };
+                getApiRequestCall(user_info_url, dataPayload, function(response) {
                     console.log('user information', response);
+                    if(response.data && response.data.Items) {
+                        dispatch({
+                            type: 'STORE_USER_INFORMATION',
+                            payload: response.data.Items[0]
+                        })
+                        history.push('/home');
+                    }
                 });
             }).catch(err => {
                 setIsValidUser(false);
@@ -53,7 +66,7 @@ export function LoginPage() {
             <div className="textField">
                 <p>login</p>
             </div>
-            <div className="loginPageCreation">
+            <div>
                 <form className="formCreation">
                 <p className="loginHeadPara">Sign in to Account</p>
                     <div className="emailField"> 
