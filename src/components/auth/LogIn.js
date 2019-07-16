@@ -58,7 +58,7 @@ export function LogIn() {
                 });
             }).catch(err => {
                 setIsValidUser(false);
-                setLoginErrorMsg(err);
+                setLoginErrorMsg(err.message);
                 console.log("inside error", err)
         });
     }
