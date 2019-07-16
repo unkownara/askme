@@ -102,11 +102,10 @@ export function Signup() {
         setGenderValue(value);
     }
 
-    function onBlurChange(name, value) {
-        
+    function onBlurChange(name, value) { 
         switch(name) {
             case 'firstName':
-                if(inputValidation('name', value)) {
+                if(inputValidation('name', value)) { 
                     setFirstNameValidationErrorMsg('');
                 } else {
                     setFirstNameValidationErrorMsg('invalid');
@@ -120,7 +119,7 @@ export function Signup() {
                 }
                 break;
             case 'userName':
-                if(inputValidation('name', value)) {
+                if(inputValidation('name', value)) { 
                     setUserNameValidationErrorMsg('');
                 } else {
                     setUserNameValidationErrorMsg('invalid');
@@ -272,7 +271,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input firstName"
                             />
-                            {userNameValidationErrorMsg}
+                            <span className="errorMsgSpan">{userNameValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Email</label>
@@ -283,7 +282,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input email"
                             />
-                            {emailValidationErrorMsg}
+                            <span className="errorMsgSpan">{emailValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Password</label>
@@ -294,7 +293,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input"
                             />
-                            {passwordValidationErrorMsg}
+                            <span className="errorMsgSpan">{passwordValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Phone no</label>
@@ -306,7 +305,7 @@ export function Signup() {
                                 className="input"
                                 maxLength="10"
                             />
-                            {phoneNumberValidationErrorMsg}
+                            <span className="errorMsgSpan">{phoneNumberValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Gender</label>
@@ -383,7 +382,7 @@ export function Signup() {
                                             }}
                                         />}
                                 </div>
-                                {genderValidationErrorMsg}
+                                <span className="errorMsgSpan">{genderValidationErrorMsg}</span>
                             </div>
                         </div>
                         <div className="division">
@@ -410,15 +409,10 @@ export function Signup() {
                                 Sign up
                             </button>
                         </div>
-                        {formValidationErrorMsg}
+                        <span className="submitErrMsg errorMsgSpan">{formValidationErrorMsg}</span>
                     </form>
-                    <p className="bottomPara">Already have an account?
-                        <span onClick={() => history.push('/') }>
-                            Log in
-                        </span>
-                    </p>
                 </div>
             </>
-        );
+        )
     }
 }
