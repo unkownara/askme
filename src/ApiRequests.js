@@ -10,7 +10,7 @@ export const getApiRequestCall = function(url, payload, callback) {
             "Authorization": cookie.load("_ref_i_token_")
         }
     }).then(res => {
-        callback(res.data.Items);
+        callback(res);
         console.log('response ', res);
     }).catch(err => {
         console.log('error ', err);

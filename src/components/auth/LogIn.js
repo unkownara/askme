@@ -7,10 +7,10 @@ import { getApiRequestCall } from '../../ApiRequests';
 import { user_info_url } from '../../ApiUrls';
 import { Icon } from 'semantic-ui-react';
 import history from '../../history';
-import './LoginPage.css';
+import './LogIn.css';
 import 'semantic-ui-css/semantic.min.css';
 
-export function LoginPage() {
+export function LogIn() {
 
     const userName = useInput(''); /* It might be a user name or email Id */
     const password = useInput('');
@@ -46,17 +46,19 @@ export function LoginPage() {
                 };
                 getApiRequestCall(user_info_url, dataPayload, function(response) {
                     console.log('user information', response);
-                    if(response.data && response.data.Items) {
+                    if(response.status === 200 && response.data.Items !== undefined && response.data.Items.length === 1) {
                         dispatch({
                             type: 'STORE_USER_INFORMATION',
                             payload: response.data.Items[0]
                         })
-                        history.push('/home');
+                        history.push('/wall');
+                    } else {
+                        console.log('fallback here');
                     }
                 });
             }).catch(err => {
                 setIsValidUser(false);
-                setLoginErrorMsg(err);
+                setLoginErrorMsg(err.message);
                 console.log("inside error", err)
         });
     }

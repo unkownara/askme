@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import CardHeader from './CardHeader';
 import ProfileDetails from './ProfileDetails';
 
-import Avatar from './images/dp.png';
+import Avatar from '../images/dp.png';
 
 
 const PopularUsersWrapper = styled.div`

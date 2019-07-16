@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import ProfileDetails from './ProfileDetails';
 
-import Avatar from './images/dp.png';
+import Avatar from '../images/dp.png';
 
 const ProfileCardWrapper = styled.div`
     width: 280px;

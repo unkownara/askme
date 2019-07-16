@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import { ImageWrapper } from './CommonStyles';
 import AskButton from './Buttons';
 
-import Avatar from './images/dp.png';
-import ImageUpload from './images/image_upload.png';
-import AudioUpload from './images/audio_upload.png';
-import VideoUpload from './images/video_upload.png';
+import Avatar from '../images/dp.png';
+import ImageUpload from '../images/image_upload.png';
+import AudioUpload from '../images/audio_upload.png';
+import VideoUpload from '../images/video_upload.png';
 
 const BoxWrapper = styled.div`
     min-height: 280px;
