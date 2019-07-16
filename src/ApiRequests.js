@@ -1,7 +1,6 @@
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-/* Retrieve user information from dynamodb by sending user_id */
 export const getApiRequestCall = function(url, payload, callback) {
     axios.get(url, {
         params: payload,
@@ -20,10 +19,10 @@ export const getApiRequestCall = function(url, payload, callback) {
 }
 
 
-/* Store user information after user successfully confirmed by email otp verification */
 export const postApiRequestCall = function(url, payload, callback) {
-    console.log('payload ', payload);
-    axios.post(url, {
+    axios({
+        method: 'POST',
+        url: url,
         data: JSON.stringify({
             payload: payload,
         }),

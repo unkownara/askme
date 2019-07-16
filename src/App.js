@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Router, Switch, Route } from 'react-router';
 import { LoginPage } from './components/auth/LoginPage';
 import { LandingPage } from './components/landingPage/LandingPage';
-import { Signup } from './components/auth/Signup';
+import { Signup } from './components/auth/SignUp';
 import NavBar from './components/NavBar';
 import WallPage from './containers/WallPage';
 import { Forgot } from './components/auth/Forgot';
@@ -23,13 +23,13 @@ function App() {
 				<Router history={history}>
 					<Switch>
 						<Route
-						exact
-						path="/"
-						component={LandingPage}
+							exact
+							path="/"
+							component={LandingPage}
 						/>
 						<Route
 							exact
-							path="/home"
+							path="/login"
 							component={LoginPage}
 						/>
 						<Route

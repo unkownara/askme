@@ -195,7 +195,7 @@ export function Signup() {
     }
 
     useEffect(() => {
-        if(isFormValid) {
+        if(isFormValid && !isSignUpCompleted) {
             Auth.signUp({
                 username: email.value,
                 password: password.value,
@@ -211,7 +211,7 @@ export function Signup() {
         } else {
             console.log('false');
         }
-    }, [isFormValid, isSignUpCompleted]);
+    });
 
     /* Triggering component based on signup form validation */
     if(isSignUpCompleted) {
