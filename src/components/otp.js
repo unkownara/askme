@@ -1,6 +1,6 @@
 import React from 'react';
-import { OTPValidation } from './Validation';
-export function OTPpage() {
+import { OTPValidation } from '../Validation';
+export function OTP() {
 
     const [isOTPActive, setIsOTPActive] = useState(true);
     const OTP = useInput('');
