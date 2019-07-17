@@ -8,7 +8,7 @@ import ImageUpload from '../images/image_upload.png';
 import AudioUpload from '../images/audio_upload.png';
 import VideoUpload from '../images/video_upload.png';
 
-export function AskQuestionBox() {
+export function AskQuestionBox({ userFullName }) {
     return (
         <BoxWrapper>
             <HeaderWrapper>
@@ -17,7 +17,7 @@ export function AskQuestionBox() {
                     alt={'Avatar'}
                     height={'40px'}
                     width={'40px'} />
-                <AskText>{this.props.userFullName}, Ask a question.</AskText>
+                <AskText>{userFullName}, Ask a question.</AskText>
             </HeaderWrapper>
             <QuestionTextArea placeholder={'Type...'} />
             <FooterWrapper>
