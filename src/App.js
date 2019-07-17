@@ -8,6 +8,7 @@ import { Signup } from './components/auth/SignUp';
 import NavBar from './components/NavBar';
 import { WallPage } from './containers/WallPage';
 import { Forgot } from './components/auth/Forgot';
+import { OTP } from './components/otp';
 
 
 const Layout = styled.div`
@@ -46,6 +47,10 @@ function App() {
 							exact
 							path="/forgot"
 							component={Forgot}
+						/>
+						<Route
+							path="/otp"
+							component={OTP}
 						/>
 					</Switch>
 				</Router>

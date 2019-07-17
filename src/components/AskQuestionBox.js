@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useInput } from './hooks/useInput';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import history from '../history';
 import { ImageWrapper } from './CommonStyles';
 import { AskButton } from './Buttons';
 import Avatar from '../images/dp.png';
