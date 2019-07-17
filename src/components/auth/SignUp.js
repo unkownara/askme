@@ -190,6 +190,7 @@ export function Signup() {
             case 'none':
                 setFormValidationErrorMsg('');
                 setIsFormValid(true);
+                setArrowChange(false)
                 break;
         }
     }
@@ -232,7 +233,7 @@ export function Signup() {
         );
     } else {
         return (
-            <>
+            <div className="signupContainer">
                 <div className="textField">
                         <p>Sign Up</p>
                     </div>
@@ -249,7 +250,7 @@ export function Signup() {
                                     placeholder="Enter Value"
                                     className="input firstName"
                                 />
-                                {firstNameValidationErrorMsg}
+                                <span className="errMsg">{firstNameValidationErrorMsg}</span>
                             </div>
                             <div>
                                 <label>Last name</label><br />
@@ -260,7 +261,7 @@ export function Signup() {
                                     placeholder="Enter Value"
                                     className="input lastName"
                                 />
-                                {lastNameValidationErrorMsg}
+                                <span className="errMsg">{lastNameValidationErrorMsg}</span>
                             </div>
                         </div>
                         <div className="division">
@@ -272,7 +273,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input firstName"
                             />
-                            {userNameValidationErrorMsg}
+                            <span className="errMsg">{userNameValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Email</label>
@@ -283,7 +284,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input email"
                             />
-                            {emailValidationErrorMsg}
+                            <span className="errMsg">{emailValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Password</label>
@@ -294,7 +295,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input"
                             />
-                            {passwordValidationErrorMsg}
+                            <span className="errMsg">{passwordValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Phone no</label>
@@ -306,7 +307,7 @@ export function Signup() {
                                 className="input"
                                 maxLength="10"
                             />
-                            {phoneNumberValidationErrorMsg}
+                            <span className="errMsg">{phoneNumberValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Gender</label>
@@ -383,7 +384,7 @@ export function Signup() {
                                             }}
                                         />}
                                 </div>
-                                {genderValidationErrorMsg}
+                                <span className="errMsg">{genderValidationErrorMsg}</span>
                             </div>
                         </div>
                         <div className="division">
@@ -398,19 +399,18 @@ export function Signup() {
                                 selection
                                 options={friendOptions}
                             />
-                        </div>
+                        </div> 
                         <div className="submitField">
                             {arrowChange ?
                                 <Icon name="arrow right" className="arrowIcon" /> :
                                 <Icon loading name="spinner" className="arrowIcon" />}
                             <button
                                 className="submitButton"
-                                onMouseOver={e => setArrowChange(false)}
                                 onClick={(e) => formSubmit(e)}>
                                 Sign up
                             </button>
                         </div>
-                        {formValidationErrorMsg}
+                        <span className="errMsg submitErrMsg">{formValidationErrorMsg}</span>
                     </form>
                     <p className="bottomPara">Already have an account?
                         <span onClick={() => history.push('/') }>
@@ -418,7 +418,7 @@ export function Signup() {
                         </span>
                     </p>
                 </div>
-            </>
+            </div>
         );
     }
 }

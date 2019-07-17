@@ -1,3 +1,10 @@
+.forgotContainer {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 45% 55%; 
+}
+
 .forgotSection {
     position: relative;
 }
