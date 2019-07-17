@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
     margin: ${props => props.margin || '0px'};
     border-radius: 5px;
     font-weight: 500;
@@ -16,7 +16,7 @@ const ButtonWrapper = styled.div`
     background: #EF5A00;
 `
 
-const AskButton = (props) => {
+export function AskButton(props) {
     return (
         <ButtonWrapper onClick={props.onClickProps} margin={props.margin}>
             Ask ?
@@ -27,5 +27,3 @@ const AskButton = (props) => {
 AskButton.propTypes = {
 
 };
-
-export default AskButton;
