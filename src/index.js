@@ -10,7 +10,6 @@ import App from './App';
 import { userReducer } from './reducers/userReducer';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css';
-// import { LandingPage } from './components/landingPage/LandingPage';
 
 Amplify.configure({
 	Auth: {
@@ -25,9 +24,9 @@ Amplify.configure({
     }
 });
 
-const store = createStore(combineReducers(
+const store = createStore(combineReducers({
 	userReducer
-),compose(applyMiddleware(thunkMiddleware)));
+}),compose(applyMiddleware(thunkMiddleware)));
 
 ReactDOM.render(<Provider store={store}>
 	<App />

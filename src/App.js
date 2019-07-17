@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import history from './history';
 import styled from 'styled-components';
 import { Router, Switch, Route } from 'react-router';
-import { LoginPage } from './components/auth/LoginPage';
+import { LogIn } from './components/auth/LogIn';
 import { LandingPage } from './components/landingPage/LandingPage';
 import { Signup } from './components/auth/SignUp';
 import NavBar from './components/NavBar';
-import WallPage from './containers/WallPage';
+import { WallPage } from './containers/WallPage';
 import { Forgot } from './components/auth/Forgot';
 
 
@@ -30,7 +30,7 @@ function App() {
 						<Route
 							exact
 							path="/login"
-							component={LoginPage}
+							component={LogIn}
 						/>
 						<Route
 							path="/wall"

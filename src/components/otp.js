@@ -1,6 +1,6 @@
 import React from 'react';
-import { OTPValidation } from './Validation';
-export function OTPpage() {
+import { OTPValidation } from '../Validation';
+export function OTP() {
 
     const [isOTPActive, setIsOTPActive] = useState(true);
     const OTP = useInput('');
@@ -18,9 +18,9 @@ export function OTPpage() {
             <input
                 type="text"
                 placeholder="Enter Value"
-                className="otpInput"
+                className="otpInput" 
                 maxLength="6"
-                {...OTP}
+                {...OTP} 
             />
         </div>
     )

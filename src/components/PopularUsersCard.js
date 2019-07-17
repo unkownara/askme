@@ -1,12 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { CardHeader } from './CardHeader';
+import { ProfileDetails } from './ProfileDetails';
+import Avatar from '../images/dp.png';
 
-import CardHeader from './CardHeader';
-import ProfileDetails from './ProfileDetails';
-
-import Avatar from './images/dp.png';
-
+export function PopularUsers({ margin, popularUsers }) {
+    return (
+        <PopularUsersWrapper margin={margin}>
+            <CardHeader>POPULAR USERS</CardHeader>
+            <UsersWrapper>
+                {
+                    popularUsers.map((user, user_index) =>
+                        <ProfileWrapper key={user_index}>
+                            <ProfileDetails
+                                radius={'50%'}
+                                showUserName={false}
+                                askedCount={user.askedCount}
+                                answeredCount={user.answeredCount}
+                                showActivityDetails
+                                showUploadedTime={false}
+                                userFullName={user.userFullName}
+                                src={Avatar} />
+                        </ProfileWrapper>
+                    )
+                }
+            </UsersWrapper>
+        </PopularUsersWrapper>
+    );
+};
 
 const PopularUsersWrapper = styled.div`
     background: #fff;
@@ -29,34 +51,7 @@ const ProfileWrapper = styled.div`
     border-bottom: 1px solid #eee;
 `
 
-const PopularUsers = (props) => {
-    return (
-        <PopularUsersWrapper margin={props.margin}>
-            <CardHeader>POPULAR USERS</CardHeader>
-            <UsersWrapper>
-                {
-                    props.popularUsers.map((user, user_index) =>
-                        <ProfileWrapper key={user_index}>
-                            <ProfileDetails
-                                radius={'50%'}
-                                showUserName={false}
-                                askedCount={user.askedCount}
-                                answeredCount={user.answeredCount}
-                                showActivityDetails
-                                showUploadedTime={false}
-                                userFullName={user.userFullName}
-                                src={Avatar} />
-                        </ProfileWrapper>
-                    )
-                }
-            </UsersWrapper>
-        </PopularUsersWrapper>
-    );
-};
-
 PopularUsers.propTypes = {
     margin: PropTypes.string,
     popularUsers: PropTypes.array
 };
-
-export default PopularUsers;

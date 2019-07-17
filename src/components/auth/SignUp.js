@@ -102,11 +102,10 @@ export function Signup() {
         setGenderValue(value);
     }
 
-    function onBlurChange(name, value) {
-        
+    function onBlurChange(name, value) { 
         switch(name) {
             case 'firstName':
-                if(inputValidation('name', value)) {
+                if(inputValidation('name', value)) { 
                     setFirstNameValidationErrorMsg('');
                 } else {
                     setFirstNameValidationErrorMsg('invalid');
@@ -120,7 +119,7 @@ export function Signup() {
                 }
                 break;
             case 'userName':
-                if(inputValidation('name', value)) {
+                if(inputValidation('name', value)) { 
                     setUserNameValidationErrorMsg('');
                 } else {
                     setUserNameValidationErrorMsg('invalid');
@@ -273,7 +272,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input firstName"
                             />
-                            <span className="errMsg">{userNameValidationErrorMsg}</span>
+                            <span className="errorMsgSpan">{userNameValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Email</label>
@@ -284,7 +283,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input email"
                             />
-                            <span className="errMsg">{emailValidationErrorMsg}</span>
+                            <span className="errorMsgSpan">{emailValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Password</label>
@@ -295,7 +294,7 @@ export function Signup() {
                                 placeholder="Enter Value"
                                 className="input"
                             />
-                            <span className="errMsg">{passwordValidationErrorMsg}</span>
+                            <span className="errorMsgSpan">{passwordValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Phone no</label>
@@ -307,7 +306,7 @@ export function Signup() {
                                 className="input"
                                 maxLength="10"
                             />
-                            <span className="errMsg">{phoneNumberValidationErrorMsg}</span>
+                            <span className="errorMsgSpan">{phoneNumberValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Gender</label>
@@ -384,7 +383,7 @@ export function Signup() {
                                             }}
                                         />}
                                 </div>
-                                <span className="errMsg">{genderValidationErrorMsg}</span>
+                                <span className="errorMsgSpan">{genderValidationErrorMsg}</span>
                             </div>
                         </div>
                         <div className="division">
@@ -410,15 +409,10 @@ export function Signup() {
                                 Sign up
                             </button>
                         </div>
-                        <span className="errMsg submitErrMsg">{formValidationErrorMsg}</span>
+                        <span className="submitErrMsg errorMsgSpan">{formValidationErrorMsg}</span>
                     </form>
-                    <p className="bottomPara">Already have an account?
-                        <span onClick={() => history.push('/') }>
-                            Log in
-                        </span>
-                    </p>
                 </div>
             </div>
-        );
+        )
     }
 }
