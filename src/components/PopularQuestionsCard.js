@@ -1,9 +1,27 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import { UserName } from './ProfileDetails';
-import CardHeader from './CardHeader';
+import { CardHeader } from './CardHeader';
+
+export function PopularQuestions(props) {
+    return (
+        <PopularQuestionsWrapper margin={props.margin}>
+            <CardHeader>POPULAR Questions</CardHeader>
+            <QuestionsListWrapper>
+                {
+                    props.popularQuestions.map((question, question_index) =>
+                        <QuestionWrapper>
+                            {/* <TrendIconWrapper><div>?</div></TrendIconWrapper> */}
+                            <AskedQuestion>{question.question}</AskedQuestion>
+                            <UserName>{question.username}</UserName>
+                        </QuestionWrapper>
+                    )
+                }
+            </QuestionsListWrapper>
+        </PopularQuestionsWrapper>
+    );
+};
 
 const PopularQuestionsWrapper = styled.div`
     background: #fff;
@@ -48,27 +66,6 @@ const AskedQuestion = styled.div`
 //     }
 // `
 
-const PopularQuestions = (props) => {
-    return (
-        <PopularQuestionsWrapper margin={props.margin}>
-            <CardHeader>POPULAR Questions</CardHeader>
-            <QuestionsListWrapper>
-                {
-                    props.popularQuestions.map((question, question_index) =>
-                        <QuestionWrapper>
-                            {/* <TrendIconWrapper><div>?</div></TrendIconWrapper> */}
-                            <AskedQuestion>{question.question}</AskedQuestion>
-                            <UserName>{question.username}</UserName>
-                        </QuestionWrapper>
-                    )
-                }
-            </QuestionsListWrapper>
-        </PopularQuestionsWrapper>
-    );
-};
-
 PopularQuestions.propTypes = {
     popularQestions: PropTypes.array
 };
-
-export default PopularQuestions;

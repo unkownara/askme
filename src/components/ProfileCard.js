@@ -1,10 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-import ProfileDetails from './ProfileDetails';
-
+import { ProfileDetails } from './ProfileDetails';
 import Avatar from '../images/dp.png';
+
+
+export function ProfileCard(props) {
+    return (
+        <ProfileCardWrapper margin={props.margin}>
+            <ProfileWrapper>
+                <ProfileDetails
+                    radius={'10px'}
+                    showUserName
+                    showActivityDetails={false}
+                    showUploadedTime={false}
+                    userFullName={props.userFullName}
+                    username={props.username}
+                    src={Avatar} />
+            </ProfileWrapper>
+            <ActivityDetailsWrapper>
+                <ActivityWrapper>
+                    <Activity>ASKED <span>{props.askedCount}</span></Activity>
+                </ActivityWrapper>
+                <ActivityWrapper>
+                    <Activity>ANSWERED <span>{props.answeredCount}</span></Activity>
+                </ActivityWrapper>
+            </ActivityDetailsWrapper>
+        </ProfileCardWrapper>
+    );
+};
 
 const ProfileCardWrapper = styled.div`
     width: 280px;
@@ -50,31 +74,6 @@ const Activity = styled.div`
     }
 `
 
-const ProfileCard = (props) => {
-    return (
-        <ProfileCardWrapper margin={props.margin}>
-            <ProfileWrapper>
-                <ProfileDetails
-                    radius={'10px'}
-                    showUserName
-                    showActivityDetails={false}
-                    showUploadedTime={false}
-                    userFullName={props.userFullName}
-                    username={props.username}
-                    src={Avatar} />
-            </ProfileWrapper>
-            <ActivityDetailsWrapper>
-                <ActivityWrapper>
-                    <Activity>ASKED <span>{props.askedCount}</span></Activity>
-                </ActivityWrapper>
-                <ActivityWrapper>
-                    <Activity>ANSWERED <span>{props.answeredCount}</span></Activity>
-                </ActivityWrapper>
-            </ActivityDetailsWrapper>
-        </ProfileCardWrapper>
-    );
-};
-
 ProfileCard.propTypes = {
     margin: PropTypes.string,
     userFullName: PropTypes.string,
@@ -82,5 +81,3 @@ ProfileCard.propTypes = {
     askedCount: PropTypes.string,
     answeredCount: PropTypes.string
 };
-
-export default ProfileCard;

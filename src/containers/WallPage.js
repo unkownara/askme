@@ -2,12 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import AskQuestionBox from '../components/AskQuestionBox';
-import ProfileCard from '../components/ProfileCard';
-import PopularUsersCard from '../components/PopularUsersCard';
-import PopularQuestionsCard from '../components/PopularQuestionsCard';
-
-import Avatar from '../images/dp.png';
+import { AskQuestionBox } from '../components/AskQuestionBox';
+import { ProfileCard } from '../components/ProfileCard';
+import { PopularUsers } from '../components/PopularUsersCard';
+import { PopularQuestions } from '../components/PopularQuestionsCard';
 
 
 const popularUsersData = [
@@ -45,7 +43,7 @@ export function WallPage() {
                         username={'@aravindmv97'}
                         askedCount={'100'}
                         answeredCount={'200'} />
-                    <PopularUsersCard
+                    <PopularUsers
                         margin={'40px auto'}
                         popularUsers={popularUsersData} />
                 </RowOneWrapper>
@@ -53,7 +51,7 @@ export function WallPage() {
                     <AskQuestionBox />
                 </RowtwoWrapper>
                 <RowThreeWrapper>
-                    <PopularQuestionsCard popularQuestions={popularQuestionsData} />
+                    <PopularQuestions popularQuestions={popularQuestionsData} />
                 </RowThreeWrapper>
             </PageWrapper>
         </>
