@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useInput } from './hooks/useInput';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import history from '../history';
 import { ImageWrapper } from './CommonStyles';
 import { AskButton } from './Buttons';
 import Avatar from '../images/dp.png';
@@ -9,6 +12,30 @@ import AudioUpload from '../images/audio_upload.png';
 import VideoUpload from '../images/video_upload.png';
 
 export function AskQuestionBox({ userFullName }) {
+
+    const postTextContent = useInput('');
+    const [userInfo, setUserInfo] = useState(null);
+
+    const storeUserInfo = useSelector(state => state.userReducer);
+
+    // Checking redux store user information
+    useEffect(() => {
+        if(storeUserInfo && storeUserInfo.userInfo) {
+            console.log('store user information ', storeUserInfo);
+            setUserInfo(storeUserInfo.userInfo);
+        }
+    }, [userInfo]);
+
+
+    function postQuestionOnClick(e) {
+        e.preventDefault();
+        import('../s3Uploader').then(obj => {
+            const uploadData = postTextContent.value;
+            const key = 'key';
+            obj.s3Uploader(uploadData, key, 'text');
+        })
+    }
+
     return (
         <BoxWrapper>
             <HeaderWrapper>
@@ -19,7 +46,10 @@ export function AskQuestionBox({ userFullName }) {
                     width={'40px'} />
                 <AskText>{userFullName}, Ask a question.</AskText>
             </HeaderWrapper>
-            <QuestionTextArea placeholder={'Type...'} />
+            <QuestionTextArea
+                placeholder={'Ask anything...'}
+                {...postTextContent}
+            />
             <FooterWrapper>
                 <MediaUploadIconsWrapper>
                     <IconsWrapper margin={'0 10px 5px 10px'} src={ImageUpload} height={'20px'} width={'20px'} alt={'Image upload'} />
@@ -27,7 +57,10 @@ export function AskQuestionBox({ userFullName }) {
                     <IconsWrapper margin={'0 10px 5px 10px'} src={AudioUpload} height={'20px'} width={'20px'} alt={'Audio upload'} />
                 </MediaUploadIconsWrapper>
                 <ButtonWrapper>
-                    <AskButton margin={'0 10px 0 0'} />
+                    <AskButton 
+                        margin={'0 10px 0 0'}
+                        onClickProps={postQuestionOnClick}
+                    />
                 </ButtonWrapper>
             </FooterWrapper>
         </BoxWrapper>
@@ -99,5 +132,3 @@ const ButtonWrapper = styled.div`
 AskQuestionBox.propTypes = {
     userFullName: PropTypes.string
 };
-
-export default AskQuestionBox;

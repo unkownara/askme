@@ -18,7 +18,9 @@ export const ButtonWrapper = styled.div`
 
 export function AskButton(props) {
     return (
-        <ButtonWrapper onClick={props.onClickProps} margin={props.margin}>
+        <ButtonWrapper 
+            onClick={props.onClickProps}
+            margin={props.margin}>
             Ask ?
         </ButtonWrapper>
     );

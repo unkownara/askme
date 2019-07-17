@@ -51,6 +51,7 @@ export function LogIn() {
                             type: 'STORE_USER_INFORMATION',
                             payload: response.data.Items[0]
                         })
+                        localStorage.setItem('_user_info_', JSON.stringify(response.data.Items[0]));
                         history.push('/wall');
                     } else {
                         console.log('fallback here');
