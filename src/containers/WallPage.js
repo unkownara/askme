@@ -66,7 +66,7 @@ class WallPage extends React.Component {
                         popularUsers={popularUsersData} />
                 </RowOneWrapper>
                 <RowtwoWrapper>
-                    <AskQuestionBox />
+                    <AskQuestionBox username={'Aravind Manoharan'} />
                 </RowtwoWrapper>
                 <RowThreeWrapper>
                     <PopularQuestionsCard popularQuestions={popularQuestionsData} />
