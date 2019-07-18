@@ -26,9 +26,13 @@ export const postApiRequestCall = function(url, payload, callback) {
         data: JSON.stringify({
             payload: payload,
         }),
-        headers: {
+        headers: window.location.pathname === "/signup" ? {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json"
+        } : {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            "Authorization": cookie.load("_ref_i_token_")   
         }
     }).then(res => {
         callback(res);

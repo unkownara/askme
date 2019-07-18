@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useInput } from './hooks/useInput';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { user_post_url } from '../ApiUrls';
 import { ImageWrapper } from './CommonStyles';
 import { AskButton } from './Buttons';
 import Avatar from '../images/dp.png';
@@ -13,8 +14,8 @@ import VideoUpload from '../images/video_upload.png';
 export function AskQuestionBox({ userFullName }) {
 
     const postTextContent = useInput('');
+    const hashTag = useInput('');
     const [userInfo, setUserInfo] = useState(null);
-
     const storeUserInfo = useSelector(state => state.userReducer);
 
     // Checking redux store user information
@@ -26,13 +27,31 @@ export function AskQuestionBox({ userFullName }) {
     }, [userInfo]);
 
 
-    function postQuestionOnClick(e) {
+    async function postQuestionOnClick(e) {
         e.preventDefault();
-        import('../s3Uploader').then(obj => {
+        const type = 'txt';
+        let postId = '';
+        await import('../common').then(obj => {
+            postId = obj.uniqueId();
+        });
+        const tag = hashTag.value;
+        const key = `${userInfo.userId}/${postId}-${tag}.${type}`;
+        const postObj = {
+            userId: userInfo.userId,
+            userName: userInfo.userName,
+            profilePicture: userInfo.profilePicture,
+            hashTag: hashTag.value,
+            contentKey: key
+        };
+        await import('../s3Uploader').then(obj => {
             const uploadData = postTextContent.value;
-            const key = 'key';
-            obj.s3Uploader(uploadData, key, 'text');
-        })
+            obj.s3Uploader(uploadData, key, type);
+        });
+        await import('../ApiRequests').then(apiObj => {
+            apiObj.postApiRequestCall(user_post_url, postObj, function(response) {
+                console.log('successfully uploaded...', response);
+            });
+        });
     }
 
     return (
@@ -48,6 +67,9 @@ export function AskQuestionBox({ userFullName }) {
             <QuestionTextArea
                 placeholder={'Ask anything...'}
                 {...postTextContent}
+            />
+            <input
+                {...hashTag}
             />
             <FooterWrapper>
                 <MediaUploadIconsWrapper>

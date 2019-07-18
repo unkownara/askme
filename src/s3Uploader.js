@@ -31,7 +31,7 @@ export function s3Uploader(uploadData, key, dataType) {
     };
     s3Bucket.putObject(s3Obj, function(data, err) {
         if(err) {
-            console.log('Error message', err);
+            console.log('Error message', err, data);
         } else {
             console.log('S3 upload successful', data);
         }
