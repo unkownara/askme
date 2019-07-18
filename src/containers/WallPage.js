@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { AskQuestionBox } from '../components/AskQuestionBox';
+import  AskQuestionBox from '../components/AskQuestionBox';
 import { ProfileCard } from '../components/ProfileCard';
 import { PopularUsers } from '../components/PopularUsersCard';
 import { PopularQuestions } from '../components/PopularQuestionsCard';
