@@ -52,35 +52,28 @@ export function WallPage() {
         console.log('redux store ', reduxStore);
     });
 
-    if(canRender) {
-        return (
-            <>
-                <PageWrapper>
-                    <RowOneWrapper>
-                        <ProfileCard
-                            userFullName={'Aravind Manoharan'}
-                            username={'@aravindmv97'}
-                            askedCount={'100'}
-                            answeredCount={'200'} />
-                        <PopularUsers
-                            margin={'40px auto'}
-                            popularUsers={popularUsersData} />
-                    </RowOneWrapper>
-                    <RowtwoWrapper>
-                        <AskQuestionBox />
-                    </RowtwoWrapper>
-                    <RowThreeWrapper>
-                        <PopularQuestions popularQuestions={popularQuestionsData} />
-                    </RowThreeWrapper>
-                </PageWrapper>
-            </>
-        )
-    } else {
-        return (
-            <>
-            </>
-        );
-    }
+    return (
+        <>
+            <PageWrapper>
+                <RowOneWrapper>
+                    <ProfileCard
+                        userFullName={'Aravind Manoharan'}
+                        username={'@aravindmv97'}
+                        askedCount={'100'}
+                        answeredCount={'200'} />
+                    <PopularUsers
+                        margin={'40px auto'}
+                        popularUsers={popularUsersData} />
+                </RowOneWrapper>
+                <RowtwoWrapper>
+                    <AskQuestionBox username={'Aravind Manoharan'} />
+                </RowtwoWrapper>
+                <RowThreeWrapper>
+                    <PopularQuestions popularQuestions={popularQuestionsData} />
+                </RowThreeWrapper>
+            </PageWrapper>
+        </>
+    )
 }
 
 const PageWrapper = styled.div`
