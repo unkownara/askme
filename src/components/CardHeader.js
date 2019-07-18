@@ -17,7 +17,7 @@ const HeaderWrapper = styled.div`
     text-transform: uppercase;
 `
 
-const CardHeader = (props) => {
+export function CardHeader(props) {
     return (
         <HeaderWrapper>
             {props.children}
@@ -28,5 +28,3 @@ const CardHeader = (props) => {
 CardHeader.propTypes = {
     children: PropTypes.node
 };
-
-export default CardHeader;

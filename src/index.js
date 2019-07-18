@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
 import Amplify from 'aws-amplify';
 import config from './aws-config';
 import './index.css';
 import App from './App';
+import { userReducer } from './reducers/userReducer';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css';
-// import { LandingPage } from './components/landingPage/LandingPage';
 
 Amplify.configure({
 	Auth: {
@@ -21,5 +24,11 @@ Amplify.configure({
     }
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore(combineReducers({
+	userReducer
+}),compose(applyMiddleware(thunkMiddleware)));
+
+ReactDOM.render(<Provider store={store}>
+	<App />
+</Provider>, document.getElementById('root'));
 serviceWorker.unregister();

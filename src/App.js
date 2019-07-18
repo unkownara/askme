@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
+import history from './history';
 import styled from 'styled-components';
-import createBrowserHistory from './history';
 import { Router, Switch, Route } from 'react-router';
-import { LoginPage } from './components/authentication/LoginPage'
+import { LogIn } from './components/auth/LogIn';
 import { LandingPage } from './components/landingPage/LandingPage';
+import { Signup } from './components/auth/SignUp';
 import NavBar from './components/NavBar';
-import WallPage from './containers/WallPage';
+import { WallPage } from './containers/WallPage';
+import { Forgot } from './components/auth/Forgot';
 
 
 const Layout = styled.div`
@@ -18,12 +20,17 @@ function App() {
 		<Fragment>
 			<NavBar />
 			<Layout>
-				<Router history={createBrowserHistory}>
+				<Router history={history}>
 					<Switch>
 						<Route
 							exact
-							path="/home"
-							component={LoginPage}
+							path="/"
+							component={LandingPage}
+						/>
+						<Route
+							exact
+							path="/login"
+							component={LogIn}
 						/>
 						<Route
 							path="/wall"
@@ -32,15 +39,18 @@ function App() {
 						/>
 						<Route
 							exact
-							path="/"
-							component={LandingPage}
+							path="/signup"
+							component={Signup}
+						/>
+						<Route
+							exact
+							path="/forgot"
+							component={Forgot}
 						/>
 					</Switch>
 				</Router>
 			</Layout>
 		</Fragment>
-
 	)
 }
-
-export default App;
+export default App; 

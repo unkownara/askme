@@ -1,14 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import { ImageWrapper } from './CommonStyles';
-import AskButton from './Buttons';
+import { AskButton } from './Buttons';
+import Avatar from '../images/dp.png';
+import ImageUpload from '../images/image_upload.png';
+import AudioUpload from '../images/audio_upload.png';
+import VideoUpload from '../images/video_upload.png';
 
-import Avatar from './images/dp.png';
-import ImageUpload from './images/image_upload.png';
-import AudioUpload from './images/audio_upload.png';
-import VideoUpload from './images/video_upload.png';
+export function AskQuestionBox({ userFullName }) {
+    return (
+        <BoxWrapper>
+            <HeaderWrapper>
+                <AvatarWrapper
+                    src={Avatar}
+                    alt={'Avatar'}
+                    height={'40px'}
+                    width={'40px'} />
+                <AskText>{userFullName}, Ask a question.</AskText>
+            </HeaderWrapper>
+            <QuestionTextArea placeholder={'Type...'} />
+            <FooterWrapper>
+                <MediaUploadIconsWrapper>
+                    <IconsWrapper margin={'0 10px 5px 10px'} src={ImageUpload} height={'20px'} width={'20px'} alt={'Image upload'} />
+                    <IconsWrapper margin={'0 10px 5px 10px'} src={VideoUpload} height={'20px'} width={'20px'} alt={'Video upload'} />
+                    <IconsWrapper margin={'0 10px 5px 10px'} src={AudioUpload} height={'20px'} width={'20px'} alt={'Audio upload'} />
+                </MediaUploadIconsWrapper>
+                <ButtonWrapper>
+                    <AskButton margin={'0 10px 0 0'} />
+                </ButtonWrapper>
+            </FooterWrapper>
+        </BoxWrapper>
+    )
+}
 
 const BoxWrapper = styled.div`
     min-height: 280px;
@@ -71,41 +95,6 @@ const ButtonWrapper = styled.div`
     align-items: center;
     justify-content: flex-end;
 `
-
-class AskQuestionBox extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        };
-    }
-
-    render() {
-        return (
-            <BoxWrapper>
-                <HeaderWrapper>
-                    <AvatarWrapper
-                        src={Avatar}
-                        alt={'Avatar'}
-                        height={'40px'}
-                        width={'40px'} />
-                    <AskText>{this.props.userFullName}, Ask a question.</AskText>
-                </HeaderWrapper>
-                <QuestionTextArea placeholder={'Type...'} />
-                <FooterWrapper>
-                    <MediaUploadIconsWrapper>
-                        <IconsWrapper margin={'0 10px 5px 10px'} src={ImageUpload} height={'20px'} width={'20px'} alt={'Image upload'} />
-                        <IconsWrapper margin={'0 10px 5px 10px'} src={VideoUpload} height={'20px'} width={'20px'} alt={'Video upload'} />
-                        <IconsWrapper margin={'0 10px 5px 10px'} src={AudioUpload} height={'20px'} width={'20px'} alt={'Audio upload'} />
-                    </MediaUploadIconsWrapper>
-                    <ButtonWrapper>
-                        <AskButton margin={'0 10px 0 0'} />
-                    </ButtonWrapper>
-                </FooterWrapper>
-            </BoxWrapper>
-        );
-    }
-}
 
 AskQuestionBox.propTypes = {
     userFullName: PropTypes.string

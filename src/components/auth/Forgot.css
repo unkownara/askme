@@ -1,0 +1,64 @@
+.forgotSection {
+    position: relative;
+}
+
+.forgotForm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 500px;
+}
+
+.forgotHeaderPara {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #132c83;
+}
+
+.newPassDiv {
+    position: relative;
+    margin: 70px 0px 30px 0px;
+}
+
+.confirmPasswordInput {
+    position: relative;
+    margin-bottom: 65px;
+}
+
+.inputBox {
+    position: relative;
+    padding: 15px 10px 15px 28px;
+    width: 100%;
+    background: #dedede75;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    color: black;
+    font-size: 15px;
+}
+
+.inputField:focus::placeholder {
+    color: transparent
+}
+
+.otpPara {
+    position: relative;
+    top: -20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #132c83;
+}
+
+.otpInput{
+    outline: none;
+    padding: 15px 15px 15px 0px;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    background: lightgrey;
+    text-align: center;
+    font-size: 15px;
+}
