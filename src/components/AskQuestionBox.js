@@ -119,51 +119,6 @@ export function AskQuestionBox({ userFullName }) {
         </BoxWrapper>
     )
 }
-// class AskQuestionBox extends React.Component {
-//     render() {
-//         return (
-//             <BoxWrapper>
-//                 <HeaderWrapper>
-//                     <AvatarWrapper
-//                         src={Avatar}
-//                         alt={'Avatar'}
-//                         height={'40px'}
-//                         width={'40px'} />
-//                     <AskText>{'userFullName'}, Ask a question.</AskText>
-//                 </HeaderWrapper>
-//                 <QuestionTextArea placeholder={'Type...'} />
-//                 <MediaUploadContainer>
-//                     <FileUploadPreviewCard />
-//                 </MediaUploadContainer>
-//                 <FooterWrapper>
-//                     <MediaUploadIconsWrapper>
-//                         <MediaDropzone
-//                             onDrop={this.onDrop}
-//                             onCancel={this.onCancel}
-//                             mediaType={'image'}>
-//                             <IconsWrapper margin={'0 10px 5px 10px'} src={ImageUpload} height={'20px'} width={'20px'} alt={'Image upload'} />
-//                         </MediaDropzone>
-//                         <MediaDropzone
-//                             onDrop={this.onDrop}
-//                             onCancel={this.onCancel}
-//                             mediaType={'video'}>
-//                             <IconsWrapper margin={'0 10px 5px 10px'} src={VideoUpload} height={'20px'} width={'20px'} alt={'Video upload'} />
-//                         </MediaDropzone>
-//                         <MediaDropzone
-//                             onDrop={this.onDrop}
-//                             onCancel={this.onCancel}
-//                             mediaType={'audio'}>
-//                             <IconsWrapper margin={'0 10px 5px 10px'} src={AudioUpload} height={'20px'} width={'20px'} alt={'Audio upload'} />
-//                         </MediaDropzone>
-//                     </MediaUploadIconsWrapper>
-//                     <ButtonWrapper>
-//                         <AskButton margin={'0 10px 0 0'} />
-//                     </ButtonWrapper>
-//                 </FooterWrapper>
-//             </BoxWrapper>
-//         )
-//     }
-// }
 
 const MediaDropzone = (props) => {
     return (
