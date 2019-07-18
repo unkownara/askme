@@ -23,7 +23,6 @@ class NavBar extends React.Component {
         return (
             <NavBarContainer>
                 <Logo />
-                
             </NavBarContainer>
         );
     }
