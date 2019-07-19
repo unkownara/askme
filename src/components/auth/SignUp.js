@@ -189,6 +189,7 @@ export function Signup() {
             case 'none':
                 setFormValidationErrorMsg('');
                 setIsFormValid(true);
+                setArrowChange(false)
                 break;
         }
     }
@@ -231,7 +232,7 @@ export function Signup() {
         );
     } else {
         return (
-            <>
+            <div className="signupContainer">
                 <div className="textField">
                         <p>Sign Up</p>
                     </div>
@@ -248,7 +249,7 @@ export function Signup() {
                                     placeholder="Enter Value"
                                     className="input firstName"
                                 />
-                                {firstNameValidationErrorMsg}
+                                <span className="errMsg">{firstNameValidationErrorMsg}</span>
                             </div>
                             <div>
                                 <label>Last name</label><br />
@@ -259,7 +260,7 @@ export function Signup() {
                                     placeholder="Enter Value"
                                     className="input lastName"
                                 />
-                                {lastNameValidationErrorMsg}
+                                <span className="errMsg">{lastNameValidationErrorMsg}</span>
                             </div>
                         </div>
                         <div className="division">
@@ -397,14 +398,13 @@ export function Signup() {
                                 selection
                                 options={friendOptions}
                             />
-                        </div>
+                        </div> 
                         <div className="submitField">
                             {arrowChange ?
                                 <Icon name="arrow right" className="arrowIcon" /> :
                                 <Icon loading name="spinner" className="arrowIcon" />}
                             <button
                                 className="submitButton"
-                                onMouseOver={e => setArrowChange(false)}
                                 onClick={(e) => formSubmit(e)}>
                                 Sign up
                             </button>
@@ -412,7 +412,7 @@ export function Signup() {
                         <span className="submitErrMsg errorMsgSpan">{formValidationErrorMsg}</span>
                     </form>
                 </div>
-            </>
+            </div>
         )
     }
 }

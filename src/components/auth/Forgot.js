@@ -62,7 +62,7 @@ export function Forgot() {
     }, [OTP.value])
 
     return (
-        <>
+        <div className="forgotContainer">
             <div className="textField">
                 <p>Forgot Password</p>
             </div>
@@ -110,6 +110,6 @@ export function Forgot() {
                     </div>
                 </form>
             </div>
-        </>
+        </div>
     )
 }
