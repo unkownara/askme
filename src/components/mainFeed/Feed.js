@@ -5,6 +5,10 @@ export function Feed({ userId }) {
 
     const [posts, setPosts] = useState([]);
 
+    function updatePostList(newPosts) {
+        setPosts(posts => posts.concat(newPosts));
+    }
+
     useEffect(() => {
         console.log('api call ');
         const payload = {
@@ -13,13 +17,15 @@ export function Feed({ userId }) {
         };
         import('../../ApiRequests').then(obj => {
             obj.getApiRequestCall(all_user_post_url, payload, function(response) {
-                console.log('post response ', response);
-                // setPosts(response);
+                if(response.data !== null && response.data !== undefined && response.data.Items !== null && response.data.Items !== undefined && response.data.Items.length >= 0) {
+                    updatePostList(response.data.Items);
+                }
             });
         });
-    }, [posts]);
+    }, []);
 
-    if(posts.length <= 0 ) {
+    // view
+    if(posts.length === 0) {
         return (
             <>
                 No Data...
@@ -30,7 +36,7 @@ export function Feed({ userId }) {
             <>
               {posts.map((post, index) => (
                 <div key={index}>
-                    {post}
+                    {post.userId}
                 </div>
               ))}
             </>
