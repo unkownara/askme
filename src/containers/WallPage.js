@@ -31,7 +31,7 @@ export function WallPage() {
 
     const [canRender, setRender] = useState(false);
 
-    const reduxStore = useSelector(state => state.userReducer);
+    const storeUser = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
 
     // Checking if user info is exists or not in local storage.
@@ -48,32 +48,41 @@ export function WallPage() {
         }
     }, [canRender]);
 
-    useEffect(() => {
-        console.log('redux store ', reduxStore);
-    });
 
-    return (
-        <>
-            <PageWrapper>
-                <RowOneWrapper>
-                    <ProfileCard
-                        userFullName={'Aravind Manoharan'}
-                        username={'@aravindmv97'}
-                        askedCount={'100'}
-                        answeredCount={'200'} />
-                    <PopularUsers
-                        margin={'40px auto'}
-                        popularUsers={popularUsersData} />
-                </RowOneWrapper>
-                <RowtwoWrapper>
-                    <AskQuestionBox username={'Aravind Manoharan'} />
-                </RowtwoWrapper>
-                <RowThreeWrapper>
-                    <PopularQuestions popularQuestions={popularQuestionsData} />
-                </RowThreeWrapper>
-            </PageWrapper>
-        </>
-    )
+    if(storeUser === null || storeUser.userInfo === null) {
+        return (
+            <>
+                Loading...
+            </>
+        );
+    } else {
+        const userInfo = storeUser.userInfo;
+        return (
+            <>
+                <PageWrapper>
+                    <RowOneWrapper>
+                        <ProfileCard
+                            userFullName={'Aravind Manoharan'}
+                            username={'@aravindmv97'}
+                            askedCount={'100'}
+                            answeredCount={'200'} />
+                        <PopularUsers
+                            margin={'40px auto'}
+                            popularUsers={popularUsersData} />
+                    </RowOneWrapper>
+                    <RowtwoWrapper>
+                        <AskQuestionBox 
+                            username={'Aravind Manoharan'} 
+                            userInfo={userInfo}
+                        />
+                    </RowtwoWrapper>
+                    <RowThreeWrapper>
+                        <PopularQuestions popularQuestions={popularQuestionsData} />
+                    </RowThreeWrapper>
+                </PageWrapper>
+            </>
+        )
+    }
 }
 
 const PageWrapper = styled.div`

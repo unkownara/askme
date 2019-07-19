@@ -11,3 +11,12 @@ export function uniqueId() {
         return v.toString(16);
     });
 }
+
+export function fileTypeExtension(type) {
+    switch(type) {
+        case 'video/mp4':
+            return 'mp4';
+        default:
+            return 'txt';
+    }
+}

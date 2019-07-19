@@ -14,22 +14,11 @@ import ImageUpload from '../images/image_upload.png';
 import AudioUpload from '../images/audio_upload.png';
 import VideoUpload from '../images/video_upload.png';
 
-export function AskQuestionBox({ userFullName }) {
+export function AskQuestionBox({ userFullName, userInfo }) {
 
-    const postTextContent = useInput('');
+    const question = useInput('');
     const hashTag = useInput('');
-    const [userInfo, setUserInfo] = useState(null);
-    const [file, setFile] = useState([]);
-    const storeUserInfo = useSelector(state => state.userReducer);
-
-    // Checking redux store user information
-    useEffect(() => {
-        if(storeUserInfo && storeUserInfo.userInfo) {
-            console.log('store user information ', storeUserInfo);
-            setUserInfo(storeUserInfo.userInfo);
-        }
-    }, [userInfo]);
-
+    const [files, setFiles] = useState([]);
 
     function onDrop(files) {
         let sources = [];
@@ -37,19 +26,22 @@ export function AskQuestionBox({ userFullName }) {
             sources.push({ src: URL.createObjectURL(file), type: file.type });
             return file
         });
-        setFile(files);
+        console.log('file ', files);
+        setFiles(files);
     }
 
     function onCancel() {
-        setFile([]);
+        setFiles([]);
     }
 
     async function postQuestionOnClick(e) {
         e.preventDefault();
-        const type = 'txt';
-        let postId = '';
+        const postQuestion = question.value;
+        const postHashTag = hashTag.value;
+        let postId = '', type = '';
         await import('../common').then(obj => {
             postId = obj.uniqueId();
+            type = obj.fileTypeExtension(files[0].type);
         });
         const tag = hashTag.value;
         const key = `${userInfo.userId}/${postId}-${tag}.${type}`;
@@ -57,14 +49,18 @@ export function AskQuestionBox({ userFullName }) {
             userId: userInfo.userId,
             userName: userInfo.userName,
             profilePicture: userInfo.profilePicture,
-            hashTag: hashTag.value,
-            contentKey: key
+            postId: postId,
+            question: postQuestion,
+            hashTag: postHashTag,
+            contentKey: type !== 'txt' ? key : '' // If it is string then we don't need to store s3 key.
         };
-        await import('../s3Uploader').then(obj => {
-            const uploadData = postTextContent.value;
-            obj.s3Uploader(uploadData, key, type);
-        });
-        await import('../ApiRequests').then(apiObj => {
+        if(type !== 'txt') {
+            import('../s3Uploader').then(s3Obj => {
+                const uploadData = question.value;
+                s3Obj.s3Uploader(uploadData, key, type);
+            });
+        }
+        import('../ApiRequests').then(apiObj => {
             apiObj.postApiRequestCall(user_post_url, postObj, function(response) {
                 console.log('successfully uploaded...', response);
             });
@@ -83,7 +79,7 @@ export function AskQuestionBox({ userFullName }) {
             </HeaderWrapper>
             <QuestionTextArea
                 placeholder={'Ask anything...'}
-                {...postTextContent}
+                {...question}
             />
             <input
                 {...hashTag}
@@ -113,7 +109,10 @@ export function AskQuestionBox({ userFullName }) {
                     </MediaDropzone>
                 </MediaUploadIconsWrapper>
                 <ButtonWrapper>
-                    <AskButton margin={'0 10px 0 0'} />
+                    <AskButton 
+                        margin={'0 10px 0 0'}
+                        onClickProps={postQuestionOnClick}
+                    />
                 </ButtonWrapper>
             </FooterWrapper>
         </BoxWrapper>
