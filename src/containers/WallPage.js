@@ -48,7 +48,7 @@ export function WallPage() {
                         popularUsers={popularUsersData} />
                 </RowOneWrapper>
                 <RowtwoWrapper>
-                    <AskQuestionBox />
+                    <AskQuestionBox username={'Aravind Manoharan'} />
                 </RowtwoWrapper>
                 <RowThreeWrapper>
                     <PopularQuestions popularQuestions={popularQuestionsData} />
