@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -7,7 +7,11 @@ import { AskQuestionBox } from '../components/AskQuestionBox';
 import { ProfileCard } from '../components/ProfileCard';
 import { PopularUsers } from '../components/PopularUsersCard';
 import { PopularQuestions } from '../components/PopularQuestionsCard';
-
+import { FallbackLoader } from '../components/SusponseFallbackLoader';
+const Feed = lazy(() =>
+  import('../components/mainFeed/Feed').then(module => ({ default: module.Feed }))
+);
+// const Feed = lazy(() => import('../components/mainFeed/Feed'));
 
 const popularUsersData = [
     {
@@ -75,6 +79,11 @@ export function WallPage() {
                             username={'Aravind Manoharan'} 
                             userInfo={userInfo}
                         />
+                        <Suspense fallback={<FallbackLoader />}>
+                            <Feed
+                                userId={userInfo.userId}
+                            />
+                        </Suspense>
                     </RowtwoWrapper>
                     <RowThreeWrapper>
                         <PopularQuestions popularQuestions={popularQuestionsData} />
