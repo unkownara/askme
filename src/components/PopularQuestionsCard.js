@@ -11,7 +11,7 @@ export function PopularQuestions(props) {
             <QuestionsListWrapper>
                 {
                     props.popularQuestions.map((question, question_index) =>
-                        <QuestionWrapper>
+                        <QuestionWrapper key={question_index}>
                             {/* <TrendIconWrapper><div>?</div></TrendIconWrapper> */}
                             <AskedQuestion>{question.question}</AskedQuestion>
                             <UserName>{question.username}</UserName>
