@@ -29,7 +29,7 @@ function App() {
 						<Route
 							exact
 							path="/"
-							component={LandingPage}
+							component={LogIn}
 						/>
 						<Route
 							exact
