@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useInput } from '../hooks/useInput';
+import { useInput } from '../../hooks/useInput';
 import history from '../../history';
 import styled from 'styled-components';
 import { Auth } from 'aws-amplify';

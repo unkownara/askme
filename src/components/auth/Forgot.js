@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from 'semantic-ui-react';
-import { useInput } from '../hooks/useInput';
+import { useInput } from '../../hooks/useInput';
 import { passwordValidation, confirmPasswordValidation, OTPValidation } from '../../Validation';
 import './Forgot.css';
 import 'semantic-ui-css/semantic.min.css';
