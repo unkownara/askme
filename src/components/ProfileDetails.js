@@ -116,7 +116,7 @@ const OtherDetailsWrapper = styled.div`
 const UserFullName = styled.p`
     margin: 0;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 14px;
     color: #000;
     letter-spacing: 0.5px;
     padding: 3px 0 4px 0;
