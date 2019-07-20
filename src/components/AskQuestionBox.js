@@ -144,6 +144,8 @@ const BoxWrapper = styled.div`
     border: 1px solid #eee;
     position: relative;
     margin: 0 auto;
+    display: grid;
+    grid-template-rows: 1fr 2fr 0.5fr 0.5fr;
 `
 
 const HeaderWrapper = styled.div`
@@ -168,7 +170,6 @@ const QuestionTextArea = styled.textarea`
     height: 150px;
     border: none;
     padding: 10px;
-    box-sizing: border-box;
     letter-spacing: 0.5px;
     color: gray;
     font-size: 22px;
