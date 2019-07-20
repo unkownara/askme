@@ -1,8 +1,7 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import history from '../history';
 import { AskQuestionBox } from '../components/AskQuestionBox';
 import { ProfileCard } from '../components/ProfileCard';
 import { PopularQuestions } from '../components/PopularQuestionsCard';
@@ -13,13 +12,6 @@ const Feed = lazy(() =>
 const Popularusers = lazy(() =>
     import('../components/PopularUsersCard').then(module => ({ default: module.PopularUsers }))
 );
-const popularUsersData = [
-    {
-        askedCount: '100',
-        answeredCount: '1200',
-        userFullName: '@aravindmv97'
-    }
-];
 
 const popularQuestionsData = [
     {
@@ -33,24 +25,11 @@ const popularQuestionsData = [
 
 export function WallPage() {
 
-    const [canRender, setRender] = useState(false);
-
-    const storeUser = useSelector(state => state.userReducer);
-    const dispatch = useDispatch();
-
-    // Checking if user info is exists or not in local storage.
+    const reduxStore = useSelector(state => state.userReducer);
+    
     useEffect(() => {
-        const localStorageUserInfo = JSON.parse(localStorage.getItem('_user_info_'));
-        if(localStorageUserInfo === null || localStorageUserInfo === undefined) {
-            history.push('/login');
-        } else {
-            setRender(true);
-            dispatch({
-                type: 'STORE_USER_INFORMATION',
-                payload: localStorageUserInfo
-            })
-        }
-    }, [canRender]);
+        console.log('redux store ', reduxStore);
+    });
 
 
     if(storeUser === null || storeUser.userInfo === null) {

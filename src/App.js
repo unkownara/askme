@@ -11,15 +11,18 @@ import { Forgot } from './components/auth/Forgot';
 import { OTP } from './components/otp';
 import { ConfirmSignUp } from './components/auth/ConfirmSignUp';
 
+const Container = styled.div`
+	background: rgba(0,0,0,0.03);
+`
 
 const Layout = styled.div`
-    padding: 50px;
-	/* background: #fff; */
+	width: 1200px;
+	margin: 0 auto;
 `
 
 function App() {
 	return (
-		<Fragment>
+		<Container>
 			<NavBar />
 			<Layout>
 				<Router history={history}>
@@ -56,7 +59,7 @@ function App() {
 					</Switch>
 				</Router>
 			</Layout>
-		</Fragment>
+		</Container>
 	)
 }
 export default App; 
