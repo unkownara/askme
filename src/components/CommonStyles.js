@@ -6,6 +6,7 @@ const ImgWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin: ${props => props.margin || '0px'};
+    cursor: ${props => props.pointer ? 'pointer' : 'default'};
 `
 
 const Image = styled.img`
@@ -17,7 +18,7 @@ const Image = styled.img`
 
 export const ImageWrapper = (props) => {
     return (
-        <ImgWrapper margin={props.margin}>
+        <ImgWrapper margin={props.margin} className={props.className} onClick={props.onClickProps}>
             <Image
                 src={props.src}
                 alt={props.alt}
