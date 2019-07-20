@@ -9,6 +9,7 @@ import NavBar from './components/NavBar';
 import { WallPage } from './containers/WallPage';
 import { Forgot } from './components/auth/Forgot';
 import { OTP } from './components/otp';
+import { ConfirmSignUp } from './components/auth/ConfirmSignUp';
 
 const Container = styled.div`
 	background: rgba(0,0,0,0.03);
@@ -29,7 +30,7 @@ function App() {
 						<Route
 							exact
 							path="/"
-							component={LogIn}
+							component={ConfirmSignUp}
 						/>
 						<Route
 							exact

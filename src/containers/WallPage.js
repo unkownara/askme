@@ -4,17 +4,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { AskQuestionBox } from '../components/AskQuestionBox';
 import { ProfileCard } from '../components/ProfileCard';
-import { PopularUsers } from '../components/PopularUsersCard';
 import { PopularQuestions } from '../components/PopularQuestionsCard';
-
-
-const popularUsersData = [
-    {
-        askedCount: '100',
-        answeredCount: '1200',
-        userFullName: '@aravindmv97'
-    }
-];
+import { FallbackLoader } from '../components/SusponseFallbackLoader';
+const Feed = lazy(() =>
+    import('../components/mainFeed/Feed').then(module => ({ default: module.Feed }))
+);
+const Popularusers = lazy(() =>
+    import('../components/PopularUsersCard').then(module => ({ default: module.PopularUsers }))
+);
 
 const popularQuestionsData = [
     {
@@ -34,28 +31,52 @@ export function WallPage() {
         console.log('redux store ', reduxStore);
     });
 
-    return (
-        <>
-            <PageWrapper>
-                <RowOneWrapper>
-                    <ProfileCard
-                        userFullName={'Aravind Manoharan'}
-                        username={'@aravindmv97'}
-                        askedCount={'100'}
-                        answeredCount={'200'} />
-                    <PopularUsers
-                        margin={'40px auto'}
-                        popularUsers={popularUsersData} />
-                </RowOneWrapper>
-                <RowtwoWrapper>
-                    <AskQuestionBox />
-                </RowtwoWrapper>
-                <RowThreeWrapper>
-                    <PopularQuestions popularQuestions={popularQuestionsData} />
-                </RowThreeWrapper>
-            </PageWrapper>
-        </>
-    )
+
+    if(storeUser === null || storeUser.userInfo === null) {
+        return (
+            <>
+                Loading...
+            </>
+        );
+    } else {
+        const userInfo = storeUser.userInfo;
+        return (
+            <>
+                <PageWrapper>
+                    <RowOneWrapper>
+                        <ProfileCard
+                            userFullName={'Aravind Manoharan'}
+                            username={'@aravindmv97'}
+                            askedCount={'100'}
+                            answeredCount={'200'} />
+                        <Suspense fallback={<FallbackLoader />}>
+                            <Popularusers
+                                margin={'40px auto'}
+                                userId={userInfo.userId}
+                                userCity={userInfo.city}
+                            />
+                        </Suspense>
+                    </RowOneWrapper>
+                    <RowtwoWrapper>
+                        <AskQuestionBox 
+                            username={'Aravind Manoharan'} 
+                            userInfo={userInfo}
+                        />
+                        <Suspense fallback={<FallbackLoader />}>
+                            <Feed
+                                userId={userInfo.userId}
+                            />
+                        </Suspense>
+                    </RowtwoWrapper>
+                    <RowThreeWrapper>
+                        <PopularQuestions 
+                            popularQuestions={popularQuestionsData}
+                        />
+                    </RowThreeWrapper>
+                </PageWrapper>
+            </>
+        )
+    }
 }
 
 const PageWrapper = styled.div`

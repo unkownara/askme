@@ -1,33 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CardHeader } from './CardHeader';
 import { ProfileDetails } from './ProfileDetails';
+import { getApiRequestCall } from '../ApiRequests';
+import { user_sugession_url } from '../ApiUrls';
 import Avatar from '../images/dp.png';
 
-export function PopularUsers({ margin, popularUsers }) {
-    return (
-        <PopularUsersWrapper margin={margin}>
-            <CardHeader>POPULAR USERS</CardHeader>
-            <UsersWrapper>
-                {
-                    popularUsers.map((user, user_index) =>
-                        <ProfileWrapper key={user_index}>
-                            <ProfileDetails
-                                radius={'50%'}
-                                showUserName={false}
-                                askedCount={user.askedCount}
-                                answeredCount={user.answeredCount}
-                                showActivityDetails
-                                showUploadedTime={false}
-                                userFullName={user.userFullName}
-                                src={Avatar} />
-                        </ProfileWrapper>
-                    )
-                }
-            </UsersWrapper>
-        </PopularUsersWrapper>
-    );
+export function PopularUsers({ margin, userId, userCity }) {
+
+    const [popularUsers, setPopularUsers] = useState([]);
+
+    function updatePopularUsers(popularUsers) {
+        setPopularUsers(users => users.concat(popularUsers));
+    }
+
+    useEffect(() => {
+        const params = {
+            userId: userId,
+            city: userCity
+        };
+        getApiRequestCall(user_sugession_url, params, function(response) {
+            if(response.data && response.data.Items) {
+                console.log('popular user list ', response.data.Items);
+                updatePopularUsers(response.data.Items);
+            }
+        });
+    }, []);
+
+
+    if(popularUsers.length === 0) {
+        return (
+            <>
+                Loading...
+            </>
+        )
+    } else {
+        return (
+            <PopularUsersWrapper margin={margin}>
+                <CardHeader>POPULAR USERS</CardHeader>
+                <UsersWrapper>
+                    {
+                        popularUsers.map((user, user_index) =>
+                            <ProfileWrapper key={user_index}>
+                                <ProfileDetails
+                                    radius={'50%'}
+                                    showUserName={false}
+                                    fUserId={user.userId}
+                                    askedCount={user.qAsked}
+                                    answeredCount={user.qAnswered}
+                                    showActivityDetails
+                                    showUploadedTime={false}
+                                    userName={user.userName}
+                                    src={Avatar} />
+                            </ProfileWrapper>
+                        )
+                    }
+                </UsersWrapper>
+            </PopularUsersWrapper>
+        );
+    }
 };
 
 const PopularUsersWrapper = styled.div`
