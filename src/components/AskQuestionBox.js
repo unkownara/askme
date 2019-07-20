@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useInput } from './hooks/useInput';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { user_post_url } from '../ApiUrls';
 import Dropzone from 'react-dropzone';
-
 import { ImageWrapper } from './CommonStyles';
 import { AskButton } from './Buttons';
 import FileUploadPreviewCard from './FileUploadPreviewCard';
@@ -12,70 +14,109 @@ import ImageUpload from '../images/image_upload.png';
 import AudioUpload from '../images/audio_upload.png';
 import VideoUpload from '../images/video_upload.png';
 
-class AskQuestionBox extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            files: []
-        }
-    }
+export function AskQuestionBox({ userFullName, userInfo }) {
 
-    onDrop = (files) => {
+    const question = useInput('');
+    const hashTag = useInput('');
+    const [files, setFiles] = useState([]);
+
+    function onDrop(files) {
         let sources = [];
         files = files.map(file => {
             sources.push({ src: URL.createObjectURL(file), type: file.type });
             return file
         });
-
-        this.setState({ files, sources });
+        console.log('file ', files);
+        setFiles(files);
     }
 
-    onCancel = () => this.setState({ files: [] })
-
-
-    render() {
-        return (
-            <BoxWrapper>
-                <HeaderWrapper>
-                    <AvatarWrapper
-                        src={Avatar}
-                        alt={'Avatar'}
-                        height={'40px'}
-                        width={'40px'} />
-                    <AskText>{'userFullName'}, Ask a question.</AskText>
-                </HeaderWrapper>
-                <QuestionTextArea placeholder={'Type...'} />
-                <MediaUploadContainer>
-                    <FileUploadPreviewCard />
-                </MediaUploadContainer>
-                <FooterWrapper>
-                    <MediaUploadIconsWrapper>
-                        <MediaDropzone
-                            onDrop={this.onDrop}
-                            onCancel={this.onCancel}
-                            mediaType={'image'}>
-                            <IconsWrapper margin={'0 10px 5px 10px'} src={ImageUpload} height={'20px'} width={'20px'} alt={'Image upload'} />
-                        </MediaDropzone>
-                        <MediaDropzone
-                            onDrop={this.onDrop}
-                            onCancel={this.onCancel}
-                            mediaType={'video'}>
-                            <IconsWrapper margin={'0 10px 5px 10px'} src={VideoUpload} height={'20px'} width={'20px'} alt={'Video upload'} />
-                        </MediaDropzone>
-                        <MediaDropzone
-                            onDrop={this.onDrop}
-                            onCancel={this.onCancel}
-                            mediaType={'audio'}>
-                            <IconsWrapper margin={'0 10px 5px 10px'} src={AudioUpload} height={'20px'} width={'20px'} alt={'Audio upload'} />
-                        </MediaDropzone>
-                    </MediaUploadIconsWrapper>
-                    <ButtonWrapper>
-                        <AskButton margin={'0 10px 0 0'} />
-                    </ButtonWrapper>
-                </FooterWrapper>
-            </BoxWrapper>
-        )
+    function onCancel() {
+        setFiles([]);
     }
+
+    async function postQuestionOnClick(e) {
+        e.preventDefault();
+        const postQuestion = question.value;
+        const postHashTag = hashTag.value;
+        let postId = '', type = '';
+        await import('../common').then(obj => {
+            postId = obj.uniqueId();
+            type = obj.fileTypeExtension(files[0].type);
+        });
+        const tag = hashTag.value;
+        const key = `${userInfo.userId}/${postId}-${tag}.${type}`;
+        const postObj = {
+            userId: userInfo.userId,
+            userName: userInfo.userName,
+            profilePicture: userInfo.profilePicture,
+            postId: postId,
+            question: postQuestion,
+            hashTag: postHashTag,
+            contentKey: type !== 'txt' ? key : '' // If it is string then we don't need to store s3 key.
+        };
+        if(type !== 'txt') {
+            import('../s3Uploader').then(s3Obj => {
+                const uploadData = question.value;
+                s3Obj.s3Uploader(uploadData, key, type);
+            });
+        }
+        import('../ApiRequests').then(apiObj => {
+            apiObj.postApiRequestCall(user_post_url, postObj, function(response) {
+                console.log('successfully uploaded...', response);
+            });
+        });
+    }
+
+    return (
+        <BoxWrapper>
+            <HeaderWrapper>
+                <AvatarWrapper
+                    src={Avatar}
+                    alt={'Avatar'}
+                    height={'40px'}
+                    width={'40px'} />
+                <AskText>{userFullName}, Ask a question.</AskText>
+            </HeaderWrapper>
+            <QuestionTextArea
+                placeholder={'Ask anything...'}
+                {...question}
+            />
+            <input
+                {...hashTag}
+            />
+            <MediaUploadContainer>
+                <FileUploadPreviewCard />
+            </MediaUploadContainer>
+            <FooterWrapper>
+                <MediaUploadIconsWrapper>
+                    <MediaDropzone
+                        onDrop={onDrop}
+                        onCancel={onCancel}
+                        mediaType={'image'}>
+                        <IconsWrapper margin={'0 10px 5px 10px'} src={ImageUpload} height={'20px'} width={'20px'} alt={'Image upload'} />
+                    </MediaDropzone>
+                    <MediaDropzone
+                        onDrop={onDrop}
+                        onCancel={onCancel}
+                        mediaType={'video'}>
+                        <IconsWrapper margin={'0 10px 5px 10px'} src={VideoUpload} height={'20px'} width={'20px'} alt={'Video upload'} />
+                    </MediaDropzone>
+                    <MediaDropzone
+                        onDrop={onDrop}
+                        onCancel={onCancel}
+                        mediaType={'audio'}>
+                        <IconsWrapper margin={'0 10px 5px 10px'} src={AudioUpload} height={'20px'} width={'20px'} alt={'Audio upload'} />
+                    </MediaDropzone>
+                </MediaUploadIconsWrapper>
+                <ButtonWrapper>
+                    <AskButton 
+                        margin={'0 10px 0 0'}
+                        onClickProps={postQuestionOnClick}
+                    />
+                </ButtonWrapper>
+            </FooterWrapper>
+        </BoxWrapper>
+    )
 }
 
 const MediaDropzone = (props) => {
@@ -167,5 +208,3 @@ const MediaUploadContainer = styled.div`
 AskQuestionBox.propTypes = {
     userFullName: PropTypes.string
 };
-
-export default AskQuestionBox;
