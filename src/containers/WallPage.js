@@ -35,28 +35,28 @@ export function WallPage() {
     const dispatch = useDispatch();
 
     // Checking if user info is exists or not in local storage.
-    useEffect(() => {
-        const localStorageUserInfo = JSON.parse(localStorage.getItem('_user_info_'));
-        if(localStorageUserInfo === null || localStorageUserInfo === undefined) {
-            history.push('/login');
-        } else {
-            setRender(true);
-            dispatch({
-                type: 'STORE_USER_INFORMATION',
-                payload: localStorageUserInfo
-            })
-        }
-    }, [canRender]);
+    // useEffect(() => {
+    //     const localStorageUserInfo = JSON.parse(localStorage.getItem('_user_info_'));
+    //     if(localStorageUserInfo === null || localStorageUserInfo === undefined) {
+    //         history.push('/login');
+    //     } else {
+    //         setRender(true);
+    //         dispatch({
+    //             type: 'STORE_USER_INFORMATION',
+    //             payload: localStorageUserInfo
+    //         })
+    //     }
+    // }, [canRender]);
 
 
-    if(storeUser === null || storeUser.userInfo === null) {
-        return (
-            <>
-                Loading...
-            </>
-        );
-    } else {
-        const userInfo = storeUser.userInfo;
+    // if(storeUser === null || storeUser.userInfo === null) {
+    //     return (
+    //         <>
+    //             Loading...
+    //         </>
+    //     );
+    // } else {
+    //     const userInfo = storeUser.userInfo;
         return (
             <>
                 <PageWrapper>
@@ -73,7 +73,7 @@ export function WallPage() {
                     <RowtwoWrapper>
                         <AskQuestionBox 
                             username={'Aravind Manoharan'} 
-                            userInfo={userInfo}
+                            // userInfo={userInfo}
                         />
                     </RowtwoWrapper>
                     <RowThreeWrapper>
@@ -83,11 +83,11 @@ export function WallPage() {
             </>
         )
     }
-}
+
 
 const PageWrapper = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 2fr 1.5fr;
+    grid-template-columns: 1fr 3fr 1fr;
 `;
 
 const RowOneWrapper = styled.div`

@@ -8,6 +8,7 @@ import Dropzone from 'react-dropzone';
 import { ImageWrapper } from './CommonStyles';
 import { AskButton } from './Buttons';
 import FileUploadPreviewCard from './FileUploadPreviewCard';
+import TagSelector from './TagSelector';
 
 import Avatar from '../images/dp.png';
 import ImageUpload from '../images/image_upload.png';
@@ -16,6 +17,8 @@ import VideoUpload from '../images/video_upload.png';
 
 export function AskQuestionBox({ userFullName, userInfo }) {
 
+    const [questionBoxShow, setQuestionBoxShow] = useState(1);
+    const [tags, setTags] = useState([]);
     const question = useInput('');
     const hashTag = useInput('');
     const [files, setFiles] = useState([]);
@@ -54,67 +57,103 @@ export function AskQuestionBox({ userFullName, userInfo }) {
             hashTag: postHashTag,
             contentKey: type !== 'txt' ? key : '' // If it is string then we don't need to store s3 key.
         };
-        if(type !== 'txt') {
+        if (type !== 'txt') {
             import('../s3Uploader').then(s3Obj => {
                 const uploadData = question.value;
                 s3Obj.s3Uploader(uploadData, key, type);
             });
         }
         import('../ApiRequests').then(apiObj => {
-            apiObj.postApiRequestCall(user_post_url, postObj, function(response) {
+            apiObj.postApiRequestCall(user_post_url, postObj, function (response) {
                 console.log('successfully uploaded...', response);
             });
         });
     }
 
+    function toggleQuestionBox() {
+        setQuestionBoxShow(!questionBoxShow);
+    }
+
+    function addSelectTags(customTag) {
+        let flag = 0;
+        for (var i = 0; i < tags.length; i++) {
+            if (tags[i].name === customTag.name) {
+                flag = 1;
+            }
+        }
+        if (flag === 0)
+            tags.push(customTag)
+        setTags(tags);
+    }
+
+    function removeTag(tag) {
+        let filteredArr = tags.filter((value) => {
+            return value.name !== tag.name
+        });
+        setTags(filteredArr);
+    }
+
     return (
         <BoxWrapper>
-            <HeaderWrapper>
+            <HeaderWrapper onClick={toggleQuestionBox}>
                 <AvatarWrapper
                     src={Avatar}
                     alt={'Avatar'}
                     height={'40px'}
                     width={'40px'} />
-                <AskText>{userFullName}, Ask a question.</AskText>
+                <AskText>{userFullName}Aravind, Ask a question.</AskText>
             </HeaderWrapper>
-            <QuestionTextArea
-                placeholder={'Ask anything...'}
-                {...question}
-            />
-            <input
-                {...hashTag}
-            />
-            <MediaUploadContainer>
-                <FileUploadPreviewCard />
-            </MediaUploadContainer>
-            <FooterWrapper>
-                <MediaUploadIconsWrapper>
-                    <MediaDropzone
-                        onDrop={onDrop}
-                        onCancel={onCancel}
-                        mediaType={'image'}>
-                        <IconsWrapper margin={'0 10px 5px 10px'} src={ImageUpload} height={'20px'} width={'20px'} alt={'Image upload'} />
-                    </MediaDropzone>
-                    <MediaDropzone
-                        onDrop={onDrop}
-                        onCancel={onCancel}
-                        mediaType={'video'}>
-                        <IconsWrapper margin={'0 10px 5px 10px'} src={VideoUpload} height={'20px'} width={'20px'} alt={'Video upload'} />
-                    </MediaDropzone>
-                    <MediaDropzone
-                        onDrop={onDrop}
-                        onCancel={onCancel}
-                        mediaType={'audio'}>
-                        <IconsWrapper margin={'0 10px 5px 10px'} src={AudioUpload} height={'20px'} width={'20px'} alt={'Audio upload'} />
-                    </MediaDropzone>
-                </MediaUploadIconsWrapper>
-                <ButtonWrapper>
-                    <AskButton 
-                        margin={'0 10px 0 0'}
-                        onClickProps={postQuestionOnClick}
-                    />
-                </ButtonWrapper>
-            </FooterWrapper>
+            {
+                questionBoxShow ?
+                    <QuestionAreaWrapper>
+                        <TextAreaWrapper>
+                            <QuestionTextArea
+                                showFileUpload={files.length && files[0].size}
+                                placeholder={'Ask anything...'}
+                                {...question}
+                            />
+                            <TagSelector
+                                tags={tags}
+                                addSelectTags={addSelectTags}
+                                removeTag={removeTag} />
+                        </TextAreaWrapper>
+                        {
+                            files.length && files[0].size ?
+                                <MediaUploadContainer>
+                                    <FileUploadPreviewCard />
+                                </MediaUploadContainer>
+                                : null
+                        }
+                        <FooterWrapper>
+                            <MediaUploadIconsWrapper>
+                                <MediaDropzone
+                                    onDrop={onDrop}
+                                    onCancel={onCancel}
+                                    mediaType={'image'}>
+                                    <IconsWrapper margin={'0 10px 5px 10px'} src={ImageUpload} height={'20px'} width={'20px'} alt={'Image upload'} />
+                                </MediaDropzone>
+                                <MediaDropzone
+                                    onDrop={onDrop}
+                                    onCancel={onCancel}
+                                    mediaType={'video'}>
+                                    <IconsWrapper margin={'0 10px 5px 10px'} src={VideoUpload} height={'20px'} width={'20px'} alt={'Video upload'} />
+                                </MediaDropzone>
+                                <MediaDropzone
+                                    onDrop={onDrop}
+                                    onCancel={onCancel}
+                                    mediaType={'audio'}>
+                                    <IconsWrapper margin={'0 10px 5px 10px'} src={AudioUpload} height={'20px'} width={'20px'} alt={'Audio upload'} />
+                                </MediaDropzone>
+                            </MediaUploadIconsWrapper>
+                            <ButtonWrapper>
+                                <AskButton
+                                    margin={'0 10px 0 0'}
+                                    onClickProps={postQuestionOnClick}
+                                />
+                            </ButtonWrapper>
+                        </FooterWrapper>
+                    </QuestionAreaWrapper> : null
+            }
         </BoxWrapper>
     )
 }
@@ -137,23 +176,26 @@ const MediaDropzone = (props) => {
 }
 
 const BoxWrapper = styled.div`
-    min-height: 340px;
     width: auto;
     background: #fff;
+    padding: 10px 0;
     border-radius: 5px;
     border: 1px solid #eee;
     position: relative;
     margin: 0 auto;
-    display: grid;
-    grid-template-rows: 1fr 2fr 0.5fr 0.5fr;
 `
 
 const HeaderWrapper = styled.div`
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 0.7fr 4.3fr;
     height: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
+
+    &:hover{
+        background: #eee;
+        cursor: pointer;
+    }
 `
 
 const AskText = styled.div`
@@ -165,9 +207,15 @@ const AskText = styled.div`
 
 const AvatarWrapper = styled(ImageWrapper)``
 
+const QuestionAreaWrapper = styled.div`
+    padding: 0 20px;
+`
+
+const TextAreaWrapper = styled.div``
+
 const QuestionTextArea = styled.textarea`
     width: 100%;
-    height: 150px;
+    height: ${props => props.showFileUpload ? '150px' : '180px'};
     border: none;
     padding: 10px;
     letter-spacing: 0.5px;
@@ -177,10 +225,9 @@ const QuestionTextArea = styled.textarea`
 `
 
 const FooterWrapper = styled.div`
+    border-top: 1px solid #eee;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    position: absolute;
-    bottom: 0;  
     width: 100%;
     height: 40px;
 `
@@ -206,5 +253,6 @@ const MediaUploadContainer = styled.div`
 `
 
 AskQuestionBox.propTypes = {
-    userFullName: PropTypes.string
+    userFullName: PropTypes.string,
+    fileSelected: PropTypes.bool
 };
