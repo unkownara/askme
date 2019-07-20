@@ -5,14 +5,14 @@ import styled from 'styled-components';
 import history from '../history';
 import { AskQuestionBox } from '../components/AskQuestionBox';
 import { ProfileCard } from '../components/ProfileCard';
-import { PopularUsers } from '../components/PopularUsersCard';
 import { PopularQuestions } from '../components/PopularQuestionsCard';
 import { FallbackLoader } from '../components/SusponseFallbackLoader';
 const Feed = lazy(() =>
-  import('../components/mainFeed/Feed').then(module => ({ default: module.Feed }))
+    import('../components/mainFeed/Feed').then(module => ({ default: module.Feed }))
 );
-// const Feed = lazy(() => import('../components/mainFeed/Feed'));
-
+const Popularusers = lazy(() =>
+    import('../components/PopularUsersCard').then(module => ({ default: module.PopularUsers }))
+);
 const popularUsersData = [
     {
         askedCount: '100',
@@ -70,9 +70,13 @@ export function WallPage() {
                             username={'@aravindmv97'}
                             askedCount={'100'}
                             answeredCount={'200'} />
-                        <PopularUsers
-                            margin={'40px auto'}
-                            popularUsers={popularUsersData} />
+                        <Suspense fallback={<FallbackLoader />}>
+                            <Popularusers
+                                margin={'40px auto'}
+                                userId={userInfo.userId}
+                                userCity={userInfo.city}
+                            />
+                        </Suspense>
                     </RowOneWrapper>
                     <RowtwoWrapper>
                         <AskQuestionBox 
@@ -86,7 +90,9 @@ export function WallPage() {
                         </Suspense>
                     </RowtwoWrapper>
                     <RowThreeWrapper>
-                        <PopularQuestions popularQuestions={popularQuestionsData} />
+                        <PopularQuestions 
+                            popularQuestions={popularQuestionsData}
+                        />
                     </RowThreeWrapper>
                 </PageWrapper>
             </>

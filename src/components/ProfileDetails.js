@@ -1,9 +1,36 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ImageWrapper } from './CommonStyles';
+import { follower_request_url } from '../ApiUrls';
 
 export function ProfileDetails(props) {
+
+    const [userInfo, setUserInfo] = useState(null);
+    const [requestStatus, setRequestStatus] = useState('Follow');
+    const storeUser = useSelector(state => state.userReducer);
+    useEffect(() => {
+        console.log('store user information in profile details page ', storeUser, userInfo);
+        setUserInfo(storeUser.userInfo);
+    }, []);
+
+    function followRequest(e) {
+        e.preventDefault();
+        setRequestStatus('pending');
+        import('../ApiRequests').then(obj => {
+            const payload = {
+                userId: userInfo.userId,
+                fUserId: props.fUserId,
+                fProfilePicture: props.profilePicture || 'https://s3',
+                fUserName: props.userName,
+                status: 'pending'
+            };
+            obj.postApiRequestCall(follower_request_url, payload, function(response) {
+                console.log('follow request response ', response);
+            })
+        })
+    }
 
     return (
         <ProfileDetailsWrapper margin={props.margin}>
@@ -14,7 +41,12 @@ export function ProfileDetails(props) {
                 height={'45px'}
                 width={'45px'} />
             <DetailsWrapper>
-                <UserFullName>{props.userFullName}</UserFullName>
+                <UserFullName>{props.userName}</UserFullName>
+                <span 
+                    style={{ cursor: 'pointer', color: 'blue' }}
+                    onClick={followRequest}>
+                    {requestStatus}
+                </span>
                 <OtherDetailsWrapper>
                     {
                         props.showUserName ?
@@ -63,8 +95,8 @@ ProfileDetails.propTypes = {
     username: PropTypes.string,
     margin: PropTypes.string,
     radius: PropTypes.string,
-    askedCount: PropTypes.string,
-    answeredCount: PropTypes.string,
+    askedCount: PropTypes.number,
+    answeredCount: PropTypes.number,
     showUserName: PropTypes.bool,
     showActivityDetails: PropTypes.bool,
     showUploadedTime: PropTypes.bool,
@@ -152,8 +184,8 @@ export const UserName = styled.div`
 
 ActivityDetails.propTypes = {
     margin: PropTypes.string,
-    askedCount: PropTypes.string,
-    answeredCount: PropTypes.string
+    askedCount: PropTypes.number,
+    answeredCount: PropTypes.number
 }
 
 /*
