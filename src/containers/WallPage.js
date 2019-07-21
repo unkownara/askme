@@ -77,7 +77,7 @@ export function WallPage() {
                             <Popularusers
                                 margin={'40px auto'}
                                 userId={userInfo.userId}
-                                userCity={userInfo.city}
+                                specialist={userInfo.specialist}
                             />
                         </Suspense>
                     </RowOneWrapper>

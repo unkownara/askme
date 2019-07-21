@@ -9,7 +9,6 @@ import { ImageWrapper } from '../CommonStyles';
 import { AskButton } from '../Buttons';
 import FileUploadPreviewCard from './FileUploadPreviewCard';
 import TagSelector from './TagSelector';
-
 import Avatar from '../../images/dp.png';
 import ImageUpload from '../../images/image_upload.png';
 import AudioUpload from '../../images/audio_upload.png';

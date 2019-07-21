@@ -5,13 +5,23 @@ import { CardHeader } from './CardHeader';
 import { ProfileDetails } from '../ProfileDetails';
 
 import { getApiRequestCall } from '../../ApiRequests';
-import { user_sugession_url } from '../../ApiUrls';
+import { popular_users_url } from '../../ApiUrls';
 
 import Avatar from '../../images/dp.png';
 
-export function PopularUsers({ margin, userId, userCity }) {
+export function PopularUsers({ margin, userId, specialist }) {
 
     const [popularUsers, setPopularUsers] = useState([]);
+    const [popularUsersStatus, setPopularUsersStatus] = useState({});
+
+    async function updatePopularUsersStatus(popularUsersStatus) {
+        let popularUsersObj = {};
+        await popularUsersStatus.map((data, index) => {
+            popularUsersObj[data.fUserId] = data.requestStatus;
+        });
+        console.log('popular status ', popularUsersStatus);
+        setPopularUsersStatus(popularUsersObj);
+    }
 
     function updatePopularUsers(popularUsers) {
         setPopularUsers(users => users.concat(popularUsers));
@@ -20,12 +30,15 @@ export function PopularUsers({ margin, userId, userCity }) {
     useEffect(() => {
         const params = {
             userId: userId,
-            city: userCity
+            specialist: specialist
         };
-        getApiRequestCall(user_sugession_url, params, function (response) {
-            if (response.data && response.data.Items) {
-                console.log('popular user list ', response.data.Items);
-                updatePopularUsers(response.data.Items);
+        getApiRequestCall(popular_users_url, params, function (response) {
+            console.log('response for popular users ', response);
+            if (response.data.relationShips && response.data.relationShips.Responses && response.data.relationShips.Responses.follower_connections) {
+                updatePopularUsersStatus(response.data.relationShips.Responses.follower_connections);
+            }
+            if(response.data && response.data.popularUsers && response.data.popularUsers.Items) {
+                updatePopularUsers(response.data.popularUsers.Items);
             }
         });
     }, []);
@@ -38,13 +51,14 @@ export function PopularUsers({ margin, userId, userCity }) {
             </>
         )
     } else {
+        console.log('popular user status render', popularUsersStatus);
         return (
             <PopularUsersWrapper margin={margin}>
                 <CardHeader>POPULAR USERS</CardHeader>
                 <UsersWrapper>
                     {
                         popularUsers.map((user, user_index) =>
-                            <ProfileWrapper key={user_index}>
+                            <ProfileWrapper key={user.userId}>
                                 <ProfileDetails
                                     radius={'50%'}
                                     showUserName={false}
@@ -54,7 +68,9 @@ export function PopularUsers({ margin, userId, userCity }) {
                                     showActivityDetails
                                     showUploadedTime={false}
                                     userName={user.userName}
-                                    src={Avatar} />
+                                    src={Avatar}
+                                    connectionStatus={popularUsersStatus['2cd0460c-3ff5-4d85-93b7-e74842e1d4e6']}    
+                                />
                             </ProfileWrapper>
                         )
                     }
