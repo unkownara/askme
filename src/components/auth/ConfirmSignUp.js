@@ -1,10 +1,66 @@
 import React, {useState} from 'react';
 import { useInput } from '../hooks/useInput';
+import history from '../../history';
 import styled from 'styled-components';
 import { Auth } from 'aws-amplify';
 import { postApiRequestCall } from '../../ApiRequests';
 import { user_info_url } from '../../ApiUrls';
 import { Icon } from 'semantic-ui-react'
+
+export function ConfirmSignUp({ emailId, userInfo }) {
+    const otp = useInput('');
+    const [arrowChange, setArrowChange] = useState(true);
+
+    function verifyOtp(e) {
+        e.preventDefault();
+        setArrowChange(false)
+        Auth.confirmSignUp("aravindmv97@gmail.com", otp.value, {
+            forceAliasCreation: true
+        }).then(data => {
+            console.log(data);
+            postApiRequestCall(user_info_url, userInfo, function (response) {
+                console.log('response in confirm sign up page', response);
+                history.push('/login');
+            });
+        })
+            .catch(err => console.log(err));
+    }
+
+    function reSendOtp(e) {
+        Auth.resendSignUp(emailId).then(() => {
+            console.log('code resent successfully');
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
+    return (
+        <ConfirmSignUpOtp>
+            <TextField>
+                <ParagraphText>OTP Verfication</ParagraphText>
+            </TextField>
+            <OTPContainer>
+                <OTPForm>
+                    <OTPInput
+                        {...otp}
+                        placeholder="Otp"
+                        maxLength="6"
+                    />
+                    <SubmitButtonDiv>
+                    {arrowChange ?
+                                <Icon name="arrow right" className="arrowIcon" /> :
+                                <Icon loading name="spinner" className="arrowIcon" />}
+                        <SubmitButton onClick={verifyOtp}>
+                            Verify
+                    </SubmitButton>
+                        <ResendOtpSpan onClick={reSendOtp}>Resend OTP?</ResendOtpSpan>
+                    </SubmitButtonDiv>
+
+                </OTPForm>
+            </OTPContainer>
+        </ConfirmSignUpOtp>
+    );
+}
 
 const ConfirmSignUpOtp = styled.div`
 width: 100%;
@@ -84,55 +140,3 @@ font-size: 15px;
 color: #132c83;
 cursor: pointer;
 `
-
-export function ConfirmSignUp({ emailId, userInfo }) {
-    const otp = useInput('');
-    const [arrowChange, setArrowChange] = useState(true);
-    function verifyOtp(e) {
-        setArrowChange(false)
-        Auth.confirmSignUp(emailId, otp.value, {
-            forceAliasCreation: true
-        }).then(data => {
-            console.log(data);
-            postApiRequestCall(user_info_url, userInfo, function (response) {
-                console.log('response in confirm sign up page', response);
-            });
-        })
-            .catch(err => console.log(err));
-    }
-
-    function reSendOtp(e) {
-        Auth.resendSignUp(emailId).then(() => {
-            console.log('code resent successfully');
-        }).catch(e => {
-            console.log(e);
-        });
-    }
-
-    return (
-        <ConfirmSignUpOtp>
-            <TextField>
-                <ParagraphText>OTP Verfication</ParagraphText>
-            </TextField>
-            <OTPContainer>
-                <OTPForm>
-                    <OTPInput
-                        {...otp}
-                        placeholder="Otp"
-                        maxLength="6"
-                    />
-                    <SubmitButtonDiv>
-                    {arrowChange ?
-                                <Icon name="arrow right" className="arrowIcon" /> :
-                                <Icon loading name="spinner" className="arrowIcon" />}
-                        <SubmitButton onClick={verifyOtp}>
-                            Verify
-                    </SubmitButton>
-                        <ResendOtpSpan onClick={reSendOtp}>Resend OTP?</ResendOtpSpan>
-                    </SubmitButtonDiv>
-
-                </OTPForm>
-            </OTPContainer>
-        </ConfirmSignUpOtp>
-    );
-}
