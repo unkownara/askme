@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { Dropdown, Icon } from 'semantic-ui-react';
 import { useInput } from '../../hooks/useInput';
@@ -59,7 +59,7 @@ export function Signup() {
     const [lastNameValidationErrorMsg, setLastNameValidationErrorMsg] = useState('');
     const [userNameValidationErrorMsg, setUserNameValidationErrorMsg] = useState('');
     const [emailValidationErrorMsg, setEmailValidationErrorMsg] = useState('');
-    const [passwordValidationErrorMsg, setPasswordValidationErrorMsg] = useState('');   
+    const [passwordValidationErrorMsg, setPasswordValidationErrorMsg] = useState('');
     const [phoneNumberValidationErrorMsg, setPhoneNumberValidationErrorMsg] = useState('');
     const [genderValidationErrorMsg, setGenderValidationErrorMsg] = useState('');
     const [formValidationErrorMsg, setFormValidationErrorMsg] = useState('');
@@ -102,52 +102,52 @@ export function Signup() {
         setGenderValue(value);
     }
 
-    function onBlurChange(name, value) { 
-        switch(name) {
+    function onBlurChange(name, value) {
+        switch (name) {
             case 'firstName':
-                if(inputValidation('name', value)) { 
+                if (inputValidation('name', value)) {
                     setFirstNameValidationErrorMsg('');
                 } else {
                     setFirstNameValidationErrorMsg('invalid');
                 }
                 break;
             case 'lastName':
-                if(inputValidation('name', value)) {
+                if (inputValidation('name', value)) {
                     setLastNameValidationErrorMsg('');
                 } else {
                     setLastNameValidationErrorMsg('invalid');
                 }
                 break;
             case 'userName':
-                if(inputValidation('name', value)) { 
+                if (inputValidation('name', value)) {
                     setUserNameValidationErrorMsg('');
                 } else {
                     setUserNameValidationErrorMsg('invalid');
                 }
                 break;
             case 'email':
-                if(inputValidation('email', value)) {
+                if (inputValidation('email', value)) {
                     setEmailValidationErrorMsg('');
                 } else {
                     setEmailValidationErrorMsg('invalid');
                 }
                 break;
             case 'password':
-                if(inputValidation('password', value)) {
+                if (inputValidation('password', value)) {
                     setPasswordValidationErrorMsg('');
                 } else {
                     setPasswordValidationErrorMsg('invalid');
                 }
                 break;
             case 'phoneNumber':
-                if(inputValidation('phone', value)) {
+                if (inputValidation('phone', value)) {
                     setPhoneNumberValidationErrorMsg('');
                 } else {
                     setPhoneNumberValidationErrorMsg('invalid');
                 }
                 break;
             case 'gender':
-                if(inputValidation('name', value)) {
+                if (inputValidation('name', value)) {
                     setGenderValidationErrorMsg('');
                 } else {
                     setGenderValidationErrorMsg('invalid');
@@ -161,33 +161,33 @@ export function Signup() {
     function formSubmit(e) {
         e.preventDefault();
         console.log('userInfoect ', userInfo);
-        switch(formValidation(userInfo)) {
+        switch (formValidation(userInfo)) {
             case 'firstName':
-                setFirstNameValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setFirstNameValidationErrorMsg("First name can't be empty");
+                setFormValidationErrorMsg('Fill required fields');
                 break;
             case 'lastName':
-                setLastNameValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setLastNameValidationErrorMsg("Last name can't be empty");
+                setFormValidationErrorMsg('Fill required fields');
                 break;
             case 'userName':
-                setUserNameValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setUserNameValidationErrorMsg("Username can't be empty");
+                setFormValidationErrorMsg('Fill required fields');
                 break;
             case 'email':
-                setEmailValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setEmailValidationErrorMsg("Email can't be empty");
+                setFormValidationErrorMsg('Fill required fields');
                 break;
             case 'password':
-                setPasswordValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setPasswordValidationErrorMsg("Enter a valid Password");
+                setFormValidationErrorMsg('Fill required fields');
                 break;
             case 'gender':
-                setGenderValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setGenderValidationErrorMsg("Select a gender");
+                setFormValidationErrorMsg('Fill required fields');
                 break;
             case 'none':
-                setFormValidationErrorMsg('');
+                setFormValidationErrorMsg('Fill required fields');
                 setIsFormValid(true);
                 setArrowChange(false)
                 break;
@@ -195,7 +195,7 @@ export function Signup() {
     }
 
     useEffect(() => {
-        if(isFormValid && !isSignUpCompleted) {
+        if (isFormValid && !isSignUpCompleted) {
             Auth.signUp({
                 username: email.value,
                 password: password.value,
@@ -203,18 +203,18 @@ export function Signup() {
                     email: email.value,
                     phone_number: '+91' + phoneNumber.value,
                 }
-                }).then(data => {
-                    console.log('signup data ', data);
-                    setIsSignUpCompleted(true);
-                    setUserId(data.userSub);
-                }).catch(err => console.log(err));
+            }).then(data => {
+                console.log('signup data ', data);
+                setIsSignUpCompleted(true);
+                setUserId(data.userSub);
+            }).catch(err => console.log(err));
         } else {
             console.log('false');
         }
     });
 
     /* Triggering component based on signup form validation */
-    if(isSignUpCompleted) {
+    if (isSignUpCompleted) {
         const userInfo = {
             userId: userId,
             firstName: firstName.value,
@@ -225,7 +225,7 @@ export function Signup() {
             gender: genderValue
         };
         return (
-            <ConfirmSignUp 
+            <ConfirmSignUp
                 emailId={email.value}
                 userInfo={userInfo}
             />
@@ -234,8 +234,8 @@ export function Signup() {
         return (
             <div className="signupContainer">
                 <div className="textField">
-                        <p>Sign Up</p>
-                    </div>
+                    <p>Sign Up</p>
+                </div>
                 <div className="signUpCreation">
                     <p className="signupHeader">Sign up to Account</p>
                     <form>
@@ -398,7 +398,7 @@ export function Signup() {
                                 selection
                                 options={friendOptions}
                             />
-                        </div> 
+                        </div>
                         <div className="submitField">
                             {arrowChange ?
                                 <Icon name="arrow right" className="arrowIcon" /> :

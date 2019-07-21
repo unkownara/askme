@@ -2,17 +2,20 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import history from '../history';
-import { AskQuestionBox } from '../components/AskQuestionBox';
-import { ProfileCard } from '../components/ProfileCard';
-import { PopularQuestions } from '../components/PopularQuestionsCard';
+import { AskQuestionBox } from '../components/questionBox/AskQuestionBox';
+import { ProfileCard } from '../components/wallPage/ProfileCard';
+import { PopularQuestions } from '../components/wallPage/PopularQuestionsCard';
 import { FallbackLoader } from '../components/SusponseFallbackLoader';
+
 const Feed = lazy(() =>
     import('../components/mainFeed/Feed').then(module => ({ default: module.Feed }))
 );
 const Popularusers = lazy(() =>
-    import('../components/PopularUsersCard').then(module => ({ default: module.PopularUsers }))
+    import('../components/wallPage/PopularUsersCard').then(module => ({ default: module.PopularUsers }))
 );
+
 const popularUsersData = [
     {
         askedCount: '100',
@@ -41,7 +44,7 @@ export function WallPage() {
     // Checking if user info is exists or not in local storage.
     useEffect(() => {
         const localStorageUserInfo = JSON.parse(localStorage.getItem('_user_info_'));
-        if(localStorageUserInfo === null || localStorageUserInfo === undefined) {
+        if (localStorageUserInfo === null || localStorageUserInfo === undefined) {
             history.push('/login');
         } else {
             setRender(true);
@@ -53,7 +56,7 @@ export function WallPage() {
     }, [canRender]);
 
 
-    if(storeUser === null || storeUser.userInfo === null) {
+    if (storeUser === null || storeUser.userInfo === null) {
         return (
             <>
                 Loading...
@@ -79,8 +82,8 @@ export function WallPage() {
                         </Suspense>
                     </RowOneWrapper>
                     <RowtwoWrapper>
-                        <AskQuestionBox 
-                            username={'Aravind Manoharan'} 
+                        <AskQuestionBox
+                            username={'Aravind Manoharan'}
                             userInfo={userInfo}
                         />
                         <Suspense fallback={<FallbackLoader />}>
@@ -90,7 +93,7 @@ export function WallPage() {
                         </Suspense>
                     </RowtwoWrapper>
                     <RowThreeWrapper>
-                        <PopularQuestions 
+                        <PopularQuestions
                             popularQuestions={popularQuestionsData}
                         />
                     </RowThreeWrapper>
@@ -102,7 +105,7 @@ export function WallPage() {
 
 const PageWrapper = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 2fr 1.5fr;
+    grid-template-columns: 1fr 3fr 1fr;
 `;
 
 const RowOneWrapper = styled.div`
