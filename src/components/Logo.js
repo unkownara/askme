@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ImageWrapper } from './CommonStyles';
+
 import LogoIcon from '../images/logo.png';
 
 const LogoWrapper = styled.div`

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { UserName } from './ProfileDetails';
+import { UserName } from '../ProfileDetails';
 import { CardHeader } from './CardHeader';
 
 export function PopularQuestions(props) {

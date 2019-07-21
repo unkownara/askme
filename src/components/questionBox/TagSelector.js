@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { ImageWrapper } from './CommonStyles';
-import Popover from './Popover';
+import { ImageWrapper } from '../CommonStyles';
+import Popover from '../Popover';
 
-import Delete from '../images/close.png';
+import Delete from '../../images/close.png';
 
 export default function TagSelector(props) {
 

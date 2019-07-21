@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { ImageWrapper } from './CommonStyles';
+import { ImageWrapper } from '../CommonStyles';
 
-import File from '../images/file.png';
-import Image from '../images/image.png';
-import Video from '../images/video.png';
-import Audio from '../images/audio.png';
-import Close from '../images/close.png';
-import Tick from '../images/tick.png';
-import Warning from '../images/warning.png';
+import File from '../../images/file.png';
+import Image from '../../images/image.png';
+import Video from '../../images/video.png';
+import Audio from '../../images/audio.png';
+import Close from '../../images/close.png';
+import Tick from '../../images/tick.png';
+import Warning from '../../images/warning.png';
 
 const PreviewCardContainer = styled.div`
     padding: 0 10px;

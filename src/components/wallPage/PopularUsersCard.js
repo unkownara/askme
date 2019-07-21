@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CardHeader } from './CardHeader';
-import { ProfileDetails } from './ProfileDetails';
-import { getApiRequestCall } from '../ApiRequests';
-import { user_sugession_url } from '../ApiUrls';
-import Avatar from '../images/dp.png';
+import { ProfileDetails } from '../ProfileDetails';
+
+import { getApiRequestCall } from '../../ApiRequests';
+import { user_sugession_url } from '../../ApiUrls';
+
+import Avatar from '../../images/dp.png';
 
 export function PopularUsers({ margin, userId, userCity }) {
 
@@ -20,8 +22,8 @@ export function PopularUsers({ margin, userId, userCity }) {
             userId: userId,
             city: userCity
         };
-        getApiRequestCall(user_sugession_url, params, function(response) {
-            if(response.data && response.data.Items) {
+        getApiRequestCall(user_sugession_url, params, function (response) {
+            if (response.data && response.data.Items) {
                 console.log('popular user list ', response.data.Items);
                 updatePopularUsers(response.data.Items);
             }
@@ -29,7 +31,7 @@ export function PopularUsers({ margin, userId, userCity }) {
     }, []);
 
 
-    if(popularUsers.length === 0) {
+    if (popularUsers.length === 0) {
         return (
             <>
                 Loading...
