@@ -10,6 +10,7 @@ export function ProfileDetails(props) {
     const [userInfo, setUserInfo] = useState(null);
     const [requestStatus, setRequestStatus] = useState('Follow');
     const storeUser = useSelector(state => state.userReducer);
+
     useEffect(() => {
         console.log('store user information in profile details page ', storeUser, userInfo);
         setUserInfo(storeUser.userInfo);
@@ -21,10 +22,12 @@ export function ProfileDetails(props) {
         import('../ApiRequests').then(obj => {
             const payload = {
                 userId: userInfo.userId,
+                userProfilePicture: userInfo.profilePicture,
+                userName: userInfo.userName,
                 fUserId: props.fUserId,
                 fProfilePicture: props.profilePicture || 'https://s3',
                 fUserName: props.userName,
-                status: 'pending'
+                requestStatus: 'pending'
             };
             obj.postApiRequestCall(follower_request_url, payload, function(response) {
                 console.log('follow request response ', response);
