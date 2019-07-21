@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useInput } from '../hooks/useInput';
+import { useInput } from '../../hooks/useInput';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { user_post_url } from '../../ApiUrls';
