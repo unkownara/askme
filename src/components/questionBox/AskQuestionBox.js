@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useInput } from './hooks/useInput';
+import { useInput } from '../hooks/useInput';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { user_post_url } from '../ApiUrls';
+import { user_post_url } from '../../ApiUrls';
 import Dropzone from 'react-dropzone';
-import { ImageWrapper } from './CommonStyles';
-import { AskButton } from './Buttons';
+import { ImageWrapper } from '../CommonStyles';
+import { AskButton } from '../Buttons';
 import FileUploadPreviewCard from './FileUploadPreviewCard';
 import TagSelector from './TagSelector';
 
-import Avatar from '../images/dp.png';
-import ImageUpload from '../images/image_upload.png';
-import AudioUpload from '../images/audio_upload.png';
-import VideoUpload from '../images/video_upload.png';
+import Avatar from '../../images/dp.png';
+import ImageUpload from '../../images/image_upload.png';
+import AudioUpload from '../../images/audio_upload.png';
+import VideoUpload from '../../images/video_upload.png';
 
 export function AskQuestionBox({ userFullName, userInfo }) {
 
@@ -42,7 +42,7 @@ export function AskQuestionBox({ userFullName, userInfo }) {
         const postQuestion = question.value;
         const postHashTag = hashTag.value;
         let postId = '', type = '';
-        await import('../common').then(obj => {
+        await import('../../common').then(obj => {
             postId = obj.uniqueId();
             type = obj.fileTypeExtension(files[0].type);
         });
@@ -58,12 +58,12 @@ export function AskQuestionBox({ userFullName, userInfo }) {
             contentKey: type !== 'txt' ? key : '' // If it is string then we don't need to store s3 key.
         };
         if (type !== 'txt') {
-            import('../s3Uploader').then(s3Obj => {
+            import('../../s3Uploader').then(s3Obj => {
                 const uploadData = question.value;
                 s3Obj.s3Uploader(uploadData, key, type);
             });
         }
-        import('../ApiRequests').then(apiObj => {
+        import('../../ApiRequests').then(apiObj => {
             apiObj.postApiRequestCall(user_post_url, postObj, function (response) {
                 console.log('successfully uploaded...', response);
             });

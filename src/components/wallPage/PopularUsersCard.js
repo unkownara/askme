@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CardHeader } from './CardHeader';
-import { ProfileDetails } from './ProfileDetails';
-import Avatar from '../images/dp.png';
+import { ProfileDetails } from '../ProfileDetails';
+
+import Avatar from '../../images/dp.png';
 
 export function PopularUsers({ margin, popularUsers }) {
     return (

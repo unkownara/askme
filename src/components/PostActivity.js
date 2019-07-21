@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const PostActivityWrapper = styled.div`
-
-`
+const PostActivityWrapper = styled.div``
 
 class PostActivity extends React.Component {
     constructor(props) {
