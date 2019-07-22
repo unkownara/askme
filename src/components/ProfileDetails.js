@@ -12,10 +12,17 @@ export function ProfileDetails(props) {
     const storeUser = useSelector(state => state.userReducer);
 
     useEffect(() => {
-        console.log('connection status ', props.connectionStatus);
+        console.log('connection status ', props);
         console.log('store user information in profile details page ', storeUser, userInfo);
         setUserInfo(storeUser.userInfo);
     }, []);
+
+    useEffect(() => {
+        // const status = props.status[props.fUserId];
+        // if(status !== undefined && status !== null) {
+        //     setRequestStatus(status);
+        // }
+    });
 
     function followRequest(e) {
         e.preventDefault();
@@ -49,7 +56,7 @@ export function ProfileDetails(props) {
                 <span 
                     style={{ cursor: 'pointer', color: 'blue' }}
                     onClick={followRequest}>
-                    {requestStatus}
+                    {props.status}
                 </span>
                 <OtherDetailsWrapper>
                     {
