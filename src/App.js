@@ -31,7 +31,7 @@ function App() {
 						<Route
 							exact
 							path="/"
-							component={ConfirmSignUp}
+							component={LogIn}
 						/>
 						<Route
 							exact
