@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import { useInput } from '../hooks/useInput';
 import { unity } from '../../images/unity.png';
+import TextFileReader from '../../TextFileReader';
 
 export function LandingPage() {
 
@@ -36,6 +37,9 @@ export function LandingPage() {
                     <img src={unity} alt="no" />
                     <span>{'name'}</span>
                     <span>{'subName'}</span>
+                </div>
+                <div>
+                    <TextFileReader />
                 </div>
             </div>
         </React.Fragment>

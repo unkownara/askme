@@ -9,7 +9,6 @@ import NavBar from './components/NavBar';
 import { WallPage } from './containers/WallPage';
 import { Forgot } from './components/auth/Forgot';
 
-
 const Layout = styled.div`
     padding: 50px;
 	/* background: #fff; */

@@ -1,12 +1,12 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { Dropdown, Icon } from 'semantic-ui-react';
 import { useInput } from '../hooks/useInput';
 import { ConfirmSignUp } from './ConfirmSignUp';
 import { formValidation, inputValidation } from "../../Validation.js";
-import history from '../../history';
 import './Signup.css';
 import 'semantic-ui-css/semantic.min.css';
+import { readFileSync } from 'fs';
 
 const friendOptions = [
     {
@@ -59,7 +59,7 @@ export function Signup() {
     const [lastNameValidationErrorMsg, setLastNameValidationErrorMsg] = useState('');
     const [userNameValidationErrorMsg, setUserNameValidationErrorMsg] = useState('');
     const [emailValidationErrorMsg, setEmailValidationErrorMsg] = useState('');
-    const [passwordValidationErrorMsg, setPasswordValidationErrorMsg] = useState('');   
+    const [passwordValidationErrorMsg, setPasswordValidationErrorMsg] = useState('');
     const [phoneNumberValidationErrorMsg, setPhoneNumberValidationErrorMsg] = useState('');
     const [genderValidationErrorMsg, setGenderValidationErrorMsg] = useState('');
     const [formValidationErrorMsg, setFormValidationErrorMsg] = useState('');
@@ -83,8 +83,17 @@ export function Signup() {
         gender: genderValue
     }
 
+    let firstNameRef = React.createRef();
+    let lastNameRef = React.createRef();
+    let userNameRef = React.createRef();
+    let emailRef = React.createRef();
+    let passwordRef = React.createRef();
+    let phoneRef = React.createRef();
+    let genderRef = React.createRef();
+
     function gender(value) {
         if (value === 'male') {
+            console.log(isMaleActive)
             setIsMaleActive(false)
             setIsFemaleActive(true)
             setIsOtherActive(true)
@@ -102,52 +111,61 @@ export function Signup() {
         setGenderValue(value);
     }
 
-    function onBlurChange(name, value) { 
-        switch(name) {
+    function onBlurChange(name, value) {
+        switch (name) {
             case 'firstName':
-                if(inputValidation('name', value)) { 
+                if (inputValidation('name', value)) {
                     setFirstNameValidationErrorMsg('');
                 } else {
-                    setFirstNameValidationErrorMsg('invalid');
+                    setFirstNameValidationErrorMsg('* First name is required');
                 }
                 break;
             case 'lastName':
-                if(inputValidation('name', value)) {
+                if (inputValidation('name', value)) {
                     setLastNameValidationErrorMsg('');
                 } else {
-                    setLastNameValidationErrorMsg('invalid');
+                    setLastNameValidationErrorMsg('* Last name is required');
                 }
                 break;
             case 'userName':
-                if(inputValidation('name', value)) { 
+                if (inputValidation('name', value)) {
                     setUserNameValidationErrorMsg('');
                 } else {
-                    setUserNameValidationErrorMsg('invalid');
+                    setUserNameValidationErrorMsg('* username is required');
                 }
                 break;
             case 'email':
-                if(inputValidation('email', value)) {
+                if (inputValidation('email', value)) {
                     setEmailValidationErrorMsg('');
                 } else {
-                    setEmailValidationErrorMsg('invalid');
+                    if (value === '')
+                        setEmailValidationErrorMsg('* email is required');
+                    else
+                        setEmailValidationErrorMsg('* please enter valid email');
                 }
                 break;
             case 'password':
-                if(inputValidation('password', value)) {
+                if (inputValidation('password', value)) {
                     setPasswordValidationErrorMsg('');
                 } else {
-                    setPasswordValidationErrorMsg('invalid');
+                    if (value === '')
+                        setPasswordValidationErrorMsg('* password is required');
+                    else
+                        setPasswordValidationErrorMsg('* please enter valid password');
                 }
                 break;
             case 'phoneNumber':
-                if(inputValidation('phone', value)) {
+                if (inputValidation('phone', value)) {
                     setPhoneNumberValidationErrorMsg('');
                 } else {
-                    setPhoneNumberValidationErrorMsg('invalid');
+                    if (value === '')
+                        setPhoneNumberValidationErrorMsg('* phone number is required');
+                    else
+                    setPhoneNumberValidationErrorMsg('* please enter valid phone number');
                 }
                 break;
             case 'gender':
-                if(inputValidation('name', value)) {
+                if (inputValidation('name', value)) {
                     setGenderValidationErrorMsg('');
                 } else {
                     setGenderValidationErrorMsg('invalid');
@@ -161,30 +179,30 @@ export function Signup() {
     function formSubmit(e) {
         e.preventDefault();
         console.log('userInfoect ', userInfo);
-        switch(formValidation(userInfo)) {
+        switch (formValidation(userInfo)) {
             case 'firstName':
-                setFirstNameValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setFirstNameValidationErrorMsg('* First name is required');
+                firstNameRef.current.focus();
                 break;
             case 'lastName':
-                setLastNameValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setLastNameValidationErrorMsg('* Last name is required');
+                lastNameRef.current.focus();
                 break;
             case 'userName':
-                setUserNameValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setUserNameValidationErrorMsg('* userName is required');
+                userNameRef.current.focus();
                 break;
             case 'email':
-                setEmailValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setEmailValidationErrorMsg('* Email is required');
+                emailRef.current.focus();
                 break;
             case 'password':
-                setPasswordValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setPasswordValidationErrorMsg('* password is required');
+                passwordRef.current.focus();
                 break;
             case 'gender':
-                setGenderValidationErrorMsg('invalid');
-                setFormValidationErrorMsg('Fill all the fields');
+                setGenderValidationErrorMsg('* gender is required');
+                genderRef.current.focus();
                 break;
             case 'none':
                 setFormValidationErrorMsg('');
@@ -195,7 +213,7 @@ export function Signup() {
     }
 
     useEffect(() => {
-        if(isFormValid && !isSignUpCompleted) {
+        if (isFormValid && !isSignUpCompleted) {
             Auth.signUp({
                 username: email.value,
                 password: password.value,
@@ -203,18 +221,18 @@ export function Signup() {
                     email: email.value,
                     phone_number: '+91' + phoneNumber.value,
                 }
-                }).then(data => {
-                    console.log('signup data ', data);
-                    setIsSignUpCompleted(true);
-                    setUserId(data.userSub);
-                }).catch(err => console.log(err));
+            }).then(data => {
+                console.log('signup data ', data);
+                setIsSignUpCompleted(true);
+                setUserId(data.userSub);
+            }).catch(err => console.log(err));
         } else {
             console.log('false');
         }
     });
 
     /* Triggering component based on signup form validation */
-    if(isSignUpCompleted) {
+    if (isSignUpCompleted) {
         const userInfo = {
             userId: userId,
             firstName: firstName.value,
@@ -225,7 +243,7 @@ export function Signup() {
             gender: genderValue
         };
         return (
-            <ConfirmSignUp 
+            <ConfirmSignUp
                 emailId={email.value}
                 userInfo={userInfo}
             />
@@ -234,8 +252,8 @@ export function Signup() {
         return (
             <div className="signupContainer">
                 <div className="textField">
-                        <p>Sign Up</p>
-                    </div>
+                    <p>Sign Up</p>
+                </div>
                 <div className="signUpCreation">
                     <p className="signupHeader">Sign up to Account</p>
                     <form>
@@ -245,22 +263,24 @@ export function Signup() {
                                 <input
                                     {...firstName}
                                     onBlur={() => onBlurChange('firstName', firstName.value)}
+                                    ref = {firstNameRef}
                                     type="text"
-                                    placeholder="Enter Value"
+                                    placeholder="Enter Firstname"
                                     className="input firstName"
                                 />
-                                <span className="errMsg">{firstNameValidationErrorMsg}</span>
+                                <span className="errMsgSpan">{firstNameValidationErrorMsg}</span>
                             </div>
                             <div>
                                 <label>Last name</label><br />
                                 <input
                                     {...lastName}
                                     onBlur={() => onBlurChange('lastName', lastName.value)}
+                                    ref = {lastNameRef}
                                     type="text"
-                                    placeholder="Enter Value"
+                                    placeholder="Enter Lastname"
                                     className="input lastName"
                                 />
-                                <span className="errMsg">{lastNameValidationErrorMsg}</span>
+                                <span className="errMsgSpan">{lastNameValidationErrorMsg}</span>
                             </div>
                         </div>
                         <div className="division">
@@ -268,45 +288,49 @@ export function Signup() {
                             <input
                                 {...userName}
                                 onBlur={() => onBlurChange('userName', userName.value)}
+                                ref = {userNameRef}
                                 type="text"
-                                placeholder="Enter Value"
+                                placeholder="Enter Username"
                                 className="input firstName"
                             />
-                            <span className="errorMsgSpan">{userNameValidationErrorMsg}</span>
+                            <span className="errMsgSpan">{userNameValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Email</label>
                             <input
                                 {...email}
                                 onBlur={() => onBlurChange('email', email.value)}
+                                ref = {emailRef}
                                 type="text"
-                                placeholder="Enter Value"
+                                placeholder="Enter Email"
                                 className="input email"
                             />
-                            <span className="errorMsgSpan">{emailValidationErrorMsg}</span>
+                            <span className="errMsgSpan">{emailValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Password</label>
                             <input
                                 {...password}
                                 onBlur={() => onBlurChange('password', password.value)}
+                                ref = {passwordRef}
                                 type="text"
-                                placeholder="Enter Value"
+                                placeholder="Enter Password"
                                 className="input"
                             />
-                            <span className="errorMsgSpan">{passwordValidationErrorMsg}</span>
+                            <span className="errMsgSpan">{passwordValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Phone no</label>
                             <input
                                 {...phoneNumber}
                                 onBlur={() => onBlurChange('phoneNumber', phoneNumber.value)}
+                                ref = {phoneRef}
                                 type="text"
-                                placeholder="Enter Value"
+                                placeholder="Enter PhoneNumber"
                                 className="input"
                                 maxLength="10"
                             />
-                            <span className="errorMsgSpan">{phoneNumberValidationErrorMsg}</span>
+                            <span className="errMsgSpan">{phoneNumberValidationErrorMsg}</span>
                         </div>
                         <div className="division">
                             <label>Gender</label>
@@ -317,13 +341,11 @@ export function Signup() {
                                         <Icon name="dot circle" color="blue" className="genderIcon" />}
                                     {isMaleActive ?
                                         <input
+                                            ref = {genderRef}
                                             type="button"
                                             className="gender genderActive"
                                             value="Male"
                                             onClick={() => gender('male')}
-                                            style={{
-                                                border: '1px solid lightgray'
-                                            }}
                                         /> :
                                         <input
                                             type="button"
@@ -345,9 +367,6 @@ export function Signup() {
                                             className="gender genderActive"
                                             value="Female"
                                             onClick={() => gender('female')}
-                                            style={{
-                                                border: '1px solid lightgray'
-                                            }}
                                         /> :
                                         <input
                                             type="button"
@@ -369,9 +388,6 @@ export function Signup() {
                                             className="gender genderActive"
                                             value="Other"
                                             onClick={() => gender('other')}
-                                            style={{
-                                                border: '1px solid lightgray'
-                                            }}
                                         /> :
                                         <input
                                             type="button"
@@ -383,7 +399,7 @@ export function Signup() {
                                             }}
                                         />}
                                 </div>
-                                <span className="errorMsgSpan">{genderValidationErrorMsg}</span>
+                                <span className="errMsgSpan">{genderValidationErrorMsg}</span>
                             </div>
                         </div>
                         <div className="division">
@@ -398,7 +414,7 @@ export function Signup() {
                                 selection
                                 options={friendOptions}
                             />
-                        </div> 
+                        </div>
                         <div className="submitField">
                             {arrowChange ?
                                 <Icon name="arrow right" className="arrowIcon" /> :
@@ -409,7 +425,7 @@ export function Signup() {
                                 Sign up
                             </button>
                         </div>
-                        <span className="submitErrMsg errorMsgSpan">{formValidationErrorMsg}</span>
+                        <span className="submitErrMsg errMsgSpan">{formValidationErrorMsg}</span>
                     </form>
                 </div>
             </div>

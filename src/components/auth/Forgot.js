@@ -12,9 +12,19 @@ export function Forgot() {
     const [iscnfrmPass, setIsCnfrmPass] = useState(true);
     const [isOTPActive, setIsOTPActive] = useState(true);
     const [arrowChange, setArrowChange] = useState(true);
+    const [inputType, setInputType] = useState(false);
+    const [eyeIconFocus, setEyeIconFocus] = useState(false);
     const newPass = useInput('');
     const cnfrmPass = useInput('');
     const OTP = useInput('');
+
+    let textInput = React.createRef();
+
+    function eyeIcon() {
+        console.log('hello')
+        textInput.current.focus();
+        setInputType(!inputType);
+    }
 
     useEffect(() => {
         if (passwordValidation(newPass.value)) {
@@ -32,7 +42,7 @@ export function Forgot() {
         else {
             setIsCnfrmPass(false)
         }
-    })
+    },[newPass.value])
 
     useEffect(() => {
         if (newPass.value !== '' && cnfrmPass.value !== '') {
@@ -70,17 +80,31 @@ export function Forgot() {
                 <form className="forgotForm">
                     <p className="forgotHeaderPara">Forgot Password </p>
                     <div className="newPassDiv">
+                        { eyeIconFocus && (inputType ?
+                            <Icon className="eyeIcon"
+                                size="large"
+                                name="eye"
+                                color="grey"
+                                onClick={eyeIcon} /> :
+                            <Icon className="eyeIcon"
+                                size="large"
+                                name="eye slash"
+                                color="grey"
+                                onClick={eyeIcon} />)
+                        }
                         <input
                             className="inputBox"
-                            type={"password"}
+                            type={inputType ? 'text' : 'password'}
                             placeholder="new Password"
+                            ref={textInput}
+                            onFocus={() => setEyeIconFocus(true)}
                             {...newPass}
                         />
                     </div>
                     <div className="confirmPasswordInput">
                         <input
                             className="inputBox"
-                            type={"text"}
+                            type={"password"}
                             placeholder="confirm Password"
                             {...cnfrmPass}
                         />

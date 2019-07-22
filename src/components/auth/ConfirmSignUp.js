@@ -78,14 +78,24 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 const ResendOtpSpan = styled.span`
 position: relative;
-top: 22px;
-left: 312px;
-font-size: 15px;
+top: 24px;
+left: 307px;
+font-size: 16px;
 color: #132c83;
 cursor: pointer;
 `
 
+const MessageSent = styled.span`
+position: relative;
+z-index: 999;
+cursor: pointer;
+color: #132c83;
+left: -18px;
+`
+
 export function ConfirmSignUp({ emailId, userInfo }) {
+
+    const [resendOTPText, setResendOTPText ] = useState(false)
     const otp = useInput('');
     const [arrowChange, setArrowChange] = useState(true);
     function verifyOtp(e) {
@@ -103,6 +113,7 @@ export function ConfirmSignUp({ emailId, userInfo }) {
 
     function reSendOtp(e) {
         Auth.resendSignUp(emailId).then(() => {
+            setResendOTPText(true)
             console.log('code resent successfully');
         }).catch(e => {
             console.log(e);
@@ -128,9 +139,8 @@ export function ConfirmSignUp({ emailId, userInfo }) {
                         <SubmitButton onClick={verifyOtp}>
                             Verify
                     </SubmitButton>
-                        <ResendOtpSpan onClick={reSendOtp}>Resend OTP?</ResendOtpSpan>
-                    </SubmitButtonDiv>
-
+                        <ResendOtpSpan onClick={reSendOtp}>{resendOTPText ? <MessageSent>Message Sent...</MessageSent>:'Resend OTP?' }</ResendOtpSpan>
+                    </SubmitButtonDiv>  
                 </OTPForm>
             </OTPContainer>
         </ConfirmSignUpOtp>

@@ -16,10 +16,20 @@ export function LogIn() {
     const password = useInput('');
     const [arrowChange, setArrowChange] = useState(true);
     const [isValidUser, setIsValidUser] = useState(false);
+    const [inputType, setInputType] = useState(false);
+    const [eyeIconFocus, setEyeIconFocus] = useState(false);
     const [loginErrorMsg, setLoginErrorMsg] = useState('');
 
     // useDispatch redux object setup
     const dispatch = useDispatch();
+    // refs Create
+    let textInput = React.createRef();
+
+    function eyeIcon() {
+        console.log('hello')
+        textInput.current.focus();
+        setInputType(!inputType);
+    }
 
     function signUpRedirect() {
         setArrowChange(false);
@@ -46,7 +56,7 @@ export function LogIn() {
                 };
                 getApiRequestCall(user_info_url, dataPayload, function (response) {
                     console.log('user information', response);
-                    if(response.status === 200 && response.data.Items !== undefined && response.data.Items.length === 1) {
+                    if (response.status === 200 && response.data.Items !== undefined && response.data.Items.length === 1) {
                         dispatch({
                             type: 'STORE_USER_INFORMATION',
                             payload: response.data.Items[0]
@@ -77,7 +87,7 @@ export function LogIn() {
                         <Icon name="user" color='grey' size="large" className="icon" />
                         <input
                             className="inputField email"
-                            type={"text"}
+                            type="text"
                             placeholder="User name or Email ID"
                             {...userName}
                         />
@@ -86,11 +96,25 @@ export function LogIn() {
                         <Icon name="lock" color='grey' size="large" className="icon" />
                         <input
                             className="inputField password"
-                            type={"password"}
+                            type={inputType ? "text" : "password"}
                             placeholder="Password"
+                            ref={textInput}
+                            onFocus={() => setEyeIconFocus(true)}
                             {...password}
                             text="Password"
                         />
+                        {eyeIconFocus && (inputType ?
+                            <Icon className="eyeIcon"
+                                size="large"
+                                name="eye"
+                                color="grey"
+                                onClick={eyeIcon} /> :
+                            <Icon className="eyeIcon"
+                                size="large"
+                                name="eye slash"
+                                color="grey"
+                                onClick={eyeIcon} />)
+                        }
                     </div>
                     <span className="forgotSpan" onClick={() => history.push('/forgot')}>forgot password?</span>
                     <div className="submitField">
