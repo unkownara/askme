@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { UserName } from './ProfileDetails';
+import { UserName } from '../ProfileDetails';
 import { CardHeader } from './CardHeader';
 
 export function PopularQuestions(props) {
@@ -11,7 +11,7 @@ export function PopularQuestions(props) {
             <QuestionsListWrapper>
                 {
                     props.popularQuestions.map((question, question_index) =>
-                        <QuestionWrapper>
+                        <QuestionWrapper key={question_index}>
                             {/* <TrendIconWrapper><div>?</div></TrendIconWrapper> */}
                             <AskedQuestion>{question.question}</AskedQuestion>
                             <UserName>{question.username}</UserName>

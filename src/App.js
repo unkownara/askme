@@ -8,15 +8,24 @@ import { Signup } from './components/auth/SignUp';
 import NavBar from './components/NavBar';
 import { WallPage } from './containers/WallPage';
 import { Forgot } from './components/auth/Forgot';
+import { OTP } from './components/otp';
+import { ConfirmSignUp } from './components/auth/ConfirmSignUp';
 
+<<<<<<< HEAD
+=======
+const Container = styled.div`
+	background: rgba(0,0,0,0.03);
+`
+
+>>>>>>> 55edd7c19353ad0562bd82425fa4fa85578767c3
 const Layout = styled.div`
-    padding: 50px;
-	/* background: #fff; */
+	width: 1200px;
+	margin: 0 auto;
 `
 
 function App() {
 	return (
-		<Fragment>
+		<Container>
 			<NavBar />
 			<Layout>
 				<Router history={history}>
@@ -24,7 +33,7 @@ function App() {
 						<Route
 							exact
 							path="/"
-							component={LandingPage}
+							component={ConfirmSignUp}
 						/>
 						<Route
 							exact
@@ -46,10 +55,14 @@ function App() {
 							path="/forgot"
 							component={Forgot}
 						/>
+						<Route
+							path="/otp"
+							component={OTP}
+						/>
 					</Switch>
 				</Router>
 			</Layout>
-		</Fragment>
+		</Container>
 	)
 }
 export default App; 

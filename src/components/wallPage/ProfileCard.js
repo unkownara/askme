@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { ProfileDetails } from './ProfileDetails';
-import Avatar from '../images/dp.png';
+import { ProfileDetails } from '../ProfileDetails';
 
+import Avatar from '../../images/dp.png';
 
 export function ProfileCard(props) {
     return (
