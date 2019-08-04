@@ -181,7 +181,6 @@ export function Signup() {
         console.log('userInfoect ', userInfo);
         switch (formValidation(userInfo)) {
             case 'firstName':
-<<<<<<< HEAD
                 setFirstNameValidationErrorMsg('* First name is required');
                 firstNameRef.current.focus();
                 break;
@@ -204,30 +203,6 @@ export function Signup() {
             case 'gender':
                 setGenderValidationErrorMsg('* gender is required');
                 genderRef.current.focus();
-=======
-                setFirstNameValidationErrorMsg("First name can't be empty");
-                setFormValidationErrorMsg('Fill required fields');
-                break;
-            case 'lastName':
-                setLastNameValidationErrorMsg("Last name can't be empty");
-                setFormValidationErrorMsg('Fill required fields');
-                break;
-            case 'userName':
-                setUserNameValidationErrorMsg("Username can't be empty");
-                setFormValidationErrorMsg('Fill required fields');
-                break;
-            case 'email':
-                setEmailValidationErrorMsg("Email can't be empty");
-                setFormValidationErrorMsg('Fill required fields');
-                break;
-            case 'password':
-                setPasswordValidationErrorMsg("Enter a valid Password");
-                setFormValidationErrorMsg('Fill required fields');
-                break;
-            case 'gender':
-                setGenderValidationErrorMsg("Select a gender");
-                setFormValidationErrorMsg('Fill required fields');
->>>>>>> 55edd7c19353ad0562bd82425fa4fa85578767c3
                 break;
             case 'none':
                 setFormValidationErrorMsg('Fill required fields');

@@ -10,14 +10,12 @@ import { WallPage } from './containers/WallPage';
 import { Forgot } from './components/auth/Forgot';
 import { OTP } from './components/otp';
 import { ConfirmSignUp } from './components/auth/ConfirmSignUp';
+import { CodeTesting } from './codeTesting';
 
-<<<<<<< HEAD
-=======
 const Container = styled.div`
 	background: rgba(0,0,0,0.03);
 `
 
->>>>>>> 55edd7c19353ad0562bd82425fa4fa85578767c3
 const Layout = styled.div`
 	width: 1200px;
 	margin: 0 auto;
@@ -33,7 +31,7 @@ function App() {
 						<Route
 							exact
 							path="/"
-							component={ConfirmSignUp}
+							component={CodeTesting}
 						/>
 						<Route
 							exact

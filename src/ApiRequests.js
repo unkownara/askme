@@ -1,7 +1,7 @@
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-export const getApiRequestCall = function(url, payload, callback) {
+export const getApiRequestCall = function (url, payload, callback) {
     axios.get(url, {
         params: payload,
         headers: {
@@ -19,7 +19,7 @@ export const getApiRequestCall = function(url, payload, callback) {
 }
 
 
-export const postApiRequestCall = function(url, payload, callback) {
+export const postApiRequestCall = function (url, payload, callback) {
     axios({
         method: 'POST',
         url: url,
@@ -30,10 +30,10 @@ export const postApiRequestCall = function(url, payload, callback) {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json"
         } : {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Authorization": cookie.load("_ref_i_token_")   
-        }
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                "Authorization": cookie.load("_ref_i_token_")
+            }
     }).then(res => {
         callback(res);
         console.log('response ', res);

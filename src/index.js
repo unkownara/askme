@@ -11,6 +11,7 @@ import { userReducer } from './reducers/userReducer';
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css';
 
+
 Amplify.configure({
 	Auth: {
 		mandatorySignIn: true,
