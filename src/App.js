@@ -10,6 +10,7 @@ import { WallPage } from './containers/WallPage';
 import { Forgot } from './components/auth/Forgot';
 import { OTP } from './components/otp';
 import { ConfirmSignUp } from './components/auth/ConfirmSignUp';
+import { Notification } from './components/notification/index';
 
 const Container = styled.div`
 	background: rgba(0,0,0,0.03);
@@ -30,7 +31,7 @@ function App() {
 						<Route
 							exact
 							path="/"
-							component={ConfirmSignUp}
+							component={LogIn}
 						/>
 						<Route
 							exact
@@ -55,6 +56,10 @@ function App() {
 						<Route
 							path="/otp"
 							component={OTP}
+						/>
+						<Route
+							path="/notification"
+							component={Notification}
 						/>
 					</Switch>
 				</Router>

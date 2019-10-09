@@ -3,32 +3,55 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CardHeader } from './CardHeader';
 import { ProfileDetails } from '../ProfileDetails';
-
 import { getApiRequestCall } from '../../ApiRequests';
-import { user_sugession_url } from '../../ApiUrls';
-
+import { popular_users_url } from '../../ApiUrls';
 import Avatar from '../../images/dp.png';
 
-export function PopularUsers({ margin, userId, userCity }) {
+
+export function PopularUsers({ margin, userId, specialist }) {
 
     const [popularUsers, setPopularUsers] = useState([]);
+    const [popularUsersStatus, setPopularUsersStatus] = useState([]);
+    const [status, setStatus] = useState(null);
+
+    async function updatePopularUsersStatus(popularUsersStatus) {
+        console.log('popular status ', popularUsersStatus);
+        setPopularUsersStatus(popularUsersStatus);
+    }
 
     function updatePopularUsers(popularUsers) {
         setPopularUsers(users => users.concat(popularUsers));
     }
 
     useEffect(() => {
+        console.log('checking');
         const params = {
             userId: userId,
-            city: userCity
+            specialist: specialist
         };
-        getApiRequestCall(user_sugession_url, params, function (response) {
-            if (response.data && response.data.Items) {
-                console.log('popular user list ', response.data.Items);
-                updatePopularUsers(response.data.Items);
+        getApiRequestCall(popular_users_url, params, function (response) {
+            console.log('response for popular users ', response);
+            try {
+                if (response.data.relationShips && response.data.relationShips.Responses && response.data.relationShips.Responses.follower_connections) {
+                    updatePopularUsersStatus(response.data.relationShips.Responses.follower_connections);
+                }
+                if(response.data && response.data.popularUsers && response.data.popularUsers.Items) {
+                    updatePopularUsers(response.data.popularUsers.Items);
+                }
+            } catch(e) {
+                console.log('error while parsing data in local state ', e);
             }
         });
     }, []);
+
+    useEffect(() => {
+        let mapObj = new Map();
+        popularUsersStatus.map((data, index) => {
+            mapObj.set(data.fUserId, data.requestStatus);
+        });
+        setStatus(mapObj);
+        console.log('map status useEffect', mapObj);
+    }, [popularUsersStatus]);
 
 
     if (popularUsers.length === 0) {
@@ -38,13 +61,14 @@ export function PopularUsers({ margin, userId, userCity }) {
             </>
         )
     } else {
+        console.log('map status ', status);
         return (
             <PopularUsersWrapper margin={margin}>
                 <CardHeader>POPULAR USERS</CardHeader>
                 <UsersWrapper>
                     {
                         popularUsers.map((user, user_index) =>
-                            <ProfileWrapper key={user_index}>
+                            <ProfileWrapper key={user.userId}>
                                 <ProfileDetails
                                     radius={'50%'}
                                     showUserName={false}
@@ -54,7 +78,9 @@ export function PopularUsers({ margin, userId, userCity }) {
                                     showActivityDetails
                                     showUploadedTime={false}
                                     userName={user.userName}
-                                    src={Avatar} />
+                                    src={Avatar}
+                                    status={status.get(user.userId) ? status.get(user.userId) : 'follow'}
+                                />
                             </ProfileWrapper>
                         )
                     }

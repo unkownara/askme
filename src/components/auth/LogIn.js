@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useInput } from '../hooks/useInput';
+import { useInput } from '../../hooks/useInput';
 import { Auth } from 'aws-amplify';
 import cookie from 'react-cookies';
 import { getApiRequestCall } from '../../ApiRequests';

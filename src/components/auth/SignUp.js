@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { Dropdown, Icon } from 'semantic-ui-react';
-import { useInput } from '../hooks/useInput';
+import { useInput } from '../../hooks/useInput';
 import { ConfirmSignUp } from './ConfirmSignUp';
 import { formValidation, inputValidation } from "../../Validation.js";
 import history from '../../history';

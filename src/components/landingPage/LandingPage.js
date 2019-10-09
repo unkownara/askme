@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
-import { useInput } from '../hooks/useInput';
+import { useInput } from '../../hooks/useInput';
 import { unity } from '../../images/unity.png';
 
 export function LandingPage() {
